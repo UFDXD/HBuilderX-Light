@@ -1,0 +1,81 @@
+
+
+#HBuiderXToolbar{
+    width: 500px;
+    margin-right: 14px;
+    padding-left: 11px;
+    /*background-color: rgba(255, 9, 9, 0.089);*/
+}
+
+#sidebarHoverButton{
+    width: 20px;
+    height: 100%;
+    /*background-color: aqua;*/
+    float: left;
+    background-image: url("../src/A1.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100%;
+}
+
+#sidebarHoverButton:hover{
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0);
+}
+
+#LeftHoverBlock{
+    width: 16px;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+    /*background-color: rgba(0, 255, 255, 0.438);*/
+    z-index: 999;
+}
+
+/*
+#rigthHoverBlock{
+    width: 30px;
+    height: 100%;
+    position: fixed;
+    margin-top:90px;
+    right: 0px;
+    background-color: rgba(255, 0, 0, 0.418);
+    z-index: 999;
+
+}*/
+
+
+
+
+
+
+
+#highlightBecomesHidden{
+    width: 20px;
+    height: 100%;
+    float: left;
+    margin-left: 10px;
+    background-image: url("../src/B1.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100%;
+}
+#highlightBecomesHidden:hover{
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0);
+}
+
+
+
+
+#quickDropDown{
+    width: 20px;
+    height: 100%;
+    float: left;
+    margin-left: 10px;
+    background-image: url("../src/C1.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100%;
+}
+#quickDropDown:hover{
+    filter: drop-shadow(rgb(0, 0, 0) 0px 0);
+}
