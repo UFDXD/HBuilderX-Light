@@ -1,0 +1,10 @@
+
+.b3-typography mark, .protyle-wysiwyg mark{
+    background-color: yellow;
+    color: yellow;
+}
+
+mark:hover{
+    background-color: yellow;
+    color: black;
+}

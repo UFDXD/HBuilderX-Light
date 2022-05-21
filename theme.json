@@ -1,0 +1,9 @@
+{
+  "name": "HBuilderX-Light",
+  "author": "UFDXD",
+  "url": "https://github.com/UFDXD/HBuilderX-Light",
+  "version": "0.1.9",
+  "modes": [
+    "light"
+  ]
+}
