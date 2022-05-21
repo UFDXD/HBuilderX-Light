@@ -8,13 +8,13 @@
 
 
 ![image](https://user-images.githubusercontent.com/97731736/169648221-b14ad3c3-6413-4b9a-8455-d02fca6ccf00.png)
-
+---
 
 ![image](https://user-images.githubusercontent.com/97731736/169648233-72b43f7f-3f40-4297-aff4-0f1d4868fe0c.png)
-
+---
 
 ![image](https://user-images.githubusercontent.com/97731736/169648243-d6adb09c-ce8f-48ff-bed3-3a9c79b4a2c9.png)
-
+---
 
 本主题自带简单实现小功能，功能激活使用即可，请适度使用因为有刁钻和未知bug。
 
