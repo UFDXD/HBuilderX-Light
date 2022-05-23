@@ -1744,7 +1744,7 @@ div *[custom-f="dt"]>[data-type="NodeListItem"]::after{
 .protyle-wysiwyg *[custom-f="bg"] .li {
 	display: flex;
     outline:  1px solid var(--surface-border-color);
-    background-color: #fff;
+    background-color: #fff !important;
 }
 
 .protyle-wysiwyg *[custom-f="bg"] .li>.p {
