@@ -1,7 +1,6 @@
 
 
 #HBuiderXToolbar{
-    width: 500px;
     margin-right: 14px;
     padding-left: 11px;
     /*background-color: rgba(255, 9, 9, 0.089);*/
@@ -23,7 +22,7 @@
 }
 
 #LeftHoverBlock{
-    width: 16px;
+    width: 12px;
     height: 100%;
     position: fixed;
     left: 0px;
