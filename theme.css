@@ -366,8 +366,8 @@ div.fn__flex-column.fn__flex-shrink{
     height: 1.1em;
     color:rgb(244, 144, 12);
 }
-/*大纲树第一级去缩进，为了获得更大的可视空间*/
-.sy__outline>.fn__flex-1>.b3-list--background>ul{
+/*大纲树标题下缩进去除，获得更大的可视空间*/
+.sy__outline>.fn__flex-1>.b3-list--background{
     margin-left: -15px;
 }
 
@@ -535,26 +535,37 @@ li.item.item--pin>.fn__none{
 .protyle-breadcrumb{
     position: absolute;
     width: 99.8%;
+    margin-top: -3px;
+    margin-left: -8px;
+    background-color: transparent !important;
     z-index: 7;
 }
 /*路径*/
-.protyle-breadcrumb__bar{
+.protyle-breadcrumb__bar>span{
     border-radius: 0px;
-    margin-left: -8px;
-    margin-top: -7px;
-    padding-right: 7px;
-    padding-top: 2px;
+    background-color: rgba(255, 250, 233, 0.808) !important;
+}
+/*路径节点*/
+.protyle-breadcrumb__bar>svg{
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgba(255, 250, 233, 0.808) !important;
+}
+/*最后一个路径*/
+.protyle-breadcrumb__bar>span:last-child{
+    border-radius: 0px;
+    padding-right: 20px;
     background-color: rgba(255, 250, 233, 0.808) !important;
 }
 
-/*中间空白区域*/
-div.fn__flex-1.fn__space.fn__flex-shrink{
-    background-color:transparent !important;
-}
+
 /*更多按钮*/
 button.b3-tooltips.b3-tooltips__w.block__icon{
-    margin-top: -4px;
-    margin-right: -3px;
+    margin-right: -11px;
     padding-left: 8px;
     padding-right: 6px;
     border-radius: 0px;
@@ -602,9 +613,14 @@ div.protyle-icons.fn__flex-center{
     margin-top: 22px !important;
 }
 
+
+div.protyle-content>.protyle-background{
+    padding-right: 5px;
+}
 /*标签*/
 .protyle-background__tags{
     float: right;
+    z-index: 8;
 }
 div[data-type="open-search"]{
     border-radius: 0 !important ;
