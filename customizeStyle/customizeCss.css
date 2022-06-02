@@ -1,5 +1,3 @@
-
-
 #HBuiderXToolbar{
     margin-right: 14px;
     padding-left: 11px;
@@ -25,25 +23,15 @@
     width: 12px;
     height: 100%;
     position: fixed;
-    left: 0px;
-    /*background-color: rgba(0, 255, 255, 0.438);*/
     z-index: 999;
 }
 
-/*
-#rigthHoverBlock{
-    width: 30px;
+#RightHoverBlock{
+    width: 12px;
     height: 100%;
     position: fixed;
-    margin-top:90px;
-    right: 0px;
-    background-color: rgba(255, 0, 0, 0.418);
     z-index: 999;
-
-}*/
-
-
-
+}
 
 
 
