@@ -11,12 +11,18 @@ var sidebarHoverButton = null;
 var highlightBecomesHiddenButton=null;
 var quickDropDownButton=null;
 
-var fn__flex_column = null;
+
+
+var layout__center_fn__flex_fn__flex_1=null;
 
 var LeftHoverBlock = null;
+var RightHoverBlock=null;
 
+var left_fn__flex_column = null;
+var right_fn__flex_column = null;
 
-var fn__flex_column_Width_Str = null;
+var left_fn__flex_column_Width_Str = null;
+var right_fn__flex_column_Width_Str = null;
 
 
 
@@ -39,7 +45,7 @@ function createHBuiderXToolbar() {
 /*创建边栏鼠标悬浮展开按钮*/
 function createSidebarMouseHoverExpandButton() {
     sidebarHoverButton = addCreateElement(HBuiderXToolbar, "div", SidebarHoverButtonID)
-    sidebarHoverButton.setAttribute("title", "开启后左区域展开面板自动关闭，鼠标移动贴边展开。");
+    sidebarHoverButton.setAttribute("title", "开启后左右面板自动关闭，鼠标贴边自动展开,鼠标移动编辑区域左右上角触发关闭。");
     addSidebarHoverButtonEven(sidebarHoverButtonImplementEven);/*为此按钮注册点击事件 */
 }
 
@@ -50,50 +56,63 @@ function addSidebarHoverButtonEven(fun) {
 
 /*SidebarHoverButton 按钮点击后执行事件*/
 function sidebarHoverButtonImplementEven() {
+    loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
 
-    if (!fn__flex_column) fn__flex_column = document.querySelectorAll("div.fn__flex-column.fn__flex-shrink")[0];
+    /**左区域 */
+    if (!left_fn__flex_column) left_fn__flex_column = document.querySelectorAll(".layout>div.fn__flex.fn__flex-1>.fn__flex-column")[0];
+    /**右区域 */
+    if (!right_fn__flex_column) right_fn__flex_column = document.querySelectorAll(".layout>div.fn__flex.fn__flex-1>.fn__flex-column")[1];
 
-
-    if ("0px" != fn__flex_column.style.width) {
+    /**必须左右已经展开功能才可以生效 */
+    if ("0px" != left_fn__flex_column.style.width && "0px" != right_fn__flex_column.style.width) {
 
         if (!LeftHoverBlock) createHoverBlock();
 
         closeLeftPanel();
+        closeRightPanel();
 
         sidebarHoverButton.style.backgroundImage = "url(/appearance/themes/HBuilderX-Light/src/A2.png)";
 
     } else {
 
         if (!LeftHoverBlock) {
-            alert("请在左栏区域打开状态下点击！");
+            alert("请在左右区域都处于打开下状态下点击！");
             return;
         };
 
         openLeftPanel();
+        openRightPanel();
 
         HBuiderXToolbar.removeChild(LeftHoverBlock);
+        HBuiderXToolbar.removeChild(RightHoverBlock);
+
         LeftHoverBlock = null;
+        RightHoverBlock=null;
+        
         sidebarHoverButton.style.backgroundImage = "url(/appearance/themes/HBuilderX-Light/src/A1.png)";
     }
 }
 
 
-/*在左面板打开鼠标触发块*/
+/*在左右面板打开鼠标触发块*/
 function createHoverBlock() {
     LeftHoverBlock = addCreateElement(HBuiderXToolbar, "div", "LeftHoverBlock");
     LeftHoverBlock.setAttribute("display", "block");
+
+    RightHoverBlock = addCreateElement(HBuiderXToolbar, "div", "RightHoverBlock");
+    RightHoverBlock.setAttribute("display", "block");
 }
 
 
 /*左面板关闭*/
 function closeLeftPanel() {
 
-    if ("0px" != fn__flex_column.style.width) {
+    if ("0px" != left_fn__flex_column.style.width) {
 
-        fn__flex_column_Width_Str = fn__flex_column.style.width;
-        fn__flex_column.style.width = "0px";
-        fn__flex_column.style.position = "fixed";
-        fn__flex_column.style.zIndex = "-11";
+        left_fn__flex_column_Width_Str = left_fn__flex_column.style.width;
+        left_fn__flex_column.style.width = "0px";
+        left_fn__flex_column.style.position = "fixed";
+        left_fn__flex_column.style.zIndex = "-11";
 
         /*解绑触发块鼠标进入，面板关闭事件 */
         myRemoveEvent(LeftHoverBlock, "mouseover", closeLeftPanel);
@@ -103,16 +122,25 @@ function closeLeftPanel() {
         /*移动触发块位置，等待触发面板打开 */
         LeftHoverBlock.style.width = "12px";
         LeftHoverBlock.style.left = "0px";
+        LeftHoverBlock.style.right="auto";
+        LeftHoverBlock.style.height = "100%";
+
+        if(right_fn__flex_column.style.width=="0px"){
+            RightHoverBlock.style.right = "0px";
+            RightHoverBlock.style.left = "auto"
+        }else{
+            RightHoverBlock.style.left ="0px";
+        }
     }
 }
 
 /*左面板展开*/
 function openLeftPanel() {
-    if ("0px" != fn__flex_column_Width_Str) {
+    if ("0px" != left_fn__flex_column_Width_Str) {
 
-        fn__flex_column.style.width = fn__flex_column_Width_Str;
-        fn__flex_column.style.position = "static";
-        fn__flex_column.style.zIndex = "2";
+        left_fn__flex_column.style.width = left_fn__flex_column_Width_Str;
+        left_fn__flex_column.style.position = "static";
+        left_fn__flex_column.style.zIndex = "2";
 
         /*解绑触发块鼠标进入，面板打开事件 */
         myRemoveEvent(LeftHoverBlock, "mouseover", openLeftPanel);
@@ -120,11 +148,71 @@ function openLeftPanel() {
         AddEvent(LeftHoverBlock, "mouseover", closeLeftPanel)
 
         /*移动触发块位置，等待触发面板关闭 */
-        LeftHoverBlock.style.width = "100000px";
-        LeftHoverBlock.style.left = (parseFloat(fn__flex_column_Width_Str) + 530) + "px";
+        LeftHoverBlock.style.width = "400px";
+        LeftHoverBlock.style.left="auto";
+        LeftHoverBlock.style.right=(parseFloat(right_fn__flex_column.style.width) + 25) + "px";
+        LeftHoverBlock.style.height = "200px";
+
+        if(right_fn__flex_column.style.width!="0px"){
+            RightHoverBlock.style.left = (parseFloat(left_fn__flex_column_Width_Str) + 25) + "px";
+        }
     }
 }
 
+/*右面板关闭*/
+function closeRightPanel() {
+
+    if ("0px" != right_fn__flex_column.style.width) {
+
+        right_fn__flex_column_Width_Str = right_fn__flex_column.style.width;
+        right_fn__flex_column.style.width = "0px";
+        right_fn__flex_column.style.position = "fixed";
+        right_fn__flex_column.style.zIndex = "-11";
+
+        /*解绑触发块鼠标进入，面板关闭事件 */
+        myRemoveEvent(RightHoverBlock, "mouseover", closeRightPanel);
+        /*注册触发块鼠标进入，面板打开事件 */
+        AddEvent(RightHoverBlock, "mouseover", openRightPanel);
+
+        /*移动触发块位置，等待触发面板打开 */
+        RightHoverBlock.style.width = "12px";
+        RightHoverBlock.style.height = "100%";
+        RightHoverBlock.style.right = "0px";
+        RightHoverBlock.style.left = "auto";
+        
+        if(left_fn__flex_column.style.width=="0px"){
+            LeftHoverBlock.style.left = "0px";
+            LeftHoverBlock.style.right="auto";
+        }else{
+            LeftHoverBlock.style.right = "0px";
+        }
+    }
+}
+
+/*右面板展开*/
+function openRightPanel() {
+    if ("0px" != right_fn__flex_column_Width_Str) {
+
+        right_fn__flex_column.style.width = right_fn__flex_column_Width_Str;
+        right_fn__flex_column.style.position = "static";
+        right_fn__flex_column.style.zIndex = "0";
+
+        /*解绑触发块鼠标进入，面板打开事件 */
+        myRemoveEvent(RightHoverBlock, "mouseover", openRightPanel);
+        /*注册触发块鼠标进入，面板关闭事件 */
+        AddEvent(RightHoverBlock, "mouseover", closeRightPanel);
+
+        /*移动触发块位置，等待触发面板关闭 */
+        RightHoverBlock.style.width = "400px";
+        RightHoverBlock.style.right ="auto";
+        RightHoverBlock.style.left = (parseFloat(left_fn__flex_column.style.width) + 25) + "px";
+        RightHoverBlock.style.height = "200px";
+
+        if(left_fn__flex_column.style.width!="0px"){
+            LeftHoverBlock.style.right =(parseFloat(right_fn__flex_column_Width_Str) + 25) + "px";
+        }
+    }
+}
 
 
 
