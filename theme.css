@@ -1,7 +1,3 @@
-
-/* 搜索界面左右排版，来自论坛网友 */
-@import url("style/CtrlP.css");
-
 :root {
     /* 主色 */
     --b3-theme-primary: rgb(121, 187, 138);/*左右边栏面板激活图标颜色-块进度条圆点颜色*/
@@ -252,6 +248,7 @@ body.body--win32 {
     line-height: 19px ;
 }
 
+
 /*缩小窗口,最大窗口按钮*/
 #minWindow:hover,#maxWindow:hover{
     border: none !important;
@@ -368,7 +365,7 @@ div.fn__flex-column.fn__flex-shrink{
 }
 /*大纲树标题下缩进去除，获得更大的可视空间*/
 .sy__outline>.fn__flex-1>.b3-list--background{
-    margin-left: -15px;
+    margin-left: -18px;
 }
 
 
@@ -783,9 +780,10 @@ div.fn__flex-1.fn__flex-column.file-tree.sy__backlink{
 }
 
 /*大纲树区域禁止出现横滚动条*/
-.sy__outline>.fn__flex-1>.b3-list--background>ul{
+div.fn__flex-1.fn__flex-column.file-tree.sy__outline{
    overflow-x:hidden ;
 }
+
 /*反链区域禁止出现横滚动条*/
 .backlinkList{
 	overflow-x:hidden ;
@@ -990,7 +988,7 @@ td:hover{/*表格中td标签*/
 
 }
 
-.code-block span:hover{/*代码块中的spna标签*/
+.code-block span:not(.fn__flex-1):not(.language-css):not(.hljs-function):not(.hljs-params):not(.hljs-comment):hover{/*代码块中的spna标签*/
     border-radius: 3.5px;
     background-color:rgb(200, 220, 158);
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
@@ -1945,3 +1943,88 @@ div *[custom-f="dt"]>[data-type="NodeListItem"]::after{
 }
 
 /*————————————————————列表转化看板 END————————————————————*/
+
+
+
+
+
+
+
+
+
+/*链滴id：abbj，如果兄弟们用的满意，别忘了使用我得推荐码：K9TdVww */
+/*-----------------------------------------------------------------------------ctrl+p窗口改造-------------*/
+/*放大ctrl+p窗口尺寸*/
+/*不添加[data-key]属性选择器将会同时影响alt+p窗口*/
+div[data-key] .b3-dialog__container {width: 98vw !important;}
+div[data-key] .b3-dialog__container .fn__flex-column {
+	height:97vh !important;
+	width: 98vw !important;
+}
+
+/*ctrl+p改造成左右排列*/
+/*先把容器改成左右排列并自动换行*/
+div[data-key] .b3-dialog__container .fn__flex-column {
+	flex-direction: row !important;
+	flex-wrap: wrap;
+}
+/*设置需要占满一行的项目*/
+div[data-key] .b3-dialog__container .fn__flex-column .search__header,
+div[data-key] .b3-dialog__container .fn__flex-column .b3-form__space--small {
+	width:100vw ;
+	/*flex-shrink:0;*/
+}
+/*窗口宽度大于一定尺寸时候，左右排列*/
+@media screen and (min-width: 960px) {
+	/*搜索结果列表占一半宽度，靠左排列*/
+	body > div[data-key] > .b3-dialog > .b3-dialog__container > div > .fn__flex > .fn__flex-column #searchList {
+		float: left;
+		width: 30vw;
+		height: calc(100% - 138px) !important;
+        border-right:1px solid rgb(216,202,158);
+        padding-right: 10px;
+        /*禁止搜索结果水平滚动*/
+		overflow-x: hidden !important;
+		overflow-y: auto;
+	}
+	/*结果预览自动占满剩余宽度，高度和结果列表等高*/
+	div[data-key] .b3-dialog__container .fn__flex-column #searchPreview {
+		/*width:45vw;*/
+		height: calc(100% - 138px) !important;
+        /*禁止搜索结果水平滚动*/
+		overflow-x: hidden !important;
+		overflow-y: auto;
+	}
+}
+@media screen and (min-width: 960px) {
+	/*搜索结果列表占一半宽度，靠左排列*/
+	body > div[data-key] > .b3-dialog > .b3-dialog__container > div > .fn__flex > .fn__flex-column .fn__none~#searchList {
+		float: left;
+		width: 30vw;
+		height: calc(100% - 85px) !important;
+        border-right:1px solid rgb(216,202,158);
+        padding-right: 10px;
+         /*禁止搜索结果水平滚动*/
+		overflow-x: hidden !important;
+		overflow-y: auto;
+	}
+	/*结果预览自动占满剩余宽度，高度和结果列表等高*/
+	body > div[data-key] > .b3-dialog > .b3-dialog__container > div > .fn__flex > .fn__flex-column .fn__none~#searchPreview {
+		/*width:45vw;*/
+		height: calc(100% - 85px) !important;
+         /*禁止搜索结果水平滚动*/
+		overflow-x: hidden !important;
+		overflow-y: auto;
+	}
+}
+
+/*去除预览窗口多余空间*/
+#searchPreview>.protyle-content>div.protyle-wysiwyg.protyle-wysiwyg--attr{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    /*禁止搜索结果水平滚动*/
+	overflow-x: hidden !important;
+	overflow-y: auto;
+}
+
+/*---------ctrl+p窗口改造 end -------------*/
