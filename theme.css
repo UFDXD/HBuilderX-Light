@@ -266,8 +266,10 @@ body.body--win32 {
 #dockLeft{
     width: 22px;
     background-color: rgb(255, 251, 236);
-    border-left:1px solid rgba(216, 202, 158, 0.412) ;
+    border-left:1px solid rgba(216, 202, 158, 0.412);
     border-right: 1px solid rgba(216, 202, 158, 0.412) !important ;
+    margin-right: -1.5px !important;
+    z-index: 4;
 }
 /*右栏*/
 #dockRight{
@@ -275,7 +277,6 @@ body.body--win32 {
     background-color: rgb(255, 251, 236);
     border-right:1px solid rgba(216, 202, 158, 0.412) ;
     border-left:1px solid rgba(216, 202, 158, 0.412) !important;
-
 }
 
 /*修改插槽图标大小*/
@@ -304,12 +305,12 @@ span.dock__item svg{
 /*---------------------------------左右边栏展开区域--------------------------------*/
 /*去除区域伪元素边框*/
 .layout__resize--lr:after{
-    display: none;  
+   /* display: none;  */
 }
 
 /*左区域*/
 div.fn__flex-column.fn__flex-shrink{
-    border-right:1px solid rgb(216, 202, 158) ;
+    /*border-right:1px solid rgb(216, 202, 158) ;*/
 }
 
 /*右区域*/
@@ -365,7 +366,7 @@ div.fn__flex-column.fn__flex-shrink{
 }
 /*大纲树标题下缩进去除，获得更大的可视空间*/
 .sy__outline>.fn__flex-1>.b3-list--background{
-    margin-left: -18px;
+    margin-left: -12px;
 }
 
 
@@ -443,9 +444,13 @@ span[aria-label="新建文档"]:hover{
 
 /*----------------------------------------------思源标签索引窗口---------------*/
 
-/*思源标签查找窗口上下分割线*/
+/*思源标签查找窗口上*/
 #globalSearchList{
     border-bottom: 1px solid rgb(216, 202, 158);
+
+}
+/*思源标签查找窗口下*/
+#searchPreview>.protyle-content>.protyle-wysiwyg{
 }
 
 
@@ -533,7 +538,7 @@ li.item.item--pin>.fn__none{
     position: absolute;
     width: 99.8%;
     margin-top: -3px;
-    margin-left: -8px;
+    margin-left: -6px;
     background-color: transparent !important;
     z-index: 7;
 }
@@ -2020,8 +2025,8 @@ div[data-key] .b3-dialog__container .fn__flex-column .b3-form__space--small {
 
 /*去除预览窗口多余空间*/
 #searchPreview>.protyle-content>div.protyle-wysiwyg.protyle-wysiwyg--attr{
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-left: 23px !important;
+    padding-right: 23px !important;
     /*禁止搜索结果水平滚动*/
 	overflow-x: hidden !important;
 	overflow-y: auto;
