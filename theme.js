@@ -56,12 +56,17 @@ function addSidebarHoverButtonEven(fun) {
 
 /*SidebarHoverButton 按钮点击后执行事件*/
 function sidebarHoverButtonImplementEven() {
-    loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
 
+    loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
+    
+    /**获取区域主体 */
+    var column= document.querySelectorAll("#layouts>div.fn__flex.fn__flex-1")[0];
+    
     /**左区域 */
-    if (!left_fn__flex_column) left_fn__flex_column = document.querySelectorAll(".layout>div.fn__flex.fn__flex-1>.fn__flex-column")[0];
+    if (!left_fn__flex_column) left_fn__flex_column = column.firstElementChild;
     /**右区域 */
-    if (!right_fn__flex_column) right_fn__flex_column = document.querySelectorAll(".layout>div.fn__flex.fn__flex-1>.fn__flex-column")[1];
+    if (!right_fn__flex_column) right_fn__flex_column = column.lastElementChild;
+
 
     /**必须左右已经展开功能才可以生效 */
     if ("0px" != left_fn__flex_column.style.width && "0px" != right_fn__flex_column.style.width) {
