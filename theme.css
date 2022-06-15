@@ -215,7 +215,7 @@ body.body--win32 {
 }
 
 /*引用计数*/
-.counter{
+.counter:not(.listCount):not(.listMCount){
     margin-left: 4px;
     line-height: 20px;
     padding: 0 6px;
@@ -226,12 +226,26 @@ body.body--win32 {
     height: 20px;
     background-color: rgb(101, 168, 99);
 }
-.counter:hover{
+.counter:hover:not(.listCount):not(.listMCount){
     transform: scale(1.2);
     background-color:rgb(101, 168, 99) !important;
     color: white !important;
 }
 
+/*反链，提及搜索*/
+input[placeholder="Enter 搜索"]{
+    box-shadow: none;
+    background-color: transparent;
+}
+/*反链接，提及计数*/
+.listCount,.listMCount{
+    font-size: 100%;
+    color: rgb(101, 168, 99);
+}
+.listCount:hover,.listMCount:hover{
+    transform: scale(1.2);
+    color: rgb(101, 168, 99);
+}
 
 /*-----------------------------------------------软件标题栏--------------*/
 
@@ -391,8 +405,12 @@ span[aria-label="更多"]:hover{
 span[aria-label="新建文档"]:hover{
     background-color: transparent !important;
 }
+
+.b3-list-item{
+    transition: width 3s, height 3s;
+}
+
 .b3-list-item:hover:not(li[data-type="toggle"]){/*鼠标经过*/
-    /*transition: width 3s, height 3s;*/
     font-weight: bold;
     transform: scale(1.015);
 }
@@ -419,6 +437,13 @@ span[aria-label="新建文档"]:hover{
     color:rgb(193, 167, 102);
 }
 
+/* 文件树拖拽增强 */
+.file-tree .dragover__bottom {
+    box-shadow: 0 2px 0 rgba(101,168,99),inset 0px -2px 0 rgba(101,168,99);
+}
+.file-tree .dragover__top {
+    box-shadow: 0 -2px 0 rgba(101,168,99),inset 0px 2px 0 rgba(101,168,99);
+}
 
 /*--------------------------------------------关闭笔记本笔记本归档区域---------------*/
 
@@ -457,6 +482,11 @@ span[aria-label="新建文档"]:hover{
 
 
 /*————————————————————————标签页 Tab———————————————————————— */
+
+ul.fn__flex.layout-tab-bar{
+    overflow-y:hidden ;
+}
+
 .layout-tab-bar .item{
     min-height: 25px !important;
     height: 25px !important;
@@ -538,9 +568,10 @@ li.item.item--pin>.fn__none{
     position: absolute;
     width: 99.8%;
     margin-top: -3px;
-    margin-left: -6px;
+    left: 1px;
+    padding-left: 0px;
     background-color: transparent !important;
-    z-index: 7;
+    z-index: 2;
 }
 /*路径*/
 .protyle-breadcrumb__bar>span{
@@ -556,6 +587,7 @@ li.item.item--pin>.fn__none{
     padding-left: 5px;
     padding-right: 5px;
     background-color: rgba(255, 250, 233, 0.808) !important;
+
 }
 /*最后一个路径*/
 .protyle-breadcrumb__bar>span:last-child{
@@ -571,88 +603,71 @@ button.b3-tooltips.b3-tooltips__w.block__icon{
     padding-left: 8px;
     padding-right: 6px;
     border-radius: 0px;
-    background-color: rgba(255, 250, 233, 0.808) !important;
+    background-color:transparent!important;
 }
-
+/*聚焦路径*/
+.protyle-breadcrumb__item--active,.protyle-breadcrumb__item--active>svg{
+    color: rgb(101, 168, 99);
+}
 
 /*----------------------------文档编辑区域--------------------*/
-.protyle-content>div[style="min-height: 30vh;"]{
-    min-height: 26vh !important;
+
+.protyle-background__img{
+    position: static !important;    
+    
 }
-.protyle-background__img img{
-    height: 26vh !important;    
+.protyle-background__img>img{
+    height: 271px !important;
 }
 
-.protyle-content>div[style="min-height: 67px;"]
-,.protyle-content>div[style="min-height: 66px;"]
-,.protyle-content>div[style="min-height: 65px;"]
-,.protyle-content>div[style="min-height: 64px;"]
-,.protyle-content>div[style="min-height: 63px;"]
-,.protyle-content>div[style="min-height: 58px;"]
-,.protyle-content>div[style="min-height: 57px;"]
-,.protyle-content>div[style="min-height: 56px;"]
-,.protyle-content>div[style="min-height: 55px;"]
-,.protyle-content>div[style="min-height: 54px;"]
-,.protyle-content>div[style="min-height: 93px;"]
-,.protyle-content>div[style="min-height: 92px;"]
-,.protyle-content>div[style="min-height: 91px;"]
-,.protyle-content>div[style="min-height: 90px;"]
-,.protyle-content>div[style="min-height: 89px;"]
-,.protyle-content>div[style="min-height: 30vh;"]{
-    margin-top: 25px;
-    margin-bottom: 35px !important;
+div.protyle-content{
 }
-
-.protyle-content>div[style="min-height: 0px;"]{
-    margin-top: 25px;
-    margin-bottom: 0px !important;
-}
-
-div.protyle-background__icon{
-    margin-top: -5px !important;
-}
-div.protyle-icons.fn__flex-center{
-    margin-top: 22px !important;
-}
-
 
 div.protyle-content>.protyle-background{
-    padding-right: 5px;
+    min-height: 0px !important;
 }
-/*标签*/
+
+
+
+/*标签容器*/
 .protyle-background__tags{
-    float: right;
-    z-index: 8;
+    display: block !important;
 }
+/*标签项*/
 div[data-type="open-search"]{
-    border-radius: 0 !important ;
+    border-radius: 0px !important;
 }
 
 div[data-type="open-search"]::before{
     content: "🔖 ";
 }
+
+
 /*标签小x*/
 svg[data-type="remove-tag"]{
     background-color: transparent !important;
 }
 
 
-/*文档内图标距离左边距距离*/
+/*文档内emg图标距离左边距距离*/
 .protyle-background__iconw{
-    left: 26px !important;
+    position: static !important;
+    margin-left: 26px !important;
 }
 
 /*文档内标题距离左边距的距离*/
 div.protyle-title.protyle-wysiwyg--attr{
-    margin-top: -30px !important;
+    margin-top: 0px !important;
     margin-left: 26px !important;
     margin-right: 26px !important;
 }
 
-/*文档正文编剧区域宽度*/
-div[data-doc-type="NodeDocument"]{
+
+/*聚焦或正文宽度*/
+div.protyle-content>[data-doc-type]{
     padding: 16px 26px 191.5px !important;
 }
+
 
 /*块滚动条*/
 div.protyle-scroll.b3-tooltips.b3-tooltips__s{
@@ -664,6 +679,12 @@ div.protyle-scroll.b3-tooltips.b3-tooltips__s{
     background-color: rgb(101, 168, 99);
     color: rgb(255, 255, 255);
 }
+.protyle-attr--refcount:hover{
+    transform: scale(1.2);
+    background-color:rgb(101, 168, 99) !important;
+    color: white !important;
+}
+
 .protyle-background__icon:hover{/*文档emj图标*/
     transform: scale(1.2);
     transition: width 1s, height 2s;
@@ -738,7 +759,6 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
     transform-origin: 0 0 0;
     transform: scale(1.2);
 }
-
 
 
 /* 编辑区域滚动条 */
@@ -962,6 +982,15 @@ div.fn__flex-column.fn__flex-1{
 
 /*————————————————鼠标经过元素的醒目变化*/
 
+/* 块标移动增加过渡 */
+.protyle-gutters{
+    z-index: 3;
+    transition: all 500ms ease-out;
+}
+.p,h1,h2,h3,h4,h5,h6,.protyle-title__input,.td{
+    transition: width 2s, height 3s;
+}
+
 .h1:hover,.h2:hover,.h3:hover,.h4:hover,.h5:hover,.h6:hover{/*h1~h6*/
     border-radius: 3.5px;
     background-color:rgba(204, 226, 156, 0.22);
@@ -982,14 +1011,12 @@ div.fn__flex-column.fn__flex-1{
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
     transform: scale(1.001);
     z-index: 1;/*修复备注弹窗层级,因为有transition*/
-    transition: width 2s, height 3s;
 }
 td:hover{/*表格中td标签*/
     border-radius: 3.5px;
     background-color:rgba(206, 226, 164, 0.102);
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
     transform: scale(1.001);
-    transition: width 2s, height 3s;
 
 }
 
@@ -1235,6 +1262,9 @@ span[data-type="a"]:hover{
     background-color: rgba(239, 242, 216, 0.788);
     box-shadow: 0px 0px 2px 0px rgba(4, 27, 21, 0.365) !important;
     border-bottom:0!important;
+
+    z-index: 0;
+
 }
 
 
@@ -1249,6 +1279,7 @@ span[data-type="a"]:hover{
     background-image: none !important;
     background-color: rgba(239, 242, 216, 0.788) !important; 
     border-bottom: 0px;
+
 }
 
 /* 代码块上方部分设置 */
@@ -2033,3 +2064,4 @@ div[data-key] .b3-dialog__container .fn__flex-column .b3-form__space--small {
 }
 
 /*---------ctrl+p窗口改造 end -------------*/
+
