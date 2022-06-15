@@ -431,13 +431,301 @@ function upSplitScreening(){
     trigger('mousedown', line, null);/**触发思源事件 */ 
 
 }
-
-
-
 	
 function trigger(type, element, detail){
     var customEvent=new CustomEvent(type, {detail: detail, bubbles: false, cancelable: true});
     element.dispatchEvent(customEvent);
+}
+
+
+
+/**调整文档,emj 标签，头图位置 */
+
+function adjustDocumentLabelsWhile(){
+    window.setInterval(adjustDocumentLabels,130);
+}
+
+function adjustDocumentLabels(){
+    
+    /**获取所有打开文档的标签区域 */
+    var Labels= document.querySelectorAll(".protyle-background__tags");
+    /*console.log(Labels);*/
+
+    for (let index = 0; index < Labels.length; index++) {
+        var item=Labels[index];
+
+        var Labelfater=getLabelfater(item);
+        var Icon=getIcon(item);
+        var TopSet=getTopSet(item);
+        var TopImgSet=getTopImgSet(item);
+
+        var emj=isEmj(item);
+        var labe=isLabel(item);
+        var img=isImg(item);
+
+        /**没有emj，没有标签，没有头图的情况 */
+        if((emj==false) && (labe==false) && (img==false)){
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="0px";
+            Labelfater.style.marginBottom="0px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+            item.style.height="auto";
+            item.style.marginTop="-50px";
+            item.style.marginBottom="0px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="none";
+            
+            TopSet.style.marginTop="80px";
+            TopImgSet.style.button="0px";
+
+        }
+
+        /**只有emj存在的情况 */
+        if((emj==true) && (labe==false) && (img==false)){
+            
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="0px";
+            Labelfater.style.marginBottom="10px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+            item.style.height="auto";
+            item.style.marginTop="30px";
+            item.style.marginBottom="0px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="block";
+            
+            TopSet.style.marginTop="42px";
+            TopImgSet.style.button="0px";
+
+            continue;
+        }
+
+        /**只有标签存在的情况下 */
+        if((emj==false) && (labe==true) && (img==false)){
+            
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="28px";
+            Labelfater.style.marginBottom="-80px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+
+            item.style.height="auto";
+            item.style.marginTop="0px";
+            item.style.marginBottom="0px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="none";
+            
+            TopSet.style.marginTop="-72px";
+            TopImgSet.style.button="0px";
+
+            continue;
+        }
+
+         /**只存在头图的的情况下*/
+         if((emj==false) && (labe==false) && (img==true)){
+            
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="24px";
+            Labelfater.style.marginBottom="0px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+            item.style.height="auto";
+            item.style.marginTop="-70px";
+            item.style.marginBottom="0px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="none";
+            
+            TopSet.style.marginTop="75px";
+            TopImgSet.style.top="246px";
+            TopImgSet.style.button="0px";
+
+
+
+            continue;
+        }
+
+        /**emj和标签同时存在的情况下 */
+        if((emj==true) && (labe==true) && (img==false)){
+           
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="28px";
+            Labelfater.style.marginBottom="10px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+
+            item.style.height="auto";
+            item.style.marginTop="0px";
+            item.style.marginBottom="10px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="block";
+            
+            TopSet.style.marginTop="37px";
+            TopImgSet.style.button="0px";
+
+                    
+            continue;
+        }
+        
+        
+          
+        /**只存在emj和头图的的情况下*/
+        if((emj==true) && (labe==false) && (img==true)){
+            
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="24px";
+            Labelfater.style.marginBottom="13px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+            item.style.height="auto";
+            item.style.marginTop="-50px";
+            item.style.marginBottom="0px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="block";
+            
+            TopSet.style.marginTop="45px";
+            TopImgSet.style.top="246px";
+            TopImgSet.style.button="0px";
+
+            continue;
+        }
+
+        /**只存在标签和头图的的情况下*/
+        if((emj==false) && (labe==true) && (img==true)){
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="24px";
+            Labelfater.style.marginBottom="0px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+            item.style.height="201px";
+            item.style.marginTop="-271px";
+            item.style.marginBottom="0px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="none";
+            
+            TopSet.style.marginTop="75px";
+            TopImgSet.style.top="246px";
+            TopImgSet.style.button="0px";
+            continue;
+
+        }
+        /**emj和头图 标签 都存在的的情况下*/
+        if((emj==true) && (labe==true) && (img==true)){
+            
+            Labelfater.style.height="auto";
+
+            Labelfater.style.marginTop="24px";
+            Labelfater.style.marginBottom="13px";
+            
+            Labelfater.style.paddingTop="0px";
+            Labelfater.style.paddingBottom="0px";
+
+            item.style.height="221px";
+            item.style.marginTop="-271px";
+            item.style.marginBottom="0px";
+
+            Icon.style.marginTop="0px";
+            Icon.style.marginBottom="0px";
+
+            Icon.children[0].style.display="block";
+            
+            TopSet.style.marginTop="45px";
+            TopImgSet.style.top="246px";
+            TopImgSet.style.button="0px";
+            continue;
+        }
+    }
+}
+
+/**判断是否设定emj */
+function isEmj(Label){
+    if(Label.nextElementSibling.children[0].className=="protyle-background__icon fn__none"){
+        return false
+    }
+    return true;
+}
+
+/**判断是否有标签 */
+function isLabel(Label){
+    if(Label.children.length==0){
+        return false
+    }
+    return true;
+}
+
+/**判断是否有头图 */
+function isImg(Label){
+    if(Label.previousElementSibling.children[0].className=="fn__none"){
+        return false
+    }
+    return true;
+}
+
+/**获得文档头区域元素 */
+function getLabelfater(Label){
+    return Label.parentElement;
+}
+
+/**获得文档头部设置元素 */
+function getTopSet(Label){
+    return Label.nextElementSibling.children[1];
+}
+
+/**获得文档标题元素 */
+function getTitle(Label){
+    return Label.parentElement.nextElementSibling;
+}
+
+/**获得头图设置元素 */
+function getTopImgSet(Label){
+    return Label.previousElementSibling.children[1];
+}
+
+/**获得emj所在元素 */
+function getIcon(Label){
+    return Label.nextElementSibling;
 }
 
 
@@ -462,9 +750,6 @@ function injectionCss (csstxt){
     styleElement.innerText=t;
     document.body.appendChild(styleElement);
 };
-
-
-
 
 /**
  * 向指定父级元素对象添加指定html标签并选择追加元素ID,
@@ -581,6 +866,14 @@ function getSiYuanToolbar() { return document.getElementById(SiYuanToolbarID); }
 function getHBuiderXToolbar() { return document.getElementById(HBuiderXToolbarID); }
 
 
+
+/**判断目前思源是否是手机模式 */
+function isPhone() { 
+    if(document.getElementById(SiYuanToolbarID)==null){
+        return true;
+    }    
+    return false; 
+}
 
 
 /**
@@ -869,18 +1162,26 @@ async function 解析响应体(response) {
 
 function Refresh() {
 
-    createHBuiderXToolbar();/*创建BuiderXToolbar*/
+    if(isPhone()){
+       
+        adjustDocumentLabelsWhile()/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
+        
+    }else{
 
-    createSidebarMouseHoverExpandButton();/*创建鼠标移动展开左右树面板按钮*/
+        createHBuiderXToolbar();/*创建BuiderXToolbar*/
 
-    createHighlightBecomesHidden();/*创建高亮变隐藏按钮 */
+        createSidebarMouseHoverExpandButton();/*创建鼠标移动展开左右树面板按钮*/
 
-    createQuickDropDownButton()/*创建快捷下分栏按钮 */
+        createHighlightBecomesHidden();/*创建高亮变隐藏按钮 */
 
-    loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
+        createQuickDropDownButton()/*创建快捷下分栏按钮 */
+
+        loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
   
-    setTimeout(()=>ClickMonitor(),3000);/*各种列表转xx */
+        setTimeout(()=>ClickMonitor(),3000);/*各种列表转xx */
 
-  
+        adjustDocumentLabelsWhile()/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
+    }
+
     console.log("==============>HBuilderX-Light:CSS,JS_已经执行<==============");
 }
