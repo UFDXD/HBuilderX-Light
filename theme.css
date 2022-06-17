@@ -662,11 +662,12 @@ div.protyle-title.protyle-wysiwyg--attr{
     margin-right: 26px !important;
 }
 
-
-/*聚焦或正文宽度*/
-div.protyle-content>[data-doc-type]{
+/*正文宽度*/
+div.protyle-content>[data-doc-type="NodeDocument"]
+{
     padding: 16px 26px 191.5px !important;
 }
+
 
 
 /*块滚动条*/
