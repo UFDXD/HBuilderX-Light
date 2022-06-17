@@ -4,12 +4,14 @@ const SiYuanToolbarID = "toolbar";
 const SidebarHoverButtonID = "sidebarHoverButton";
 const HighlightBecomesHiddenID="highlightBecomesHidden";
 const QuickDropDownID="quickDropDown";
+const FocusingOnAmplification="FocusingOnAmplification";
 
 var siYuanToolbar = null;
 var HBuiderXToolbar = null;
 var sidebarHoverButton = null;
 var highlightBecomesHiddenButton=null;
 var quickDropDownButton=null;
+var focusingOnAmplificationButton=null;
 
 
 
@@ -439,6 +441,64 @@ function trigger(type, element, detail){
 
 
 
+/**--------------------------聚焦正文放大200%-------------------- */
+
+function createFocusingOnAmplification(){
+
+    loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/focusingOnTheNormal.css", "focusing");
+
+    focusingOnAmplificationButton = addCreateElement(HBuiderXToolbar, "div", FocusingOnAmplification)
+    focusingOnAmplificationButton.setAttribute("title", "开启后处于聚焦状态下的正文字体将会放大200%。")
+
+    AddEvent(focusingOnAmplificationButton,"mousedown",focusingOnAmplificationButtonClickEven);/*为此按钮注册点击事件 */
+}
+
+var intervalId=null;
+
+function focusingOnAmplificationButtonClickEven(){
+    var obj = document.getElementById("focusing");
+    
+
+    if(obj.getAttribute("href")!="/appearance/themes/HBuilderX-Light/customizeStyle/focusingOnAmplification.css"){
+
+        obj.setAttribute("href","/appearance/themes/HBuilderX-Light/customizeStyle/focusingOnAmplification.css");
+        focusingOnAmplificationButton.style.backgroundImage = "url(/appearance/themes/HBuilderX-Light/src/D2.png)";
+
+        intervalId=setInterval(huifuNodeDocument,200);
+
+    }else{
+        obj.setAttribute("href","/appearance/themes/HBuilderX-Light/customizeStyle/focusingOnTheNormal.css");
+        focusingOnAmplificationButton.style.backgroundImage = "url(/appearance/themes/HBuilderX-Light/src/D1.png)";
+
+        clearInterval(intervalId);
+    }
+
+}
+
+function huifuNodeDocument(){
+    var dataDocType= document.querySelectorAll(".protyle-content>[data-doc-type]");
+
+    for (let index = 0; index < dataDocType.length; index++) {
+        const element = dataDocType[index];
+
+        var item=element.getAttribute("data-doc-type");
+
+        if(item=="NodeDocument"){
+            continue;
+        }else if(item==element.children[0].getAttribute("data-type")){
+            
+            if(element.parentElement.parentElement.className=="block__edit fn__flex-1 protyle"){
+                element.setAttribute("data-doc-type","NodeDocument");
+            }
+            continue;
+        }else{
+            element.setAttribute("data-doc-type","NodeDocument");
+        }
+    }
+}
+
+
+
 /**调整文档,emj 标签，头图位置 */
 
 function adjustDocumentLabelsWhile(){
@@ -727,6 +787,141 @@ function getTopImgSet(Label){
 function getIcon(Label){
     return Label.nextElementSibling;
 }
+
+
+
+/**-------------------------------选中文字计数-------------------------------------*/
+
+function getTXTSum(){
+    setInterval(gettxt,100);/**块级计数 */
+
+    AddEvent(document.body,"mousedown",gettxtMouseDown);
+    AddEvent(document.body,"mouseup",gettxtMouseUp);
+
+
+}
+
+/**鼠标选中的字数，显示在标题栏 */
+var dragTxt=null;
+var drag=null;
+function gettxtMouseDown(){
+
+    AddEvent(document.body,"mousemove",gettxtMouseMove)
+}
+
+var flag=false;
+function gettxtMouseMove(){
+    
+    if(flag==false){
+        drag=document.getElementById("drag");
+        dragTxt= drag.innerText;
+        flag=true;
+    }
+    
+    var txt = window.getSelection?window.getSelection():document.selection.createRange().text;
+    var sun=iGettxtSun(txt);
+    
+    if(sun<=0){
+        return;
+    }
+
+    drag.innerText="划选字数："+sun;
+}
+
+function gettxtMouseUp(){
+    myRemoveEvent(document.body,"mousemove",gettxtMouseMove)
+    
+    flag=false;
+    
+    if(dragTxt!=null){
+        drag.innerText=dragTxt;
+        dragTxt=null;
+    }
+}
+
+
+
+
+//获取鼠标选中的文字字数,显示在工具栏
+var sz=null;
+var protyleToolbar=null;
+function gettxt()
+{
+    var txt = window.getSelection?window.getSelection():document.selection.createRange().text;
+    var sun=iGettxtSun(txt);
+    var protyleToolbars=document.querySelectorAll(".protyle-toolbar");
+
+    if(sz!=null&&protyleToolbar!=null){
+        if(sz[0]!=null)protyleToolbar.removeChild(sz[0]);
+        if(sz[1]!=null)protyleToolbar.removeChild(sz[1]);
+        sz=null;
+        protyleToolbar=null;
+       }
+
+    for (let index = 0; index < protyleToolbars.length; index++) {
+        const element = protyleToolbars[index];
+        if(element.className=="protyle-toolbar"){
+            protyleToolbar=element;
+            break;
+        }
+    }
+    
+    if(protyleToolbar==null){
+        return;
+    }
+
+    if(sun<=0){
+        return;
+    }
+    sz= CreateTxtSumElement(protyleToolbar);
+
+    sz[1].innerText="选中字数："+sun+" ";
+}
+
+/** 创建工具栏显示元素*/
+function CreateTxtSumElement(inser){
+
+    var divIder= addCreateElement(inser,"div");
+    divIder.setAttribute("class","protyle-toolbar__divider");
+
+    var txtSunElement=addCreateElement(inser,"span");
+    txtSunElement.style.display="block";
+    txtSunElement.style.paddingRight="10px";
+    txtSunElement.style.lineHeight="29px";
+    txtSunElement.style.fontSize="110%";
+    txtSunElement.style.fontWeight="bold";
+
+    return [divIder,txtSunElement]
+}
+
+
+/**去除空格换行 */
+function iGettxtSun(text) {
+    var resultStr = text.toString()
+    if(resultStr.length==0){
+        return 0;
+    }else{
+        resultStr= resultStr.replace(/[\'\"\\\/\b\f\n\r\t]/g, ''); //去掉空格
+        var newStr = "";
+        for (var i = 0; i < resultStr.length; i++) {
+            if (resultStr[i] !="​") {
+                newStr += resultStr[i];
+            }
+        };
+        return newStr.length;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1175,6 +1370,11 @@ function Refresh() {
         createHighlightBecomesHidden();/*创建高亮变隐藏按钮 */
 
         createQuickDropDownButton()/*创建快捷下分栏按钮 */
+
+        createFocusingOnAmplification()/**聚焦放大 */
+
+        getTXTSum()/**选中文字计数 */
+
 
         loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
   
