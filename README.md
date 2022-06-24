@@ -1,6 +1,7 @@
 # HBuilderX-Light 思源自用主题
 
-本主题借鉴HBuilder软件配色，借鉴Roy、UserZYF作者主题css代码，使用了链滴id：abbj的ctrl+p窗口改造，感谢以上。
+本主题借鉴HBuilder软件配色，借鉴Roy、UserZYF作者主题css代码，使用了链滴id：abbj的ctrl+p窗口改造，使用了langzhou大佬的行内批注。
+感谢以上。
 
 目的是打造成一个自己使用没问题的“柔和护眼”主题。
 
