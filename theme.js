@@ -793,7 +793,7 @@ function getIcon(Label){
 /**-------------------------------选中文字计数-------------------------------------*/
 
 function getTXTSum(){
-    setInterval(gettxt,100);/**块级计数 */
+    setInterval(gettxt,300);/**块级计数 */
 
     AddEvent(document.body,"mousedown",gettxtMouseDown);
     AddEvent(document.body,"mouseup",gettxtMouseUp);
@@ -840,43 +840,45 @@ function gettxtMouseUp(){
 }
 
 
-
-
 //获取鼠标选中的文字字数,显示在工具栏
-var sz=null;
-var protyleToolbar=null;
 function gettxt()
 {
+    CreateAcountSelectElement();
+
     var txt = window.getSelection?window.getSelection():document.selection.createRange().text;
     var sun=iGettxtSun(txt);
-    var protyleToolbars=document.querySelectorAll(".protyle-toolbar");
 
-    if(sz!=null&&protyleToolbar!=null){
-        if(sz[0]!=null)protyleToolbar.removeChild(sz[0]);
-        if(sz[1]!=null)protyleToolbar.removeChild(sz[1]);
-        sz=null;
-        protyleToolbar=null;
-       }
-
-    for (let index = 0; index < protyleToolbars.length; index++) {
-        const element = protyleToolbars[index];
-        if(element.className=="protyle-toolbar"){
-            protyleToolbar=element;
-            break;
-        }
-    }
-    
-    if(protyleToolbar==null){
-        return;
-    }
 
     if(sun<=0){
         return;
     }
-    sz= CreateTxtSumElement(protyleToolbar);
 
-    sz[1].innerText="选中字数："+sun+" ";
+    var txtSuns=document.querySelectorAll(".protyle-toolbar>[data-type='txtSun']");
+
+    for (let index = 0; index < txtSuns.length; index++) {
+        const element = txtSuns[index];
+        element.innerText=sun;
+    }
 }
+
+
+/**为每个文档选择工具栏创建计数选择元素 */
+function CreateAcountSelectElement(){
+    /**获得所有打开文档为激活工具栏 */
+    var protyleToolbars=document.querySelectorAll("div.protyle-toolbar.fn__none");
+
+    /**没有标记就创建 */
+    for (let index = 0; index < protyleToolbars.length; index++) {
+        const element = protyleToolbars[index];
+        
+        if(element.getAttribute("count")==null){
+            element.setAttribute("count",true);
+            CreateTxtSumElement(element);
+        }
+    }
+}
+
+
 
 /** 创建工具栏显示元素*/
 function CreateTxtSumElement(inser){
@@ -884,14 +886,14 @@ function CreateTxtSumElement(inser){
     var divIder= addCreateElement(inser,"div");
     divIder.setAttribute("class","protyle-toolbar__divider");
 
-    var txtSunElement=addCreateElement(inser,"span");
-    txtSunElement.style.display="block";
+    var txtSunElement=addCreateElement(inser,"div");
+    txtSunElement.setAttribute("class","protyle-toolbar__item b3-tooltips b3-tooltips__n");
+    txtSunElement.setAttribute("data-type","txtSun");
+    txtSunElement.setAttribute("aria-label","选中字数");
     txtSunElement.style.paddingRight="10px";
     txtSunElement.style.lineHeight="29px";
     txtSunElement.style.fontSize="110%";
     txtSunElement.style.fontWeight="bold";
-
-    return [divIder,txtSunElement]
 }
 
 
@@ -1062,7 +1064,7 @@ function getHBuiderXToolbar() { return document.getElementById(HBuiderXToolbarID
 
 
 
-/**判断目前思源是否是手机模式 */
+/**简单判断目前思源是否是手机模式 */
 function isPhone() { 
     if(document.getElementById(SiYuanToolbarID)==null){
         return true;
@@ -1138,6 +1140,37 @@ async function 解析响应体(response) {
       
 
 
+
+
+
+  /***js form Morgan***/
+  /*****************************评论功能 From langzhou**********************************/
+  function inject(){
+    //获取当前主题名称
+    let themeStyle = document.querySelector('#themeStyle')
+    if(themeStyle){
+      let url = themeStyle.getAttribute('href').split('/')
+      let theme = url[url.length - 2]
+      if(!theme){
+        alert("未能获取到主题名称")
+      }else{
+        let script = document.querySelector('#emojiScript')
+        if(script){
+          let js = document.createElement('script')
+              js.setAttribute('src','./appearance/themes/' + theme + '/comment/index.js')
+              js.setAttribute('type','module')
+              js.setAttribute('defer','defer')
+          document.head.insertBefore(js,script)
+        }else{
+          setTimeout(()=>inject(),500)
+        }
+      }
+    }else{
+      setTimeout(()=>inject(),500)
+    }
+  }
+  inject()
+  
 
 
 
