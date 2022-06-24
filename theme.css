@@ -247,6 +247,8 @@ input[placeholder="Enter 搜索"]{
     color: rgb(101, 168, 99);
 }
 
+
+
 /*-----------------------------------------------软件标题栏--------------*/
 
 #toolbar{/*给软件头栏加上下边框*/
@@ -342,45 +344,43 @@ div.fn__flex-column.fn__flex-shrink{
 
 /*-------------------------------------------大纲面板区域--------------------------*/
 
-.file-tree ul.b3-list.b3-list--background [data-subtype="h1"] svg.b3-list-item__graphic{
+.file-tree ul.b3-list.b3-list--background [data-subtype] svg.b3-list-item__graphic{
     width: 1.1em;
     height: 1.1em;
-    color:rgb(244, 144, 12);
+    color:rgb(191,136,3);
+    margin-left: 0px;
+    margin-right: 2px;
+}
+
+div[title]>.b3-list-item__graphic{
+}
+
+.file-tree ul.b3-list.b3-list--background [data-subtype="h1"] svg.b3-list-item__graphic{
+    
 }
 
 .file-tree ul.b3-list.b3-list--background [data-subtype="h2"] svg.b3-list-item__graphic {
-    width: 1.1em;
-    height: 1.1em;
-    color:rgb(244, 144, 12);
 
 }
 
 .file-tree ul.b3-list.b3-list--background [data-subtype="h3"] svg.b3-list-item__graphic{
-    width: 1.1em;
-    height: 1.1em;
-    color:rgb(244, 144, 12);
+
 }
 
 .file-tree ul.b3-list.b3-list--background [data-subtype="h4"] svg.b3-list-item__graphic{
-    width: 1.1em;
-    height: 1.1em;
-    color:rgb(244, 144, 12);
+
 }
 
 .file-tree ul.b3-list.b3-list--background [data-subtype="h5"] svg.b3-list-item__graphic{
-    width: 1.1em;
-    height: 1.1em;
-    color:rgb(244, 144, 12);
+
 }
 
 .file-tree ul.b3-list.b3-list--background [data-subtype="h6"] svg.b3-list-item__graphic{
-    width: 1.1em;
-    height: 1.1em;
-    color:rgb(244, 144, 12);
+
 }
-/*大纲树标题下缩进去除，获得更大的可视空间*/
+
 .sy__outline>.fn__flex-1>.b3-list--background{
-    margin-left: -12px;
+    margin-left: 5px;
 }
 
 
@@ -425,17 +425,21 @@ span[aria-label="新建文档"]:hover{
 
 .b3-list-item__text {/*文档树字体颜色*/
     color: rgb(70, 67, 60);
-    font-size: 109%;/*字体放大一点，在整体界面缩小的时候，文档树和大纲可以看得更清楚点*/
+    font-size: 108.5%;/*字体放大一点，在整体界面缩小的时候，文档树和大纲可以看得更清楚点*/
 }
 
 .b3-list-item__icon svg, /*文档树emjio图标样式*/
 .b3-list-item__icon img {
     height: 18px;
     width: 18px;
-    position: relative;
-    left: -2px;
-    color:rgb(193, 167, 102);
+    margin-left: -3px;
+    margin-right: -1px;
 }
+
+/*文档树修改emj，hover*/
+.b3-list-item__icon:hover{
+    background-color: transparent !important;
+} 
 
 /* 文件树拖拽增强 */
 .file-tree .dragover__bottom {
@@ -443,6 +447,10 @@ span[aria-label="新建文档"]:hover{
 }
 .file-tree .dragover__top {
     box-shadow: 0 -2px 0 rgba(101,168,99),inset 0px 2px 0 rgba(101,168,99);
+}
+
+.b3-list-item.b3-list-item--hide-action .b3-list-item__toggle.fn__hidden {
+
 }
 
 /*--------------------------------------------关闭笔记本笔记本归档区域---------------*/
@@ -506,6 +514,7 @@ ul.fn__flex.layout-tab-bar{
     font-size: 16px ;
     background-color:  rgb(218, 234, 206) !important;
 }
+
 
 /*钉住页签*/
 li.item.item--pin{
@@ -728,10 +737,10 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
 }
 
 /*鼠标选中弹出的工具栏样式*/
-
 .protyle-toolbar {
     background-color:rgb(255, 253, 245);
     box-shadow: var(--b3-dialog-shadow);
+    z-index: 99;
     transform: scale(1.05);
 }
 
@@ -895,6 +904,10 @@ div.fn__flex-column.fn__flex-1{
 
 /*——————————————————别名，命名，备注提示*/
 
+/*块别名，命名，备注提示容器*/
+.protyle-attr{
+    background-color: rgba(240, 248, 255, 0.418);
+}
 
 /*别名*/
 .protyle-attr--alias{
@@ -902,9 +915,9 @@ div.fn__flex-column.fn__flex-1{
 }
 .protyle-attr--alias::before{
     display: inline-block;
-    content: "↗别名：";
+    content: "+别名：";
     border-radius: 15px;
-    color: rgb(101, 146, 102);
+    color: rgb(35,119,34);
     font-size: 13px;
     font-weight: bolder; 
 }
@@ -914,9 +927,9 @@ div.fn__flex-column.fn__flex-1{
 }
 .protyle-attr--bookmark::before{
     display: inline-block;
-    content: "↗书签：";
+    content: "+书签：";
     border-radius: 15px;
-    color: rgb(101, 146, 102);
+    color: rgb(35,119,34);
     font-size: 13px;
     font-weight: bolder; 
 }
@@ -927,15 +940,16 @@ div.fn__flex-column.fn__flex-1{
 }
 .protyle-attr--name::before{
     display: inline-block;
-    content: "↗命名：";
+    content: "+命名：";
     border-radius: 15px;
-    color: rgb(101, 146, 102);
+    color: rgb(35,119,34);
     font-size: 13px;
     font-weight: bolder; 
 }
 
 .protyle-attr--memo>svg,.protyle-attr--name>svg,.protyle-attr--alias>svg{
-    color: rgba(101, 168, 99, 0);
+    width: 0px !important;
+    height: 0px !important;
     /*animation: breathLamp 0.5s alternate infinite;*/
 }
 
@@ -947,17 +961,22 @@ div.fn__flex-column.fn__flex-1{
       opacity:1;
     }
   }
-
 /*备注*/
+.protyle-attr>.b3-tooltips{
+    min-width: 45px !important;
+    margin-left: -5px!important;
+
+}
+  /*备注伪元素*/
 .protyle-attr>.b3-tooltips::before{
     display: block;
     position: static;
-    border:none !important;
     width: 45px;
+    border:none !important;
     margin-right: 0;
-    content: "↗备注";
+    content: "+备注";
     text-align:right;
-    color: rgb(101, 146, 102);
+    color: rgb(35,119,34);
     font-size: 13px;
     font-weight: bolder; 
     opacity:1;
@@ -986,7 +1005,7 @@ div.fn__flex-column.fn__flex-1{
 /* 块标移动增加过渡 */
 .protyle-gutters{
     z-index: 3;
-    transition: all 500ms ease-out;
+    transition: all 200ms ease-out;
 }
 .p,h1,h2,h3,h4,h5,h6,.protyle-title__input,.td{
     transition: width 2s, height 3s;
@@ -1210,7 +1229,6 @@ div [data-type="img"]{
 span[data-type="a"]:hover{
     padding-bottom:1px ;
 }
-
 
 /*思源引用*/
 .protyle-wysiwyg [data-node-id] span[data-type="block-ref"]{
@@ -1519,7 +1537,7 @@ table tr:hover {
     margin-top: -6px;
     border-top:10px solid;
     border-left:5px solid;
-    border-right:5px solid;
+    border-right:8px solid;
     border-bottom:0px solid;
     border-color:rgba(101, 168, 99, 0.478) transparent transparent  transparent;
 }
@@ -1564,7 +1582,6 @@ table tr:hover {
 }
 
 
-
 /* 任务列表 */
 .protyle-task--done{
     color:  rgb(194, 178, 127);
@@ -1582,7 +1599,14 @@ table tr:hover {
 	display:none;
 }
 
-
+/*列表和列表子项缩进*/
+div[data-type="NodeListItem"]{
+    margin-left: -10px !important;
+}
+/*列表缩进复位*/
+div[data-type="NodeList"]{
+    margin-left: 10px !important;
+}
 
 /* PDF */
 .textLayer,
