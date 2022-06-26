@@ -1,3 +1,5 @@
+/*目标：能看就行*/
+
 :root {
     /* 主色 */
     --b3-theme-primary: rgb(121, 187, 138);/*左右边栏面板激活图标颜色-块进度条圆点颜色*/
@@ -202,8 +204,8 @@ li[data-type="toggle"]{
 }
 /*设置软件边框*/
 body.body--win32 {
-    border-top: 1px solid rgb(216, 202, 158) ;
-    border-bottom: 1px solid rgb(216, 202, 158) ;
+    border-top: none;
+    border-bottom: none;
     border-left: none;
     border-right: none;
 }
@@ -253,6 +255,7 @@ input[placeholder="Enter 搜索"]{
 
 #toolbar{/*给软件头栏加上下边框*/
     height: 22px;
+    border-top: 1px solid rgb(239,231,204);
     border-bottom: 1px solid rgba(216, 202, 158, 0.412) !important;/*边框实现*/
     border-right:1px solid rgba(216, 202, 158, 0.412) ;
     border-left:1px solid rgba(216, 202, 158, 0.412) ;
@@ -261,14 +264,50 @@ input[placeholder="Enter 搜索"]{
 
 /*标题栏信息文字*/
 #drag{
-    line-height: 19px ;
+    line-height: 19px;
 }
 
-
+/*订阅标志*/
+/*#toolbarVIP>div>svg{
+    animation: breathLamp 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+@keyframes breathLamp{
+    
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.01);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+  }
+*/
 /*缩小窗口,最大窗口按钮*/
 #minWindow:hover,#maxWindow:hover{
     border: none !important;
     background-color: transparent !important;
+}
+/*底栏*/
+#status{
+    border-top: 1px solid rgb(238,230,206);
+    border-left:1px solid rgba(216, 202, 158, 0.412);
+    border-right: 1px solid rgba(216, 202, 158, 0.412);
+    border-bottom:1px solid rgb(239,231,204);
+    background-color: rgb(253,250,239);
+}
+/*底栏图标*/
+#barDock>svg,#barSync>svg,#barLock>svg,#barDebug>svg,#barHelp>svg{
+    color: rgb(47,107,45);
+}
+#barDock>svg:hover,#barSync>svg:hover,#barLock>svg:hover,#barDebug>svg:hover,#barHelp>svg:hover{
+    color: rgb(95,99,104);
 }
 
 
@@ -629,8 +668,6 @@ button.b3-tooltips.b3-tooltips__w.block__icon{
     height: 271px !important;
 }
 
-div.protyle-content{
-}
 
 div.protyle-content>.protyle-background{
     min-height: 0px !important;
@@ -664,12 +701,18 @@ svg[data-type="remove-tag"]{
     margin-left: 26px !important;
 }
 
-/*文档内标题距离左边距的距离*/
+/*文档内标题块距离左边距的距离*/
 div.protyle-title.protyle-wysiwyg--attr{
     margin-top: 0px !important;
     margin-left: 26px !important;
     margin-right: 26px !important;
 }
+
+/*文档标题输入框*/
+.protyle-title__input{
+
+}
+
 
 /*正文宽度*/
 div.protyle-content>[data-doc-type="NodeDocument"]
@@ -869,6 +912,11 @@ div.fn__flex-column.fn__flex-1{
 	overflow-x:hidden !important;
 }
 
+/*禁止搜索类面板搜索历史列表出现横滚动条*/
+#searchHistoryList{
+	overflow-x:hidden !important;
+}
+
 
 /*————————————————————图片——————————————————————————————————*/
 /*这些图片不知道是否有版权所以发布的主题时不用，自己删掉注释启用*/
@@ -953,14 +1001,7 @@ div.fn__flex-column.fn__flex-1{
     /*animation: breathLamp 0.5s alternate infinite;*/
 }
 
-@keyframes breathLamp{
-    0%{
-      opacity:.2;
-    }
-    100%{
-      opacity:1;
-    }
-  }
+
 /*备注*/
 .protyle-attr>.b3-tooltips{
     min-width: 45px !important;
@@ -1007,23 +1048,27 @@ div.fn__flex-column.fn__flex-1{
     z-index: 3;
     transition: all 200ms ease-out;
 }
+
 .p,h1,h2,h3,h4,h5,h6,.protyle-title__input,.td{
     transition: width 2s, height 3s;
 }
 
-.h1:hover,.h2:hover,.h3:hover,.h4:hover,.h5:hover,.h6:hover{/*h1~h6*/
+
+/*.h1:hover,.h2:hover,.h3:hover,.h4:hover,.h5:hover,.h6:hover{
     border-radius: 3.5px;
     background-color:rgba(204, 226, 156, 0.22);
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
     transform: scale(1.002);
-}
-.protyle-title__input:hover{/*文档中的编辑标题*/
+}*/
+
+/*文档中的编辑标题*/
+/*.protyle-title__input:hover{
     border-radius: 3.5px;
     background-color:rgba(204, 226, 156, 0.22) !important;
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
     transform: scale(1.002);
 
-}
+}*/
 
 .p:hover{/*所有的p标签*/
     border-radius: 3.5px;
@@ -1293,6 +1338,7 @@ span[data-type="a"]:hover{
     padding-top: 4px !important;
     padding-bottom: 4px !important;
     padding-left: 16px;
+    font-size:0.8em;
     font-family: var(--b3-font-family-code);
     background-size: 20px 20px;
     background-image: none !important;
@@ -1367,6 +1413,7 @@ div[data-type="NodeCodeBlock"]>.protyle-action{
     background-color: transparent;
     padding-bottom: 0px;
     margin-bottom: 0px;
+    font-size:0.8em;
     font-family: var(--b3-font-family-code);
     border-top-left-radius: 4px;
 }
@@ -1497,6 +1544,7 @@ th, td {
     border: 0.1em solid var(--b3-table-border-color) !important;
     border-collapse: collapse;
     color: inherit;
+    font-size: 80% ;
     background-color: rgba(252, 248, 237, 0.412);
 
 }
