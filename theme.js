@@ -1,3 +1,5 @@
+/**目标：能跑就行 */
+
 const HBuiderXToolbarID = "HBuiderXToolbar";
 const SiYuanToolbarID = "toolbar";
 
@@ -39,14 +41,14 @@ function createHBuiderXToolbar() {
     var windowControls = document.getElementById("windowControls");
 
     if (HBuiderXToolbar) siYuanToolbar.removeChild(HBuiderXToolbar);
-    HBuiderXToolbar = insertCreateBeforeElement(siYuanToolbar, "div", windowControls, HBuiderXToolbarID);
+    HBuiderXToolbar = insertCreateBefore(windowControls, "div", HBuiderXToolbarID);
 }
 
 
 /**------------------边栏鼠标悬浮展开按钮-----------------*/
 /*创建边栏鼠标悬浮展开按钮*/
 function createSidebarMouseHoverExpandButton() {
-    sidebarHoverButton = addCreateElement(HBuiderXToolbar, "div", SidebarHoverButtonID)
+    sidebarHoverButton = addinsertCreateElement(HBuiderXToolbar, "div", SidebarHoverButtonID)
     sidebarHoverButton.setAttribute("title", "开启后左右面板自动关闭，鼠标贴边自动展开,鼠标移动编辑区域左右上角触发关闭。");
     addSidebarHoverButtonEven(sidebarHoverButtonImplementEven);/*为此按钮注册点击事件 */
 }
@@ -103,10 +105,10 @@ function sidebarHoverButtonImplementEven() {
 
 /*在左右面板打开鼠标触发块*/
 function createHoverBlock() {
-    LeftHoverBlock = addCreateElement(HBuiderXToolbar, "div", "LeftHoverBlock");
+    LeftHoverBlock = addinsertCreateElement(HBuiderXToolbar, "div", "LeftHoverBlock");
     LeftHoverBlock.setAttribute("display", "block");
 
-    RightHoverBlock = addCreateElement(HBuiderXToolbar, "div", "RightHoverBlock");
+    RightHoverBlock = addinsertCreateElement(HBuiderXToolbar, "div", "RightHoverBlock");
     RightHoverBlock.setAttribute("display", "block");
 }
 
@@ -230,7 +232,7 @@ function createHighlightBecomesHidden(){
 
     loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/highlight-Mark.css", "markCss");
 
-    highlightBecomesHiddenButton = addCreateElement(HBuiderXToolbar, "div", HighlightBecomesHiddenID)
+    highlightBecomesHiddenButton = addinsertCreateElement(HBuiderXToolbar, "div", HighlightBecomesHiddenID)
     highlightBecomesHiddenButton.setAttribute("title", "开启后CTRL+E 高亮文本变隐藏文本，鼠标移上去才会显示。")
 
     AddEvent(highlightBecomesHiddenButton,"mousedown",highlightBecomesHiddenButtonClickEven);/*为此按钮注册点击事件 */
@@ -268,7 +270,7 @@ var dowm=null;
 var updowm=[];
 
 function createQuickDropDownButton(){
-    quickDropDownButton = addCreateElement(HBuiderXToolbar, "div", QuickDropDownID)
+    quickDropDownButton = addinsertCreateElement(HBuiderXToolbar, "div", QuickDropDownID)
     quickDropDownButton.setAttribute("title", 
     "开启后双击下分栏任意标签下分栏可以占满上屏幕，再双击标签回到原位。")
 
@@ -447,7 +449,7 @@ function createFocusingOnAmplification(){
 
     loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/focusingOnTheNormal.css", "focusing");
 
-    focusingOnAmplificationButton = addCreateElement(HBuiderXToolbar, "div", FocusingOnAmplification)
+    focusingOnAmplificationButton = addinsertCreateElement(HBuiderXToolbar, "div", FocusingOnAmplification)
     focusingOnAmplificationButton.setAttribute("title", "开启后处于聚焦状态下的正文字体将会放大200%。")
 
     AddEvent(focusingOnAmplificationButton,"mousedown",focusingOnAmplificationButtonClickEven);/*为此按钮注册点击事件 */
@@ -797,8 +799,6 @@ function getTXTSum(){
 
     AddEvent(document.body,"mousedown",gettxtMouseDown);
     AddEvent(document.body,"mouseup",gettxtMouseUp);
-
-
 }
 
 /**鼠标选中的字数，显示在标题栏 */
@@ -848,7 +848,6 @@ function gettxt()
     var txt = window.getSelection?window.getSelection():document.selection.createRange().text;
     var sun=iGettxtSun(txt);
 
-
     if(sun<=0){
         return;
     }
@@ -883,10 +882,10 @@ function CreateAcountSelectElement(){
 /** 创建工具栏显示元素*/
 function CreateTxtSumElement(inser){
 
-    var divIder= addCreateElement(inser,"div");
+    var divIder= addinsertCreateElement(inser,"div");
     divIder.setAttribute("class","protyle-toolbar__divider");
 
-    var txtSunElement=addCreateElement(inser,"div");
+    var txtSunElement=addinsertCreateElement(inser,"div");
     txtSunElement.setAttribute("class","protyle-toolbar__item b3-tooltips b3-tooltips__n");
     txtSunElement.setAttribute("data-type","txtSun");
     txtSunElement.setAttribute("aria-label","选中字数");
@@ -915,8 +914,154 @@ function iGettxtSun(text) {
 }
 
 
+/**------------------为文档标题创建动态下划线--------------------------- */
+
+function rundynamicUnderline(){
+    setInterval(dynamicUnderline,200);
+}
+
+function dynamicUnderline(){
+    var AllDocumentTitleElement= getAllDocumentTitleElement();
+    
+    for (let index = 0; index < AllDocumentTitleElement.length; index++) {
+        const element = AllDocumentTitleElement[index];
+        
+        var line=createLine(element);
+        var txt=getTileTxt(element);
+        var maxWidth=element.offsetWidth;
+
+        var Style=getComputedStyle(element,null);
+        var font=Style.font;
+        
+        var width=getTextWidth(txt,font)+58;
+
+        if(width<288){
+            width=288;
+        }
+        
+        if(width>maxWidth){
+            width=maxWidth;
+        }
+
+        line.style.width=width+"px";
+    }
+}
 
 
+function createLine(TitleElement){
+
+    var item=TitleElement.parentElement.children;
+
+    for (let index = 0; index < item.length; index++) {
+        const element = item[index];
+        
+        if(element.getAttribute("Line")!=null){
+          return element;
+        }
+    }
+
+    var line= insertCreateAfter(TitleElement,"div");
+    line.setAttribute("Line","true");
+    line.style.height="1px";
+    line.style.marginTop="-2px";
+    line.style.marginBottom="7px";
+    line.style.backgroundColor="#F4ECD3";
+    return line;
+}
+
+
+function getTileTxt(TitleElement){
+    return TitleElement.innerText;
+}
+
+
+function getTextWidth(text, font) {
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d"); 
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
+  }
+
+
+
+
+/**------------------为打开文档的标题下显示文档创建日期------------- */
+
+function showDocumentCreationDate(){
+
+    setInterval(DocumentCreationDate,300);/**块级计数 */
+}
+
+
+function DocumentCreationDate(){
+ 
+    var allDocumentTitleElement=getAllDocumentTitleElement();
+
+    for (let index = 0; index < allDocumentTitleElement.length; index++) {
+        const element = allDocumentTitleElement[index];
+        
+        var documentCreatTimeElement=creatTimeSpanElement(element.parentElement);
+        
+        var spanTxt=documentCreatTimeElement.innerText;
+
+        if(spanTxt==""|| spanTxt=="日期取中……"){
+            var documentCreatTimeTxt=getDocumentTime(element);
+            documentCreatTimeElement.innerText=documentCreatTimeTxt;
+        }
+    }
+}
+
+
+/**获取所有打开文档的标题元素 */
+function getAllDocumentTitleElement(){
+    return document.querySelectorAll(".protyle-title__input");
+}
+
+/**为文档标题元素下创建时间容器元素 */
+function creatTimeSpanElement(tilteElement){
+
+    var item=tilteElement.children;
+
+    for (let index = 0; index < item.length; index++) {
+        const element = item[index];
+        
+        if(element.getAttribute("documentCreatTimeElement")!=null){
+          return element;
+        }
+    }
+
+    var documentCreatTimeElement= addinsertCreateElement(tilteElement,"span");
+    documentCreatTimeElement.setAttribute("documentCreatTimeElement","true");
+    documentCreatTimeElement.style.display="block";
+
+    documentCreatTimeElement.style.marginLeft="7px";
+    documentCreatTimeElement.style.marginBottom="0px";
+
+    documentCreatTimeElement.style.fontSize="61%";
+    documentCreatTimeElement.style.color="#767676";
+
+    return documentCreatTimeElement;
+}
+
+
+/**获得这个文档的创建时间 */
+function getDocumentTime(tilteElement){
+    var tS=tilteElement.parentElement.previousElementSibling.getAttribute("data-node-id");
+
+    if(tS==null){
+        return "日期取中……";
+    }
+    var year=tS.substring(0,4);
+    var moon=tS.substring(4,6);
+    var day=tS.substring(6,8);
+    var hour=tS.substring(8,10);
+    var minute=tS.substring(10,12);
+    var second=tS.substring(12,14);
+
+  return year+"-"+moon+"-"+day+" . "+hour+":"+minute+":"+second;
+    /*return year+"年"+moon+"月"+day+"日"+hour+"时"+minute+"分"+second+"秒";*/
+}
 
 
 
@@ -949,17 +1094,17 @@ function injectionCss (csstxt){
 };
 
 /**
- * 向指定父级元素对象添加指定html标签并选择追加元素ID,
+ * 向指定父级创建追加一个子元素，并可选添加ID,
  * @param {Element} fatherElement 
- * @param {string} addElement 
+ * @param {string} addElementTxt 要创建添加的元素标签
  * @param {string} setId 
  * @returns addElementObject
  */
-function addCreateElement(fatherElement, addElement, setId = null) {
+function addinsertCreateElement(fatherElement, addElementTxt, setId = null) {
     if (!fatherElement) console.error("指定元素对象不存在！");
-    if (!addElement) console.error("未指定字符串！");
+    if (!addElementTxt) console.error("未指定字符串！");
 
-    var element = document.createElement(addElement);
+    var element = document.createElement(addElementTxt);
 
     if (setId) element.id = setId;
 
@@ -970,22 +1115,50 @@ function addCreateElement(fatherElement, addElement, setId = null) {
 
 
 /**
- * 向指定父级指定对象前创建并插入元素并选择追加元素ID,
- * @param {Element} fatherElement 
- * @param {string} creatInsertElement 
- * @param {Element} beforeElement
- * @param {string} setId 
- * @returns addElementObject
+ * 向指定元素后创建插入一个元素，可选添加ID
+ * @param {*} targetElement 目标元素
+ * @param {*} addElementTxt 要创建添加的元素标签
+ * @param {*} setId 为创建元素设置ID
  */
-function insertCreateBeforeElement(fatherElement, creatInsertElement, beforeElement, setId = null) {
-    if (!fatherElement) console.error("指定元素对象不存在！");
-    if (!creatInsertElement) console.error("未指定字符串！");
+function insertCreateAfter(targetElement,addElementTxt,setId = null){
 
-    var element = document.createElement(creatInsertElement);
+    if (!targetElement) console.error("指定元素对象不存在！");
+    if (!addElementTxt) console.error("未指定字符串！");
+
+    var element = document.createElement(addElementTxt);
 
     if (setId) element.id = setId;
 
-    fatherElement.insertBefore(element, beforeElement);
+    var parent = targetElement.parentNode;//得到父节点
+    if (parent.lastChild === targetElement) {
+        //如果最后一个子节点是当前元素那么直接添加即可
+        parent.appendChild(element);
+
+        return element;
+    }else{
+        parent.insertBefore(element,targetElement.nextSibling);//否则，当前节点的下一个节点之前添加
+
+        return element;
+    }
+}
+
+
+/**
+ * 向指定元素前创建插入一个元素，可选添加ID
+ * @param {*} targetElement 目标元素
+ * @param {*} addElementTxt 要创建添加的元素标签
+ * @param {*} setId 为创建元素设置ID
+ */
+ function insertCreateBefore(targetElement,addElementTxt,setId = null){
+
+    if (!targetElement) console.error("指定元素对象不存在！");
+    if (!addElementTxt) console.error("未指定字符串！");
+
+    var element = document.createElement(addElementTxt);
+
+    if (setId) element.id = setId;
+
+    targetElement.parentElement.insertBefore(element, targetElement);
 
     return element;
 }
@@ -1392,29 +1565,41 @@ function Refresh() {
 
     if(isPhone()){
        
-        adjustDocumentLabelsWhile()/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
+        setTimeout(()=>{
+            adjustDocumentLabelsWhile()/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
+
+        },1000)
         
     }else{
 
-        createHBuiderXToolbar();/*创建BuiderXToolbar*/
+        setTimeout(()=>{
 
-        createSidebarMouseHoverExpandButton();/*创建鼠标移动展开左右树面板按钮*/
+            createHBuiderXToolbar();/*创建BuiderXToolbar*/
 
-        createHighlightBecomesHidden();/*创建高亮变隐藏按钮 */
+            createSidebarMouseHoverExpandButton();/*创建鼠标移动展开左右树面板按钮*/
+    
+            createHighlightBecomesHidden();/*创建高亮变隐藏按钮 */
+    
+            createQuickDropDownButton()/*创建快捷下分栏按钮 */
+    
+            createFocusingOnAmplification()/**聚焦放大 */
+    
+            getTXTSum()/**选中文字计数 */
+    
+    
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
+      
+            setTimeout(()=>ClickMonitor(),3000);/*各种列表转xx */
+    
+            adjustDocumentLabelsWhile();/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
 
-        createQuickDropDownButton()/*创建快捷下分栏按钮 */
+            rundynamicUnderline();/**为文档标题创建动态下划线 */
+    
+            showDocumentCreationDate();/**为打开文档标题下面显示文档创建日期 */
 
-        createFocusingOnAmplification()/**聚焦放大 */
+            console.log("==============>HBuilderX-Light:CSS,JS_已经执行<==============");
 
-        getTXTSum()/**选中文字计数 */
-
-
-        loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
-  
-        setTimeout(()=>ClickMonitor(),3000);/*各种列表转xx */
-
-        adjustDocumentLabelsWhile()/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
+        },500);
     }
 
-    console.log("==============>HBuilderX-Light:CSS,JS_已经执行<==============");
 }
