@@ -20,5 +20,5 @@
 
 本主题自带简单实现小功能，功能激活使用即可，请适度使用因为有刁钻和未知bug。
 
-本主题不定期更新，请不要过度期待。
+本主题不定期更新，更新详情请移步 https://github.com/UFDXD/HBuilderX-Light/releases 查看。
  
