@@ -1,5 +1,9 @@
 /*目标：能看就行*/
 
+/*主题附加样式，打开使用主题完全体*/
+/*@import url(customizeStyle/test.css);*/
+
+
 :root {
     /* 主色 */
     --b3-theme-primary: rgb(121, 187, 138);/*左右边栏面板激活图标颜色-块进度条圆点颜色*/
@@ -196,6 +200,8 @@ li[data-type="toggle"]{
     background-color: rgb(255, 250, 233);
 }
 
+
+
 /* ————————————————————杂项———————————————————— */
 
 /*块右上角的图标背景色*/
@@ -249,7 +255,10 @@ input[placeholder="Enter 搜索"]{
     color: rgb(101, 168, 99);
 }
 
-
+/*窗口分割拖动线*/
+.layout__resize--lr{
+    z-index: 9;
+}
 
 /*-----------------------------------------------软件标题栏--------------*/
 
@@ -300,13 +309,13 @@ input[placeholder="Enter 搜索"]{
     border-left:1px solid rgba(216, 202, 158, 0.412);
     border-right: 1px solid rgba(216, 202, 158, 0.412);
     border-bottom:1px solid rgb(239,231,204);
-    background-color: rgb(253,250,239);
+    background-color: rgb(253, 250, 239);
 }
 /*底栏图标*/
-#barDock>svg,#barSync>svg,#barLock>svg,#barDebug>svg,#barHelp>svg{
+#barDock>svg,#barSync>svg,#barLock>svg,#barDebug>svg,#barHelp>svg,#barFeedback>svg{
     color: rgb(47,107,45);
 }
-#barDock>svg:hover,#barSync>svg:hover,#barLock>svg:hover,#barDebug>svg:hover,#barHelp>svg:hover{
+#barDock>svg:hover,#barSync>svg:hover,#barLock>svg:hover,#barDebug>svg:hover,#barHelp>svg:hover,#barFeedback>svg:hover{
     color: rgb(95,99,104);
 }
 
@@ -832,6 +841,12 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
     box-shadow: inset 0px 0px 10px 10px rgb(101, 167, 99);
 }
 
+/*-------------------------------设置打开面板-------------------------*/
+.b3-dialog__container{
+    border-radius: 0px !important;
+    border: 1px solid rgb(238,230,206);
+}
+
 /*--------------------------------------------各杂项面板滚动条适配------------*/
 /*禁止软件主体区域出现横滚动条*/
 #layouts>div.fn__flex.fn__flex-1{
@@ -917,37 +932,11 @@ div.fn__flex-column.fn__flex-1{
 	overflow-x:hidden !important;
 }
 
+ul.b3-list.b3-list--background{
+	overflow-x:hidden !important;
+}
 
-/*————————————————————图片——————————————————————————————————*/
-/*这些图片不知道是否有版权所以发布的主题时不用，自己删掉注释启用*/
-/*文档树面板*/
-/*.fn__flex-1 div [data-type="navigation"]{
-    background-image: url('src/f9xfg0QGIr22.png') ;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-}*/
-/*大纲面板*/
-/*.sy__outline>.fn__flex-1{
-    background-image: url('src/f9xfg0QGIr22.png') ;
-    background-repeat: no-repeat;
-    background-position:center;
-    background-size: contain;
-}*/
 
-/*.backlinkList{
-    background-image: url('src/f9xfg0QGIr22.png') ;
-    background-repeat: no-repeat;
-    background-position:center;
-    background-size: contain;
-}*/
-/*关闭笔记面板龙图*/
-/*.b3-list:not(.b3-list--background) ul{
-    background-image: url('src/f9xfg0QGIr.png');
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: contain;
-}*/
 
 
 /*——————————————————别名，命名，备注提示*/
@@ -1172,37 +1161,45 @@ td:hover{/*表格中td标签*/
 }
 
 /*——————————————————————分割线————————————————————————————————*/
-
-.protyle-wysiwyg [data-node-id].hr {
-    
-    margin-top: -1px;
-    margin-bottom: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px ;
-    border-bottom: 1px solid rgb(204, 223, 189); 
+div.hr {
+    margin-top: -1px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px  !important;
+    border-bottom: 1px solid rgb(204, 223, 189) !important; 
 }
 
-.protyle-wysiwyg [data-node-id].hr>div{
-    border-bottom: none; 
+div.hr>div{
+    border-bottom: none !important; 
 } 
 
 
 /*段落块行线*/
 .p{
-    box-shadow: 0px 1px 0px 0px rgb(239, 230, 201);
+/*    box-shadow: 0px 1px 0px 0px rgb(239, 230, 201);*/
+    padding-bottom: 0px !important;
+    border-bottom:1px dashed rgb(239, 230, 201);
 }
 /*嵌入块内段落块的行线*/
 .protyle-wysiwyg [data-node-id].render-node[data-type="NodeBlockQueryEmbed"]>.protyle-wysiwyg__embed .p{
-    box-shadow: 0px 1px 0px 0px rgba(46, 33, 50, 0.09);
+   /* box-shadow: 0px 1px 0px 0px rgba(46, 33, 50, 0.09);*/
+    padding-bottom: 0px !important;
+    border-bottom:1px solid rgb(46, 33, 50, 0.09) !important;
    
 }
 /*引述块内段落块的行线*/
 .protyle-wysiwyg [data-node-id].bq .p{
-    box-shadow: 0px 1px 0px 0px rgba(46, 33, 50, 0.09);
+  
+    /*box-shadow: 0px 1px 0px 0px rgba(46, 33, 50, 0.09);*/
+    padding-bottom: 0px !important;
+    border-bottom:1px solid rgb(46, 33, 50, 0.09) !important;
+
 }
 /*横排超级块内段落块行线*/
 .sb[data-sb-layout="col"] .p{
-    box-shadow: 0px 1px 0px 0px rgba(239, 230, 201, 0.451);
+  /*  box-shadow: 0px 1px 0px 0px rgba(239, 230, 201, 0.451);*/
+    padding-bottom: 0px !important;
+    border-bottom:1px solid rgb(239, 230, 201, 0.451) !important;
 }
 
 
@@ -1451,6 +1448,9 @@ div[data-type="NodeCodeBlock"]>.protyle-action{
 .b3-typography .code-block .protyle-action .protyle-action__language::after,
 .protyle-wysiwyg .code-block .protyle-action .protyle-action__language::after {
     content: "›";
+    display: inline-block !important;
+    margin-left: 3px;
+    margin-right: 3px;
     font-family: var(--b3-font-family-code);
     color: rgba(128, 128, 128, 0.502);
     opacity: 1;
@@ -1571,11 +1571,13 @@ table tr:hover {
 }
 
 
-/*————————————————————————标题样式*/
+/*————————————————————————标题样式-------------------------------*/
+
+/*折叠点击展开标志*/
 .protyle-wysiwyg div[fold="1"][data-type="NodeHeading"]:before{
     content: "";
-    height: 0px;
-    width: 0px;
+    height: 0px !important;
+    width:  0px !important;
     background: transparent;
     display: block;
     position: absolute;
@@ -1583,14 +1585,17 @@ table tr:hover {
     top: 50%;
     border-radius: 0px;
     margin-top: -6px;
-    border-top:10px solid;
-    border-left:5px solid;
-    border-right:8px solid;
-    border-bottom:0px solid;
-    border-color:rgba(101, 168, 99, 0.478) transparent transparent  transparent;
+    border-top:7px solid transparent !important;
+    border-left:6px solid rgba(182,211,169) !important;
+    border-right:7px solid transparent !important;
+    border-bottom:7px solid transparent !important;
 }
 
-
+/*折叠中的标题*/
+.protyle-wysiwyg div[fold="1"][data-type="NodeHeading"]{
+    font-weight:900;
+    text-shadow: 2px 2px  4px rgba(182,211,169);
+}
 /*—————————————————————————列表样式——————————————————————————————————*/
 
 .list{
@@ -1600,14 +1605,14 @@ table tr:hover {
     margin-bottom: 0px !important;
 }
 
-.protyle-wysiwyg [data-node-id].li>div:nth-child(2) {
+.protyle-wysiwyg [data-node-id].li>div:nth-child(2):not(.hr) {
     margin-top: 4px !important;
 }
 
 .protyle-wysiwyg [data-node-id].li>[data-node-id]:before {
     content: "";
     position: absolute;
-    border-left: var(--b3-border-wider);
+    border-left: 1px solid rgba(204, 223, 189, 0.692);
     top: 4px;
     left: -18px;
     z-index: 3;
@@ -1617,6 +1622,25 @@ table tr:hover {
 .protyle-wysiwyg [data-node-id].li>.protyle-action{
 	color: rgb(35, 119, 34);
 }
+/*列表折叠*/
+.protyle-wysiwyg [data-node-id].li[fold="1"]{
+    font-weight:500;
+    text-shadow: 2px 2px  4px rgba(182,211,169);
+}
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.p>[spellcheck]{
+}
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.p>[spellcheck]::after{
+    content:"···";
+    display:inline;
+    word-break:break-all;
+    border: 1px solid black;
+    margin-left: 9px;
+    padding-left: 17px;
+    padding-right: 17px;
+    border-radius: 5px;
+}
+
+
 /*无序列表项鼠标经过，列表折叠颜色颜色*/
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.protyle-action:after, .protyle-wysiwyg [data-node-id].li>.protyle-action:hover:after{
     background-color: rgba(101, 168, 99, 0.475)!important;
