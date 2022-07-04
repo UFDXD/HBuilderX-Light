@@ -1,4 +1,5 @@
 /**目标：能跑就行 */
+/**搬运请备注来自HBuilderX-Light主题 */
 
 const HBuiderXToolbarID = "HBuiderXToolbar";
 const SiYuanToolbarID = "toolbar";
@@ -1005,7 +1006,7 @@ function DocumentCreationDate(){
         
         var spanTxt=documentCreatTimeElement.innerText;
 
-        if(spanTxt==""|| spanTxt=="日期取中……"){
+        if(spanTxt==""|| spanTxt=="日期获取中……"){
             var documentCreatTimeTxt=getDocumentTime(element);
             documentCreatTimeElement.innerText=documentCreatTimeTxt;
         }
@@ -1050,7 +1051,7 @@ function getDocumentTime(tilteElement){
     var tS=tilteElement.parentElement.previousElementSibling.getAttribute("data-node-id");
 
     if(tS==null){
-        return "日期取中……";
+        return "日期获取中……";
     }
     var year=tS.substring(0,4);
     var moon=tS.substring(4,6);
@@ -1059,7 +1060,7 @@ function getDocumentTime(tilteElement){
     var minute=tS.substring(10,12);
     var second=tS.substring(12,14);
 
-  return year+"-"+moon+"-"+day+" . "+hour+":"+minute+":"+second;
+  return year+"-"+moon+"-"+day+"  "+hour+":"+minute+":"+second;
     /*return year+"年"+moon+"月"+day+"日"+hour+"时"+minute+"分"+second+"秒";*/
 }
 
@@ -1584,7 +1585,7 @@ function Refresh() {
     
             createFocusingOnAmplification()/**聚焦放大 */
     
-            getTXTSum()/**选中文字计数 */
+            /*getTXTSum()/**选中文字计数------已官方实现 */ 
     
     
             loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
