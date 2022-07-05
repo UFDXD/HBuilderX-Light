@@ -1,6 +1,6 @@
 /*目标：能看就行*/
 
-/*主题附加样式，打开使用主题完全体*/
+/*测试样式*/
 /*@import url(customizeStyle/test.css);*/
 
 
@@ -460,13 +460,15 @@ span[aria-label="新建文档"]:hover{
 
 .b3-list-item:hover:not(li[data-type="toggle"]){/*鼠标经过*/
     font-weight: bold;
-    transform: scale(1.015);
+    margin-left: -5px !important;
+    /*transform: scale(1.015);*/
 }
 
 .b3-list--background .b3-list-item--focus{/*文件树，大纲列表点击选中样式*/
     background-color: rgba(202, 219, 186, 0.788) !important;
     font-weight: bold;
-    transform: scale(1.015);
+    margin-left: -5px !important;
+    /*transform: scale(1.015);*/
 }
 
 
@@ -523,6 +525,17 @@ span[aria-label="新建文档"]:hover{
 }
 
 
+/*----------------设置面板---------------------*/
+
+.b3-dialog__container{
+    border-radius: 0px !important;
+    border: 1px solid rgb(238,230,206);
+}
+
+.b3-dialog--open>.b3-dialog>.b3-dialog__container>div>.fn__flex-column>div.fn__flex-1.fn__flex>ul{
+	border-right:1px solid rgb(238,230,206) ;
+}
+
 /*----------------------------------------------思源标签索引窗口---------------*/
 
 /*思源标签查找窗口上*/
@@ -559,7 +572,7 @@ ul.fn__flex.layout-tab-bar{
 /*页签hover*/
 .item:not(li.item.item--pin):not(.item--focus):not(div[data-type="open-search"]):hover{
     border-radius: 0px;
-    font-size: 16px ;
+    font-size: 15px ;
     background-color:  rgb(218, 234, 206) !important;
 }
 
@@ -586,7 +599,7 @@ li.item.item--pin.item--focus{
 
 /*钉住选中页签中的字体*/
 li.item.item--pin.item--focus>.item__text{
-    font-size: 16px ;
+    font-size: 15px ;
 }
 
 /* 选中的标签页 */
@@ -595,7 +608,7 @@ li.item.item--pin.item--focus>.item__text{
     border-radius: 0px; 
     color: white;
     font-weight: 350;
-    font-size: 16px;
+    font-size: 15px;
     background-color: rgb(101, 168, 99);
 }
 
@@ -634,6 +647,8 @@ li.item.item--pin>.fn__none{
 .protyle-breadcrumb__bar>span{
     border-radius: 0px;
     background-color: rgba(255, 250, 233, 0.808) !important;
+        text-shadow: 2px 2px  4px rgba(142, 146, 139, 0.267);
+
 }
 /*路径节点*/
 .protyle-breadcrumb__bar>svg{
@@ -796,23 +811,32 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
     transform: scale(1.05);
 }
 
-.protyle-toolbar__item {
-    color: rgb(0, 0, 0);
-    background-color:rgb(255, 253, 245);
-    border-radius: 6px;
-
+.protyle-toolbar>button {
+    color: rgb(27, 71, 27);
 }
 
-.protyle-toolbar__item:hover:not(.protyle-toolbar__item:focus) {
-    color: rgb(0, 0, 0);
-    background-color: rgba(188, 221, 185, 0.424);
-    border-radius: var(--b3-border-radius-noraml);
+
+/*鼠标hover*/
+.protyle-toolbar>button:hover {
+    background-color: rgb(227,240,219) !important;
+}
+.protyle-toolbar>button>svg:hover {
+    transform: scale(1.2);
 }
 
+
+/*按钮点击未松开*/
+.protyle-toolbar>button:focus{
+    background-color: rgb(227,240,219) !important;
+}
+
+/*点击后*/
 .protyle-toolbar__item--current {
-    color: var(--b3-theme-primary) !important;
-    background-color: var(--b3-theme-tm1) !important;
-    border-radius: var(--b3-border-radius-noraml);
+    color: rgb(101,168,99) !important;
+    background-color:transparent !important;
+}
+.protyle-toolbar__item--current>svg{
+    transform: scale(1.2);
 }
 
 
@@ -826,115 +850,114 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
 /* 编辑区域滚动条 */
 ::-webkit-scrollbar {/*滚动条整体*/
     border-radius: 0 !important;
-    width:10px !important;
+    width:9px !important;
     background-color:transparent !important;
 }
 
 ::-webkit-scrollbar-thumb{/*滚动条滑块*/
     border-radius: 0;
     background-color: transparent;
-    border-left: 6px solid transparent !important;
-    box-shadow: inset 0px 0px 10px 10px rgba(101, 168, 99, 0.404);
+    border-left: 7px solid transparent !important;
+    box-shadow: inset 0px 0px 9px 9px rgba(101, 168, 99, 0.404);
 }
 ::-webkit-scrollbar-thumb:hover{/*鼠标移动到滑块上的效果*/
-    border-left: 10px solid rgb(101, 167, 99) !important;
-    box-shadow: inset 0px 0px 10px 10px rgb(101, 167, 99);
+    border-left: 9px solid rgb(101, 167, 99) !important;
+    box-shadow: inset 0px 0px 9px 9px rgb(101, 167, 99);
 }
 
-/*-------------------------------设置打开面板-------------------------*/
-.b3-dialog__container{
-    border-radius: 0px !important;
-    border: 1px solid rgb(238,230,206);
-}
 
 /*--------------------------------------------各杂项面板滚动条适配------------*/
-/*禁止软件主体区域出现横滚动条*/
-#layouts>div.fn__flex.fn__flex-1{
-	overflow-x:hidden !important;
-}
-
-/*文档树区域禁止出现横滚动条*/
-div [data-type="navigation"]{
-	overflow-x:hidden ;
-}
-/*已关闭笔记本区域禁止出现横滚动条*/
-div[data-type="wnd"]>.layout-tab-container>.fn__flex-column>.b3-list.fn__flex-column.fn__flex-1>.fn__flex-1{
-	overflow-x:hidden ;
-}
-
-/*禁止书签，标签出现横滚动条*/
-div[data-type="wnd"]>.layout-tab-container>.fn__flex-column>.fn__flex-1{
-	overflow-x:hidden ;
-}
-
-/*禁止右工具区域出现横滚动条*/
-div.fn__flex-1.fn__flex-column.file-tree.sy__backlink{
-	overflow-x:hidden ;
-}
-
-/*大纲树区域禁止出现横滚动条*/
-div.fn__flex-1.fn__flex-column.file-tree.sy__outline{
-   overflow-x:hidden ;
-}
-
-/*反链区域禁止出现横滚动条*/
-.backlinkList{
-	overflow-x:hidden ;
-}
-/*提及区域禁止出现滚动条*/
-.backlinkMList{
-	overflow-x:hidden ;
-}
-
-
-/*/弹出块面板禁止出现横滚动条*/
-div[data-type="wnd"]>.layout-tab-container>.protyle>.b3-menu.b3-list.b3-list--background{
-	overflow-x:hidden !important;
-}
-
-/*禁止/面板子项弹出面板出现横滚动条*/
-div[data-type="wnd"]>.layout-tab-container>.fn__flex-1.protyle>.protyle-util>.fn__flex-column>.b3-list.fn__flex-1.b3-list--background{
-	overflow-x:hidden !important;
-}
-
-/*设置面板左列表区域禁止出现横滚动条*/
-.b3-dialog--open>.b3-dialog>.b3-dialog__container>div>.fn__flex-column>div.fn__flex-1.fn__flex>ul{
-	overflow-x:hidden !important;
-}
-
-/*禁止数据历史面板左历史列表出现横滚动条*/
-#historyContainer>.fn__block>.b3-list--background{
-	overflow-x:hidden !important;
-}
-
-/*禁止编辑主体出现竖滚动条*/
-div.fn__flex.fn__flex-1{
-    overflow-y:hidden !important;
-}
-/*禁止主体编辑区域出现竖滚动条*/
-div.fn__flex-column.fn__flex-1{
+#layouts{
 	overflow-y:hidden !important;
 }
 
-/*禁止思源标签索引面板出现横滚动条*/
-#globalSearchList{
+/*禁止软件主体区域出现横滚动条*/
+/*#layouts>div.fn__flex.fn__flex-1{
 	overflow-x:hidden !important;
-}
+}*/
+
+/*文档树区域禁止出现横滚动条*/
+/*div [data-type="navigation"]{
+	overflow-x:hidden ;
+}*/
+/*已关闭笔记本区域禁止出现横滚动条*/
+/*div[data-type="wnd"]>.layout-tab-container>.fn__flex-column>.b3-list.fn__flex-column.fn__flex-1>.fn__flex-1{
+	overflow-x:hidden ;
+}*/
+
+/*禁止书签，标签出现横滚动条*/
+/*div[data-type="wnd"]>.layout-tab-container>.fn__flex-column>.fn__flex-1{
+	overflow-x:hidden ;
+}*/
+
+/*禁止右工具区域出现横滚动条*/
+/*div.fn__flex-1.fn__flex-column.file-tree.sy__backlink{
+	overflow-x:hidden ;
+}*/
+
+/*大纲树区域禁止出现横滚动条*/
+/*div.fn__flex-1.fn__flex-column.file-tree.sy__outline{
+   overflow-x:hidden ;
+}*/
+
+/*反链区域禁止出现横滚动条*/
+/*.backlinkList{
+	overflow-x:hidden ;
+}*/
+/*提及区域禁止出现滚动条*/
+/*.backlinkMList{
+	overflow-x:hidden ;
+}*/
+
+
+/*/弹出块面板禁止出现横滚动条*/
+/*div[data-type="wnd"]>.layout-tab-container>.protyle>.b3-menu.b3-list.b3-list--background{
+	overflow-x:hidden !important;
+}*/
+
+/*禁止/面板子项弹出面板出现横滚动条*/
+/*div[data-type="wnd"]>.layout-tab-container>.fn__flex-1.protyle>.protyle-util>.fn__flex-column>.b3-list.fn__flex-1.b3-list--background{
+	overflow-x:hidden !important;
+}*/
+
+/*设置面板左列表区域禁止出现横滚动条*/
+/*.b3-dialog--open>.b3-dialog>.b3-dialog__container>div>.fn__flex-column>div.fn__flex-1.fn__flex>ul{
+	overflow-x:hidden !important;
+}*/
+
+/*禁止数据历史面板左历史列表出现横滚动条*/
+/*#historyContainer>.fn__block>.b3-list--background{
+	overflow-x:hidden !important;
+}*/
+
+/*禁止编辑主体出现竖滚动条*/
+/*div.fn__flex.fn__flex-1{
+    overflow-y:hidden !important;
+}*/
+/*禁止主体编辑区域出现竖滚动条*/
+/*div.fn__flex-column.fn__flex-1{
+	overflow-y:hidden !important;
+}*/
+
+/*禁止思源标签索引面板出现横滚动条*/
+/*#globalSearchList{
+	overflow-x:hidden !important;
+}*/
 
 
 /*禁止文档标签定义选择列表出现横滚动条*/
-#commonMenu>.fn__flex-column>div.b3-list.fn__flex-1.b3-list--background{
+/*#commonMenu>.fn__flex-column>div.b3-list.fn__flex-1.b3-list--background{
 	overflow-x:hidden !important;
-}
+}*/
 
 /*禁止搜索类面板搜索历史列表出现横滚动条*/
-#searchHistoryList{
+/*#searchHistoryList{
 	overflow-x:hidden !important;
-}
+}*/
 
-ul.b3-list.b3-list--background{
+/*ul.b3-list.b3-list--background{
 	overflow-x:hidden !important;
-}
+}*/
 
 
 
@@ -1541,7 +1564,7 @@ div[data-type="NodeMathBlock"]{
 /* 设置表格内部边框 */
 th, td {
     min-width: 1em;
-    border: 0.1em solid var(--b3-table-border-color) !important;
+    border: 1px solid var(--b3-table-border-color) !important;
     border-collapse: collapse;
     color: inherit;
     font-size: 80% ;
@@ -1629,14 +1652,18 @@ table tr:hover {
 }
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.p>[spellcheck]{
 }
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h1>[spellcheck]::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h2>[spellcheck]::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h3>[spellcheck]::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h4>[spellcheck]::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h5>[spellcheck]::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h6>[spellcheck]::after,
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.p>[spellcheck]::after{
-    content:"···";
+    content:" ​ ​​ ···​ ​​ ​​ ";
     display:inline;
     word-break:break-all;
     border: 1px solid black;
     margin-left: 9px;
-    padding-left: 17px;
-    padding-right: 17px;
     border-radius: 5px;
 }
 
