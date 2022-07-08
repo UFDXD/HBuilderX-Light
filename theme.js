@@ -1,5 +1,8 @@
-/**目标：能跑就行 */
-/**搬运请备注来自HBuilderX-Light主题 */
+/**
+ * HBuilderX-Light主题特性js实现
+ * 目标：能跑就行
+ * 功能搬运，请在主题详情页备注来自HBuilderX-Light主题
+ */
 
 const HBuiderXToolbarID = "HBuiderXToolbar";
 const SiYuanToolbarID = "toolbar";
@@ -437,11 +440,6 @@ function upSplitScreening(){
 
 }
 	
-function trigger(type, element, detail){
-    var customEvent=new CustomEvent(type, {detail: detail, bubbles: false, cancelable: true});
-    element.dispatchEvent(customEvent);
-}
-
 
 
 /**--------------------------聚焦正文放大200%-------------------- */
@@ -933,7 +931,6 @@ function dynamicUnderline(){
 
         var Style=getComputedStyle(element,null);
         var font=Style.font;
-        
         var width=getTextWidth(txt,font)+58;
 
         if(width<288){
@@ -976,13 +973,6 @@ function getTileTxt(TitleElement){
 }
 
 
-function getTextWidth(text, font) {
-    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
-    var context = canvas.getContext("2d"); 
-    context.font = font;
-    var metrics = context.measureText(text);
-    return metrics.width;
-  }
 
 
 
@@ -1068,6 +1058,102 @@ function getDocumentTime(tilteElement){
 
 
 
+/**---------------------列表折叠内容预览查看---------------- */
+
+function collapsedListPreview(){
+    setInterval(collapsedListPreviewEvent,3000);
+}
+
+function collapsedListPreviewEvent(){
+    
+    var turn=[
+              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.p>[spellcheck]"),
+              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h1>[spellcheck]"),
+              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h2>[spellcheck]"),
+              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h3>[spellcheck]"),
+              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h4>[spellcheck]"),
+              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h5>[spellcheck]"),
+              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h6>[spellcheck]")
+             ];//将所有查询到的合并到一个容器
+
+    //检查注册事件的折叠列表是否恢复未折叠状态,是清除事件和去除标志属性
+    var ListPreview=document.querySelectorAll("[ListPreview]");
+    for (let index = 0; index < ListPreview.length; index++) {
+        const element = ListPreview[index];
+        if(element.parentElement.getAttribute("fold")==null){
+            element.removeAttribute("title");
+            element.removeAttribute("ListPreview",);
+            var item=element.children[0];
+            myRemoveEvent(item,"dblclick",LIstIn)//解绑鼠标双击事件
+
+        }
+    }
+
+    for (let index = 0; index < turn.length; index++) {//筛选未注册鼠标事件折叠列表
+        const element = turn[index];
+        if(element.parentElement.getAttribute("ListPreview")!=null){
+            continue;
+        }else{
+            element.parentElement.setAttribute("ListPreview",true);
+            element.parentElement.setAttribute("title","双击〔 ··· 〕查看折叠内容");
+            AddEvent(element,"dblclick",LIstIn);//注册鼠标双击事件
+        }
+    }
+}
+
+function LIstIn(e){
+
+    if((window.getSelection?window.getSelection():document.selection.createRange().text).toString().length!=0){
+        return;
+    }
+
+    var obj=e.target;
+    var objParent=obj.parentElement;
+
+    var X=e.offsetX+obj.offsetLeft;
+    var Y=e.offsetY+obj.offsetTop;
+    
+    var triggerBlock=addinsertCreateElement(objParent.parentElement,"div");//创建触发块
+    
+    //设置触发块样式，将触发块显示在〔 ··· 〕左键双击位置
+    triggerBlock.style.position="absolute";
+    triggerBlock.style.top=(Y-15)+"px";
+    triggerBlock.style.left=(X+15)+"px";
+    triggerBlock.style.width="30px";
+    triggerBlock.style.height="30px";
+    //triggerBlock.style.background="red";
+    triggerBlock.style.display="block";
+    triggerBlock.style.textAlign="center"
+    triggerBlock.style.lineHeight="30px";
+    triggerBlock.style.zIndex="999";
+    
+    //获取折叠列表内的内容 
+    var previewContent=objParent.nextElementSibling;
+
+    //在触发块内创建思源超链接 
+    triggerBlock.innerHTML="<span data-type='a' class='list-A' data-href=siyuan://blocks/"+previewContent.getAttribute("data-node-id")+">A</span>";
+
+    //将这个思源连接样式隐藏
+    var a= triggerBlock.children[0];
+    a.style.fontSize="30px";
+    a.style.color="transparent";
+    a.style.textShadow="none";
+    a.style.border="none";
+    
+    //将这个思源链接hover时的样式隐藏
+    AddEvent(a,"mouseover",hover);
+    function hover(e){
+        e.target.style.color="transparent";
+        e.target.style.textShadow="none";
+        e.target.style.border="none";
+    }
+    
+    //鼠标离开思源连接后触发块自我销毁
+    AddEvent(a,"mouseout",aRemove);
+    function aRemove(){
+        triggerBlock.remove();
+    }
+}
 
 
 
@@ -1082,6 +1168,33 @@ function getDocumentTime(tilteElement){
 
 
 
+
+
+
+/**
+ * 获得文本的占用的宽度
+ * @param {*} text 字符串文班
+ * @param {*} font 文本字体的样式
+ * @returns 
+ */
+function getTextWidth(text, font) {
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d"); 
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
+  }
+
+/**
+ * 
+ * @param {触发元素事件} type 
+ * @param {*} element 
+ * @param {*} detail 
+ */
+function trigger(type, element, detail){
+    var customEvent=new CustomEvent(type, {detail: detail, bubbles: false, cancelable: true});
+    element.dispatchEvent(customEvent);
+}
 
 
 /**
@@ -1347,13 +1460,6 @@ async function 解析响应体(response) {
   
 
 
-
-
-
-
-
-
-
    
     /****各种列表转xx的UI****/
     function ViewSelect(selectid,selecttype){
@@ -1475,6 +1581,15 @@ async function 解析响应体(response) {
     return node;
   }
   
+
+
+
+
+
+
+
+
+
   /* 操作 */ 
   
   /**
@@ -1561,13 +1676,13 @@ async function 解析响应体(response) {
   
 (function (w, und) { Refresh() }(window, undefined));
 
-
 function Refresh() {
 
     if(isPhone()){
        
         setTimeout(()=>{
-            adjustDocumentLabelsWhile()/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
+            
+            adjustDocumentLabelsWhile()//调整文档头部区域，在emj 标签，头图 各种情况下的布局
 
         },1000)
         
@@ -1575,31 +1690,32 @@ function Refresh() {
 
         setTimeout(()=>{
 
-            createHBuiderXToolbar();/*创建BuiderXToolbar*/
+            createHBuiderXToolbar();//创建BuiderXToolbar
 
-            createSidebarMouseHoverExpandButton();/*创建鼠标移动展开左右树面板按钮*/
+            createSidebarMouseHoverExpandButton();//鼠标移动展开左右树面板按钮
     
-            createHighlightBecomesHidden();/*创建高亮变隐藏按钮 */
+            createHighlightBecomesHidden();//高亮变隐藏
     
-            createQuickDropDownButton()/*创建快捷下分栏按钮 */
+            createQuickDropDownButton()//快捷下分栏按钮
     
-            createFocusingOnAmplification()/**聚焦放大 */
+            createFocusingOnAmplification()//聚焦内容放大200%
     
-            /*getTXTSum()/**选中文字计数------已官方实现 */ 
+            //getTXTSum()//选中文字计数------已官方实现 
     
+            setTimeout(()=>ClickMonitor(),3000);//各种列表转xx
     
+            adjustDocumentLabelsWhile();//调整文档头部区域，在emj 标签，头图 各种情况下的布局
+            
+            rundynamicUnderline();//为文档标题创建动态下划线
+            
+            showDocumentCreationDate();//为打开文档标题下面显示文档创建日期
+            
+            collapsedListPreview();//折叠列表内容预览查看
+
+
             loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
-      
-            setTimeout(()=>ClickMonitor(),3000);/*各种列表转xx */
-    
-            adjustDocumentLabelsWhile();/**调整文档头部区域，在emj 标签，头图 各种情况下的布局 */
-
-            rundynamicUnderline();/**为文档标题创建动态下划线 */
-    
-            showDocumentCreationDate();/**为打开文档标题下面显示文档创建日期 */
-
-            console.log("==============>HBuilderX-Light:CSS,JS_已经执行<==============");
-
+            
+            console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
         },500);
     }
 
