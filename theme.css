@@ -1043,6 +1043,7 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
     color:rgb(32, 33, 36);
     opacity: 0.9;
     font-size: 150%;
+    border-radius: 0px;
     background-color: rgb(255, 253, 245);
     box-shadow: var(--b3-point-shadow);
     border: 1px solid rgb(101, 168, 99);
@@ -1666,7 +1667,6 @@ table tr:hover {
     margin-left: 9px;
     border-radius: 5px;
 }
-
 
 /*无序列表项鼠标经过，列表折叠颜色颜色*/
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.protyle-action:after, .protyle-wysiwyg [data-node-id].li>.protyle-action:hover:after{
