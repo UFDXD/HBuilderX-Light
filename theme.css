@@ -1649,7 +1649,7 @@ table tr:hover {
 /*列表折叠*/
 .protyle-wysiwyg [data-node-id].li[fold="1"]{
     font-weight:500;
-    text-shadow: 2px 2px  4px rgba(182,211,169);
+    text-shadow: 2px 2px 4px rgba(182,211,169);
 }
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.p>[spellcheck]{
 }
@@ -1660,12 +1660,18 @@ table tr:hover {
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.h5>[spellcheck]::after,
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.h6>[spellcheck]::after,
 .protyle-wysiwyg [data-node-id].li[fold="1"]>.p>[spellcheck]::after{
-    content:" ​ ​​ ···​ ​​ ​​ ";
+    content:"​​ ​​ · · ·​​ ​​ ​";
+    font-family:"Trebuchet MS";
     display:inline;
+    font-weight: bold;
+    vertical-align:5%;
+    font-size: 75%;
+    color:rgb(95, 99, 104);
     word-break:break-all;
-    border: 1px solid black;
+    border: 1px solid rgb(95, 99, 104);
     margin-left: 9px;
     border-radius: 5px;
+    cursor:pointer;
 }
 
 /*无序列表项鼠标经过，列表折叠颜色颜色*/
