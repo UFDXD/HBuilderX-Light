@@ -1056,6 +1056,33 @@ function getDocumentTime(tilteElement){
 
 
 
+/**-------------------自动展开悬浮窗折叠列表-----体验优化--- */
+
+function autoOpenList(){
+    setInterval(autoOpenListEvent,1000);
+}
+
+function autoOpenListEvent(){
+//找到所有的悬浮窗
+var Preview=document.querySelectorAll("[data-oid]");
+
+//如果发现悬浮窗内首行是折叠列表就展开并打上标记
+if(Preview.length!=0){
+    for (let index = 0; index < Preview.length; index++) {
+        const element = Preview[index];
+        var item=element.children[1].children[0].children[1].children[0].children[0];
+        if(item==null)continue;
+        if(item.className!="li")continue;//判断是否是列表
+        if(item.getAttribute("foldTag")!=null)continue;//判断是否存在标记
+        if(item.getAttribute("foid")==0)continue;//判断是折叠
+
+        item.setAttribute("fold",0);
+        item.setAttribute("foldTag",true);
+    }
+}
+
+}
+
 
 
 /**---------------------列表折叠内容预览查看---------------- */
@@ -1065,17 +1092,16 @@ function collapsedListPreview(){
 }
 
 function collapsedListPreviewEvent(){
+    var _turn=document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']");//查询页面所有的折叠列表
+    var turn=[];
+    for (let index = 0; index < _turn.length; index++) {//找到列表第一列表项（父项）
+        const element = _turn[index].children[1];
+        var item=element.className;
+        if(item=="p"||item=="h1"||item=="h2"||item=="h3"||item=="h4"||item=="h5"||item=="h6"){
+            turn.push(element.children[0])
+        }
+    }
     
-    var turn=[
-              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.p>[spellcheck]"),
-              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h1>[spellcheck]"),
-              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h2>[spellcheck]"),
-              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h3>[spellcheck]"),
-              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h4>[spellcheck]"),
-              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h5>[spellcheck]"),
-              ...document.querySelectorAll(".protyle-wysiwyg [data-node-id].li[fold='1']>.h6>[spellcheck]")
-             ];//将所有查询到的合并到一个容器
-
     //检查注册事件的折叠列表是否恢复未折叠状态,是清除事件和去除标志属性
     var ListPreview=document.querySelectorAll("[ListPreview]");
     for (let index = 0; index < ListPreview.length; index++) {
@@ -1085,7 +1111,6 @@ function collapsedListPreviewEvent(){
             element.removeAttribute("ListPreview",);
             var item=element.children[0];
             myRemoveEvent(item,"dblclick",LIstIn)//解绑鼠标双击事件
-
         }
     }
 
@@ -1103,9 +1128,7 @@ function collapsedListPreviewEvent(){
 
 function LIstIn(e){
 
-    if((window.getSelection?window.getSelection():document.selection.createRange().text).toString().length!=0){
-        return;
-    }
+    if((window.getSelection?window.getSelection():document.selection.createRange().text).toString().length!=0)return;
 
     var obj=e.target;
     var objParent=obj.parentElement;
@@ -1127,11 +1150,10 @@ function LIstIn(e){
     triggerBlock.style.lineHeight="30px";
     triggerBlock.style.zIndex="999";
     
-    //获取折叠列表内的内容 
-    var previewContent=objParent.nextElementSibling;
-
+    //获取折叠列表ID 
+    var previewID=objParent.parentElement.getAttribute("data-node-id");
     //在触发块内创建思源超链接 
-    triggerBlock.innerHTML="<span data-type='a' class='list-A' data-href=siyuan://blocks/"+previewContent.getAttribute("data-node-id")+">A</span>";
+    triggerBlock.innerHTML="<span data-type='a' class='list-A' data-href=siyuan://blocks/"+previewID+">A</span>";
 
     //将这个思源连接样式隐藏
     var a= triggerBlock.children[0];
@@ -1150,17 +1172,30 @@ function LIstIn(e){
     
     //鼠标离开思源连接后触发块自我销毁
     AddEvent(a,"mouseout",aRemove);
-    function aRemove(){
-        triggerBlock.remove();
+    function aRemove(){triggerBlock.remove();}
+
+    //一秒延时后搜索打开的悬浮窗，将悬浮窗中的列表展开,重复检查三次
+    setTimeout(Suspended,1000)
+    var jisu=0;
+    function Suspended(){
+        jisu++;
+        var y=false;
+        if(jisu==3)return
+        var Sd=document.querySelectorAll("[data-oid]");
+        if(Sd.length>=1){ //如果找到那么就将悬浮窗中列表展开
+            for (let index = 0; index < Sd.length; index++) {
+                const element = Sd[index];
+                var item=element.children[1].children[0].children[1].children[0].children[0];
+                if(item==null)continue;
+                if(item.getAttribute("data-node-id")==previewID){
+                    item.setAttribute("fold",0);
+                    y=true;
+                }
+            }
+        }
+        if(!y){setTimeout(Suspended,800)}
     }
 }
-
-
-
-
-
-
-
 
 
 
@@ -1353,10 +1388,7 @@ function getHBuiderXToolbar() { return document.getElementById(HBuiderXToolbarID
 
 /**简单判断目前思源是否是手机模式 */
 function isPhone() { 
-    if(document.getElementById(SiYuanToolbarID)==null){
-        return true;
-    }    
-    return false; 
+    return document.getElementById(SiYuanToolbarID)==null;
 }
 
 
@@ -1672,6 +1704,7 @@ async function 解析响应体(response) {
 
 
 
+
   
 (function (w, und) { Refresh() }(window, undefined));
 
@@ -1709,7 +1742,10 @@ function Refresh() {
             
             showDocumentCreationDate();//为打开文档标题下面显示文档创建日期
             
+            autoOpenList();//自动展开悬浮窗内折叠列表（第一次折叠）
+
             collapsedListPreview();//折叠列表内容预览查看
+
 
 
             loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
