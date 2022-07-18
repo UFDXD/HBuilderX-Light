@@ -1,7 +1,12 @@
 /*目标：能看就行*/
 
-/*测试样式*/
-/*@import url(customizeStyle/test.css);*/
+/*----------测试样式---------*/
+/*段落首行缩进*/
+/*@import url(customizeStyle/test-FirstLineInDent.css);*/
+/*作者土嗨自用*/
+/*@import url(customizeStyle/test-Dragon.css);*/
+
+/*----------测试样式---------*/
 
 
 :root {
@@ -1093,97 +1098,6 @@ div.fn__flex-1.fn__flex-column.file-tree.sy__backlink{
     overflow-x: hidden !important;
 }
 
-/*禁止软件主体区域出现横滚动条*/
-/*#layouts>div.fn__flex.fn__flex-1{
-	overflow-x:hidden !important;
-}*/
-
-/*文档树区域禁止出现横滚动条*/
-/*div [data-type="navigation"]{
-	overflow-x:hidden ;
-}*/
-/*已关闭笔记本区域禁止出现横滚动条*/
-/*div[data-type="wnd"]>.layout-tab-container>.fn__flex-column>.b3-list.fn__flex-column.fn__flex-1>.fn__flex-1{
-	overflow-x:hidden ;
-}*/
-
-/*禁止书签，标签出现横滚动条*/
-/*div[data-type="wnd"]>.layout-tab-container>.fn__flex-column>.fn__flex-1{
-	overflow-x:hidden ;
-}*/
-
-/*禁止右工具区域出现横滚动条*/
-/*div.fn__flex-1.fn__flex-column.file-tree.sy__backlink{
-	overflow-x:hidden ;
-}*/
-
-/*大纲树区域禁止出现横滚动条*/
-/*div.fn__flex-1.fn__flex-column.file-tree.sy__outline{
-   overflow-x:hidden ;
-}*/
-
-/*反链区域禁止出现横滚动条*/
-/*.backlinkList{
-	overflow-x:hidden ;
-}*/
-/*提及区域禁止出现滚动条*/
-/*.backlinkMList{
-	overflow-x:hidden ;
-}*/
-
-
-/*/弹出块面板禁止出现横滚动条*/
-/*div[data-type="wnd"]>.layout-tab-container>.protyle>.b3-menu.b3-list.b3-list--background{
-	overflow-x:hidden !important;
-}*/
-
-/*禁止/面板子项弹出面板出现横滚动条*/
-/*div[data-type="wnd"]>.layout-tab-container>.fn__flex-1.protyle>.protyle-util>.fn__flex-column>.b3-list.fn__flex-1.b3-list--background{
-	overflow-x:hidden !important;
-}*/
-
-/*设置面板左列表区域禁止出现横滚动条*/
-/*.b3-dialog--open>.b3-dialog>.b3-dialog__container>div>.fn__flex-column>div.fn__flex-1.fn__flex>ul{
-	overflow-x:hidden !important;
-}*/
-
-/*禁止数据历史面板左历史列表出现横滚动条*/
-/*#historyContainer>.fn__block>.b3-list--background{
-	overflow-x:hidden !important;
-}*/
-
-/*禁止编辑主体出现竖滚动条*/
-/*div.fn__flex.fn__flex-1{
-    overflow-y:hidden !important;
-}*/
-/*禁止主体编辑区域出现竖滚动条*/
-/*div.fn__flex-column.fn__flex-1{
-	overflow-y:hidden !important;
-}*/
-
-/*禁止思源标签索引面板出现横滚动条*/
-/*#globalSearchList{
-	overflow-x:hidden !important;
-}*/
-
-
-/*禁止文档标签定义选择列表出现横滚动条*/
-/*#commonMenu>.fn__flex-column>div.b3-list.fn__flex-1.b3-list--background{
-	overflow-x:hidden !important;
-}*/
-
-/*禁止搜索类面板搜索历史列表出现横滚动条*/
-/*#searchHistoryList{
-	overflow-x:hidden !important;
-}*/
-
-/*ul.b3-list.b3-list--background{
-	overflow-x:hidden !important;
-}*/
-
-
-
-
 /*——————————————————别名，命名，备注提示*/
 
 /*块别名，命名，备注提示容器*/
@@ -1458,6 +1372,7 @@ blockquote {
 /*图片*/
 div [data-type="img"] {
     margin-top: -3px !important;
+    box-shadow: 0px 0px 2px 0px rgba(4, 27, 21, 0.148) !important;
 }
 
 /*思源标签*/
