@@ -20,7 +20,7 @@
 
 | 使用的                                                                                         | 作者                                                  |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
-| [notion-theme](https://github.com/royc01/notion-theme)主题的一些动画、列表转导图css，js代码。  | [Roy](https://github.com/royc01)                      |
+| [notion-theme](https://github.com/royc01/notion-theme)主题的一些动画、列表转导图css，js代码、无序列表图标样式。  | [Roy](https://github.com/royc01)                      |
 | [tsundoku-light](https://github.com/Achuan-2/siyuan-themes-tsundoku-light)主题的纸张背景图片。 | [Achuan-2](https://github.com/Achuan-2 "Creator")<br />      |
 | [zhang-light](https://github.com/UserZYF/zhang-light)主题的部分css代码。                       | [UserZYF](https://github.com/UserZYF)<br />               |
 | 链滴社区发布的[ctrl+p窗口改造](https://ld246.com/article/1648269766832)。                      | 链滴社区id：abbj<br />                                    |
