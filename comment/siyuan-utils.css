@@ -47,9 +47,9 @@ strong[style="blank"]:hover{
 
 /* Inline comment */
 strong[style*="quote"]{
-  border-bottom: 2px solid rgba(255, 72, 0, 0.856);
+  border-bottom: 1px solid rgba(255, 72, 0, 0.856);
   background-color: rgba(255, 0, 128, 0.082);
-  padding-bottom: 1px;
+  /*padding-bottom: 1px;*/
   font-weight: normal;
 }
 strong[style*="quote"]:hover{
