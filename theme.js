@@ -1202,7 +1202,9 @@ function LIstIns(e) {
         var Y = timeDiv.offsetTop;
         timeDiv.remove();
 
-        items = obj.parentElement.parentElement.children
+        var item=obj.parentElement.parentElement;
+        if(item==null)return;
+        items = item.children
         var itemobj = items[items.length - 1];
         if (itemobj != null && itemobj.getAttribute("triggerBlock") != null) {
 
@@ -1755,6 +1757,7 @@ function simpleRemarksEvent(e) {
                         left:${e.clientX + 40}px;
                         top:${e.clientY}px;
                         z-index:999`;
+    AddEvent(tilte,"mouseout",()=>{tilte.remove();})
 
     txtStr = dataTitle.slice(2, dataTitle.length);
     for (let index = 0; index < 20; index++) {
@@ -1858,6 +1861,31 @@ function removeDefaultIndent(){
 }
 
 
+/**----------------------------------点击过的思源超链接超链接会变色----------------------------------*/
+
+function hyperlinkClickColorChange() {
+    setInterval(() => {
+        var a = [...document.querySelectorAll('.layout-tab-container>.fn__flex-1.protyle:not(.fn__none) span[data-type="a"]:not([color-a])'),
+        ...document.querySelectorAll('[data-oid] span[data-type="a"]:not([color-a]'),
+        ...document.querySelectorAll('#searchPreview span[data-type="a"]:not([color-a]')];
+
+        for (let index = 0; index < a.length; index++) {
+            const element = a[index];
+            AddEvent(element, "click", () => {
+                var datatype = element.getAttribute("data-type");
+                if (datatype == null || datatype != "a") return;
+                var datatitle = element.getAttribute("data-title");
+                var datahref = element.getAttribute("data-href");
+                if (datatitle != null && datatitle.length >= 2 && datatitle[0] == "/" && datatitle[1] == "/") return;
+                if (datahref != null && datahref.length >= 2 && datahref[0] == "/" && datahref[1] == "/") return;
+                element.style.color = "rgb(119,28,170)";
+                AddEvent(element,"mouseover",()=>{element.style.borderBottom="1px solid rgb(119,28,170)";});
+                AddEvent(element,"mouseout",()=>{element.style.borderBottom="none";});
+            })
+            element.setAttribute("color-a",true);
+        }
+    }, 3000)
+}
 
 
 
@@ -2503,6 +2531,9 @@ setTimeout(() => {
 
         adjustDocumentLabelsWhile()//调整文档头部区域，在emj 标签，头图 各种情况下的布局
 
+        hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
+
+
     } else {
 
         createHBuiderXToolbar();//创建BuiderXToolbar
@@ -2538,6 +2569,8 @@ setTimeout(() => {
         findMatchingListEntries();//查找匹配列表条目前的图标可以鼠标悬停打开悬浮窗
 
         removeDefaultIndent();//开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进
+
+        hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
 
         loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
         console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
