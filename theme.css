@@ -294,7 +294,9 @@ body {
 }
 
 
-
+.protyle-content{
+    letter-spacing:0.2px;
+}
 
 
 /*+++++++++++++++++++++++++++++软件非编辑区域+++++++++++++++++++++++++++++*/
@@ -1358,11 +1360,16 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
 /*块别名，命名，备注提示容器*/
 .protyle-attr {
     background-color: rgba(240, 248, 255, 0.443);
-    font-size:65%;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(189, 189, 189, 0.057) inset !important;
+    line-height: 1;
+    font-size: 14px;
+    z-index: 1;
 }
 
 /*别名*/
 .protyle-attr--alias {
+    line-height: 14px;
 }
 
 .protyle-attr--alias::before {
@@ -1370,11 +1377,13 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
     content: "+别名：";
     border-radius: 15px;
     color: rgb(35, 119, 34);
+    line-height: 14px;
     font-weight: bolder;
 }
 
 /*书签*/
 .protyle-attr--bookmark {
+    line-height: 14px;
 }
 
 .protyle-attr--bookmark::before {
@@ -1382,11 +1391,14 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
     content: "+书签：";
     border-radius: 15px;
     color: rgb(35, 119, 34);
+    line-height: 14px;
     font-weight: bolder;
+
 }
 
 /*命名*/
 .protyle-attr--name {
+    line-height: 14px;
 }
 
 .protyle-attr--name::before {
@@ -1394,6 +1406,7 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
     content: "+命名：";
     border-radius: 15px;
     color: rgb(35, 119, 34);
+    line-height: 14px;
     font-weight: bolder;
 }
 
@@ -1408,27 +1421,26 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
 
 /*备注*/
 .protyle-attr>.b3-tooltips {
-    min-width: 45px !important;
-    margin-left: -5px !important;
-
+    line-height: 14px;
+    padding-right: 2px;
 }
 
 /*备注伪元素*/
 .protyle-attr>.b3-tooltips::before {
-    display: block;
     position: static;
-    width: 45px;
-    height: 100%;
     border: none !important;
     margin-right: 0;
     content: "+备注";
     text-align: right;
     color: rgb(35, 119, 34);
-    font-size: 13px;
+    line-height: 14px;
     font-weight: bolder;
     opacity: 1;
     transform: none;
     transition: none;
+}
+.protyle-attr>.b3-tooltips:hover::before {
+    width: auto;
 }
 
 .protyle-attr>.b3-tooltips:hover::after {
