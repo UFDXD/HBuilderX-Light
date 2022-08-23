@@ -1,0 +1,6 @@
+/*聚焦放大*/
+
+div.protyle-content>[data-doc-type]:not([data-doc-type="NodeDocument"]){
+    padding: 16px 26px 191.5px !important;
+    font-size: 200% !important;
+}
