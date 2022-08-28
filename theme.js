@@ -1202,8 +1202,8 @@ function LIstIns(e) {
         var Y = timeDiv.offsetTop;
         timeDiv.remove();
 
-        var item=obj.parentElement.parentElement;
-        if(item==null)return;
+        var item = obj.parentElement.parentElement;
+        if (item == null) return;
         items = item.children
         var itemobj = items[items.length - 1];
         if (itemobj != null && itemobj.getAttribute("triggerBlock") != null) {
@@ -1302,18 +1302,18 @@ function CreatetriggerBlock(e) {
     //获取折叠列表ID,设置悬浮窗
     var previewID = objParent.parentElement.getAttribute("data-node-id");
     triggerBlock.setAttribute("class", "protyle-attr");
-    triggerBlock.style.backgroundColor="transparent";
+    triggerBlock.style.backgroundColor = "transparent";
 
-     //在触发块内创建思源超链接 
-     triggerBlock.innerHTML = "<span data-type='a' class='list-A' data-href=siyuan://blocks/" + previewID + ">####</span>";
-     //将这个思源连接样式隐藏
-     var a = triggerBlock.children[0];
-     a.style.fontSize = "15px";
-     a.style.lineHeight= "15px";
-     a.style.color = "transparent";
-     a.style.textShadow = "none";
-     a.style.border = "none";
- 
+    //在触发块内创建思源超链接 
+    triggerBlock.innerHTML = "<span data-type='a' class='list-A' data-href=siyuan://blocks/" + previewID + ">####</span>";
+    //将这个思源连接样式隐藏
+    var a = triggerBlock.children[0];
+    a.style.fontSize = "15px";
+    a.style.lineHeight = "15px";
+    a.style.color = "transparent";
+    a.style.textShadow = "none";
+    a.style.border = "none";
+
     return triggerBlock;
 }
 
@@ -1322,19 +1322,29 @@ function CreatetriggerBlock(e) {
 
 /**----------------鼠标中键标题、列表文本折叠/展开----------------*/
 function collapseExpand_Head_List() {
-
+    var flag45 = false;
     setInterval(() => {
-        var NodeHeading = [...document.querySelectorAll('.layout-tab-container>.fn__flex-1.protyle:not(.fn__none) [data-type="NodeHeading"]'),
-        ...document.querySelectorAll('[data-oid] [data-type="NodeHeading"]'),
-        ...document.querySelectorAll('#searchPreview [data-type="NodeHeading"]')];
+
+        var NodeHeading = null;
+        var NodeListItem = null;
+
+        if (isPhone()) {
+            NodeHeading = document.querySelectorAll('#editor [data-type="NodeHeading"]');
+            NodeListItem = document.querySelectorAll('#editor [data-type="NodeListItem"].li');
+        } else {
+            NodeHeading = [...document.querySelectorAll('.layout-tab-container>.fn__flex-1.protyle:not(.fn__none) [data-type="NodeHeading"]'),
+            ...document.querySelectorAll('[data-oid] [data-type="NodeHeading"]'),
+            ...document.querySelectorAll('#searchPreview [data-type="NodeHeading"]')];
 
 
-        var NodeListItem = [...document.querySelectorAll('.layout-tab-container>.fn__flex-1.protyle:not(.fn__none) [data-type="NodeListItem"].li'),
-        ...document.querySelectorAll('[data-oid] [data-type="NodeListItem"].li'),
-        ...document.querySelectorAll('#searchPreview [data-type="NodeListItem"].li')];
-
+            NodeListItem = [...document.querySelectorAll('.layout-tab-container>.fn__flex-1.protyle:not(.fn__none) [data-type="NodeListItem"].li'),
+            ...document.querySelectorAll('[data-oid] [data-type="NodeListItem"].li'),
+            ...document.querySelectorAll('#searchPreview [data-type="NodeListItem"].li')];
+        }
 
         var H = [];
+
+
         for (let index = 0; index < NodeHeading.length; index++) {
             const element = NodeHeading[index];
             var item = element.parentElement;
@@ -1345,6 +1355,7 @@ function collapseExpand_Head_List() {
             myRemoveEvent(element, "mousedown", _collapseExpand_NodeListItem);
             myRemoveEvent(element, "mousedown", _collapseExpand_NodeHeading);
             AddEvent(element, "mousedown", _collapseExpand_NodeHeading)
+            AddEvent(element, "mouseup", () => { flag45 = false })
         }
 
 
@@ -1353,21 +1364,26 @@ function collapseExpand_Head_List() {
             myRemoveEvent(element, "mousedown", _collapseExpand_NodeHeading);
             myRemoveEvent(element, "mousedown", _collapseExpand_NodeListItem);
             AddEvent(element, "mousedown", _collapseExpand_NodeListItem)
+            AddEvent(element, "mouseup", () => { flag45 = false })
         }
     }, 3000);
 
+
+
     function _collapseExpand_NodeHeading(e) {
-        if (e.button != 1) return;
+        if (e.button == 2) { fflag45lag = true; return }
+        if (flag45 || e.shiftKey || e.altKey || e.button != 1) return;
         e.preventDefault();
         protyle_gutters_click(e.target);
     }
 
     function _collapseExpand_NodeListItem(e) {
-        if (e.button != 1) return;
+        if (e.button == 2) { flag45 = true; return }
+        if (flag45 || e.shiftKey || e.altKey || e.button != 1) return;
         e.preventDefault();
         var element = e.target;
         var i = 0;
-        while (element.getAttribute("contenteditable")==null) {
+        while (element.getAttribute("contenteditable") == null) {
             if (i == 999) return;
             i++;
             element = element.parentElement;
@@ -1384,12 +1400,12 @@ function collapseExpand_Head_List() {
 
     function commonMenu_click(element) {
 
-        var elementParentElement=element.parentElement;
-        var data_node_id=elementParentElement.getAttribute("data-node-id");
-        var elementParentElementParentElement=elementParentElement.parentElement;
+        var elementParentElement = element.parentElement;
+        var data_node_id = elementParentElement.getAttribute("data-node-id");
+        var elementParentElementParentElement = elementParentElement.parentElement;
 
-        if(elementParentElementParentElement.className=="protyle-wysiwyg protyle-wysiwyg--attr"){
-            if(elementParentElementParentElement.children[0].getAttribute("data-node-id")==data_node_id){
+        if (elementParentElementParentElement.className == "protyle-wysiwyg protyle-wysiwyg--attr") {
+            if (elementParentElementParentElement.children[0].getAttribute("data-node-id") == data_node_id) {
                 return;
             }
         }
@@ -1405,7 +1421,7 @@ function collapseExpand_Head_List() {
 
     function protyle_gutters_click(element) {
         var i = 0;
-        while (element.className != "fn__flex-1 protyle"&&element.className!="block__edit fn__flex-1 protyle" && element.className!="fn__flex-1 spread-search__preview protyle") {
+        while (element.className != "fn__flex-1 protyle" && element.className != "block__edit fn__flex-1 protyle" && element.className != "fn__flex-1 spread-search__preview protyle") {
             if (i == 999) return;
             i++;
             element = element.parentElement;
@@ -1721,21 +1737,22 @@ function simpleRemarksEvent(e) {
     tiltes = [];
 
     var tooltip = document.getElementById("tooltip");
-    if (tooltip == null) return;
-    tooltip.style.display = "none";
+    if (tooltip != null) {
+        tooltip.style.display = "none";
+    };
     var element = e.target;
 
     var dataTitle = element.getAttribute("data-title");
 
     if (dataTitle == null) {
-        tooltip.style.display = "block";
+        if (tooltip != null) tooltip.style.display = "block";
         element.removeAttribute("simpleRemarks");
         myRemoveEvent(element, "mouseenter", simpleRemarksEvent);
         return;
     }
 
     if (dataTitle[0] != "/" || dataTitle[1] != "/") {
-        tooltip.style.display = "block";
+        if (tooltip != null) tooltip.style.display = "block";
         element.removeAttribute("simpleRemarks");
         myRemoveEvent(element, "mouseenter", simpleRemarksEvent);
         return;
@@ -1749,15 +1766,15 @@ function simpleRemarksEvent(e) {
                         min-width:380px;
                         max-width:680px;
                         word-break: break-all;
-                        color:rgba(109,108,108);
-                        background:rgba(255,250,233);
+                        color:rgb(109,108,108);
+                        background:rgb(255,250,233);
                         font-weight:lighter;
                         font-size:140%;
                         box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
                         left:${e.clientX + 40}px;
                         top:${e.clientY}px;
                         z-index:999`;
-    AddEvent(tilte,"mouseout",()=>{tilte.remove();})
+    AddEvent(tilte, "mouseout", () => { tilte.remove(); })
 
     txtStr = dataTitle.slice(2, dataTitle.length);
     for (let index = 0; index < 20; index++) {
@@ -1772,7 +1789,7 @@ function simpleRemarksEvent(e) {
         txtStr = "空备注"
     }
 
-    dataTitle = "<div style='font-size:60%;text-align:center; background:rgba(101,168,99); color:rgba(255,255,255); border-top-left-radius:4px; border-top-right-radius:4px;'><span>简单备注</span></div><div style='padding-top:6px;padding-left: 10px; padding-right:8px;padding-bottom: 6px;'>" + txtStr + "</div>";
+    dataTitle = "<div style='font-size:60%;text-align:center; background:rgb(101,168,99); color:rgb(255,255,255); border-top-left-radius:4px; border-top-right-radius:4px;'><span>简单备注</span></div><div style='padding-top:6px;padding-left: 10px; padding-right:8px;padding-bottom: 6px;'>" + txtStr + "</div>";
     tilte.innerHTML = dataTitle;
     if (element.getAttribute("title") != null) {
         setTimeout(() => {
@@ -1805,7 +1822,7 @@ function _findMatchingListEntries() {
             //element.setAttribute("title",b3_list_item__text.innerText);
 
             var itemlianjie = element.children[0];
-            if (itemlianjie==null||itemlianjie.getAttribute("data-defids") != null) break;
+            if (itemlianjie == null || itemlianjie.getAttribute("data-defids") != null) break;
             itemlianjie.setAttribute("data-defids", '[""]');
             itemlianjie.setAttribute("class", "b3-list-item__graphic popover__block");
             itemlianjie.setAttribute("data-id", element.getAttribute("data-node-id"));
@@ -1829,35 +1846,46 @@ function _findMatchingListEntries() {
 }
 
 /**----------------------------------开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进-------------------------------- */
-function removeDefaultIndent(){
+function removeDefaultIndent() {
 
-    AddEvent(document.body,"dblclick",(e)=>{
-        if(getComputedStyle(document.getElementsByTagName("head")[0]).backgroundColor!="rgba(0, 0, 0, 0)")return;
-        var element=e.target;
+    AddEvent(document.body, "dblclick", (e) => {
+
+        var toolbarEdit = document.querySelector("svg#toolbarEdit.toolbar__icon");
+        if(toolbarEdit!=null){
+            var iconEdit = toolbarEdit.children[0];
+            var xlink_href = iconEdit.getAttribute("xlink:href");
+            if (xlink_href == "#iconEdit") {
+                return;
+            }
+        }
+        
+
+        if (getComputedStyle(document.getElementsByTagName("head")[0]).backgroundColor != "rgba(0, 0, 0, 0)") return;
+        var element = e.target;
         if ((window.getSelection ? window.getSelection() : document.selection.createRange().text).toString().length != 0) return;
 
         e.preventDefault();
-        if(element.getAttribute("contenteditable")==null)return;
+        if (element.getAttribute("contenteditable") == null) return;
 
-        var item=element.parentElement;
-        if(item!=null&&item.className!="p")return;
-        item=element.parentElement.previousElementSibling;
-        if(item!=null&&item.getAttribute("draggable")!=null)return;
+        var item = element.parentElement;
+        if (item != null && item.className != "p") return;
+        item = element.parentElement.previousElementSibling;
+        if (item != null && item.getAttribute("draggable") != null) return;
 
-        var element=element.parentElement;
-        var data_node_id=element.getAttribute("data-node-id");
+        var element = element.parentElement;
+        var data_node_id = element.getAttribute("data-node-id");
 
-        var custom_indent=element.getAttribute("custom-indent");
-        if(custom_indent==null||custom_indent=="true"){
-            element.setAttribute("custom-indent",false);
-            设置思源块属性(data_node_id,{"custom-indent":"false"});
+        var custom_indent = element.getAttribute("custom-indent");
+        if (custom_indent == null || custom_indent == "true") {
+            element.setAttribute("custom-indent", false);
+            设置思源块属性(data_node_id, { "custom-indent": "false" });
 
-        }else{
-            element.setAttribute("custom-indent",true);
-            设置思源块属性(data_node_id,{"custom-indent":"true"});
+        } else {
+            element.setAttribute("custom-indent", true);
+            设置思源块属性(data_node_id, { "custom-indent": "true" });
 
         }
-    }); 
+    });
 }
 
 
@@ -1879,13 +1907,661 @@ function hyperlinkClickColorChange() {
                 if (datatitle != null && datatitle.length >= 2 && datatitle[0] == "/" && datatitle[1] == "/") return;
                 if (datahref != null && datahref.length >= 2 && datahref[0] == "/" && datahref[1] == "/") return;
                 element.style.color = "rgb(119,28,170)";
-                AddEvent(element,"mouseover",()=>{element.style.borderBottom="1px solid rgb(119,28,170)";});
-                AddEvent(element,"mouseout",()=>{element.style.borderBottom="none";});
+                AddEvent(element, "mouseover", () => { element.style.borderBottom = "1px solid rgb(119,28,170)"; });
+                AddEvent(element, "mouseout", () => { element.style.borderBottom = "none"; });
             })
-            element.setAttribute("color-a",true);
+            element.setAttribute("color-a", true);
         }
     }, 3000)
 }
+
+
+
+/*********************************************************Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版*****START*********************************/
+//感谢Dark作者，其他主题作者搬运需附加详情原出处来自Dark+。
+//鼠标右键+中键打开移动端新窗口，alt+鼠标中键打来PC端窗口
+function newOpenWindow() {
+
+    let _menuParams = [
+        {
+            label: 'SiYuan',
+            submenu: [
+                {
+                    label: 'About SiYuan',
+                    role: 'about',
+                },
+                { type: 'separator' },
+                { role: 'services' },
+                { type: 'separator' },
+                {
+                    label: 'Hide SiYuan',
+                    role: 'hide',
+                },
+                { role: 'hideOthers' },
+                { role: 'unhide' },
+                { type: 'separator' },
+                {
+                    label: 'Quit SiYuan',
+                    role: 'quit',
+                },
+            ],
+        },
+        {
+            role: 'editMenu',
+            submenu: [
+                { role: 'selectAll' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                { role: 'pasteAndMatchStyle', accelerator: 'CmdOrCtrl+Shift+V' },
+                { type: 'separator' },
+                { role: 'toggleSpellChecker' },
+            ],
+        },
+        {
+            role: 'viewMenu',
+            submenu: [
+                { role: 'resetZoom' },
+                { role: 'zoomIn', accelerator: 'CmdOrCtrl+=' },
+                { role: 'zoomOut' },
+            ],
+        },
+        {
+            role: 'windowMenu',
+            submenu: [
+                { role: 'minimize' },
+                { role: 'zoom' },
+                { role: 'togglefullscreen' },
+                { type: 'separator' },
+                { role: 'toggledevtools' },
+                { type: 'separator' },
+                { role: 'front' },
+                { type: 'separator' },
+                { role: 'reload', accelerator: 'F5' },
+                { role: 'forcereload', accelerator: 'CmdOrCtrl+F5' },
+                { role: 'close' },
+                { type: 'separator' },
+                {
+                    label: 'Pinned',
+                    click: (menuItem, browserWindow, event) => {
+                        if (browserWindow) browserWindow.setAlwaysOnTop(!browserWindow.isAlwaysOnTop());
+                    },
+                    type: 'checkbox',
+                    checked: true,
+                    accelerator: 'Alt+Shift+P',
+                },
+            ],
+        },
+    ];
+
+    let _windowParams = {
+        width: 1360, // 窗口宽度
+        height: 768, // 窗口宽度
+        frame: true, // 是否显示边缘框
+        fullscreen: false, // 是否全屏显示
+        alwaysOnTop: false, // 是否置顶显示
+        autoHideMenuBar: true, // 是否隐藏菜单栏(使用 Alt 显示)
+        webPreferences: {
+            nodeIntegration: true, // 是否启用 Node.js 内置模块
+            nativeWindowOpen: true,
+            webSecurity: false, // 是否启用 Web 安全
+        }
+    }
+
+
+    let _id = /^\d{14}\-[0-9a-z]{7}$/;
+    let _url = /^siyuan:\/\/blocks\/(\d{14}\-[0-9a-z]{7})\/*(?:(?:\?)(\w+=\w+)(?:(?:\&)(\w+=\w+))*)?$/;
+
+
+    function isObject(obj) {
+        return Object.prototype.toString.call(obj) === '[object Object]'
+    }
+    function isArray(arr) {
+        return Array.isArray(arr)
+    }
+    function merge(target, ...arg) {
+        return arg.reduce((acc, cur) => {
+            return Object.keys(cur).reduce((subAcc, key) => {
+                const srcVal = cur[key]
+                if (isObject(srcVal)) {
+                    subAcc[key] = merge(subAcc[key] ? subAcc[key] : {}, srcVal)
+                } else if (isArray(srcVal)) {
+                    // series: []，下层数组直接赋值
+                    subAcc[key] = srcVal.map((item, idx) => {
+                        if (isObject(item)) {
+                            const curAccVal = subAcc[key] ? subAcc[key] : []
+                            return merge(curAccVal[idx] ? curAccVal[idx] : {}, item)
+                        } else {
+                            return item
+                        }
+                    })
+                } else {
+                    subAcc[key] = srcVal
+                }
+                return subAcc
+            }, acc)
+        }, target)
+    }
+    /**
+     * 获得焦点所在的块 ID, 否则获得焦点所在文档的 ID
+     * @return {string} 块 ID 或文档 ID
+     * @return {null} 光标不在块内或文档内
+     */
+    function getFocusedID() {
+        return getFocusedBlockID() || getFocusedDocID() || null;
+    }
+    /**
+     * 获得焦点所在块 ID
+     * @return {string} 块 ID
+     * @return {null} 光标不在块内
+     */
+    function getFocusedBlockID() {
+        let block = getFocusedBlock();
+        if (block) {
+            return block.dataset.nodeId;
+        }
+        else return null;
+    }
+    /**
+     * 获得焦点所在的块
+     * @return {HTMLElement} 光标所在块
+     * @return {null} 光标不在块内
+     */
+    function getFocusedBlock() {
+        let block = window.getSelection()
+            && window.getSelection().focusNode
+            && window.getSelection().focusNode.parentElement; // 当前光标
+        while (block != null && block.dataset.nodeId == null) block = block.parentElement;
+        return block;
+    }
+    /**
+     * 获得焦点所在文档的 ID
+     * @return {string} 文档 ID
+     * @return {null} 没有聚焦的文档
+     */
+    function getFocusedDocID() {
+        let background = getFocusedDocBackground();
+        if (background) {
+            return background.dataset.nodeId;
+        }
+        else return null;
+    }
+    /**
+     * 获得焦点所在文档的背景
+     * @return {HTMLElement} 焦点所在文档的背景
+     * @return {null} 没有聚焦的文档
+     */
+    function getFocusedDocBackground() {
+        return document.querySelector('div.layout__wnd--active div.protyle:not(.fn__none) > div.protyle-content > div.protyle-background')
+            || document.querySelector('#editor > div.protyle-content > div.protyle-background')
+            || null;
+    }
+    /**
+     * 获得目标的块 ID
+     * @params {HTMLElement} target: 目标
+     * @return {string} 块 ID
+     * @return {null} 没有找到块 ID
+     */
+    function getTargetBlockID(target) {
+        let element = target;
+        while (element != null
+            && !(element.localName === 'a' && element.href
+                || element.dataset.href
+                || _id.test(element.dataset.nodeId)
+                || _id.test(element.dataset.oid)
+                || _id.test(element.dataset.id)
+                || _id.test(element.dataset.rootId)
+            )) element = element.parentElement;
+
+        if (element != null) {
+            if (_id.test(element.dataset.nodeId)) return element.dataset.nodeId;
+            if (_id.test(element.dataset.oid)) return element.dataset.oid;
+            if (_id.test(element.dataset.id)) return element.dataset.id;
+            if (_id.test(element.dataset.oid)) return element.dataset.rootId;
+            if (_url.test(element.dataset.href)) return url2id(element.dataset.href);
+            if (_url.test(element.href)) return url2id(element.href);
+            return element.href || element.dataset.href || null;
+        }
+        else return null;
+    }
+    function url2id(url) {
+        let results = _url.exec(url);
+        if (results && results.length >= 2) {
+            return results[1];
+        }
+        return null;
+    }
+
+
+
+    /**
+     * 切换编辑模式
+     * @param {number} mode 0: 只读模式, 1: 编辑模式
+     */
+    function changeEditMode(mode = 0) { // 切换编辑模式
+
+        let toolbarEdit = document.getElementById('toolbarEdit');
+        if (toolbarEdit) {
+            let editable = toolbarEdit.firstElementChild.getAttribute('xlink:href') === '#iconPreview';
+
+            let event = new MouseEvent('click');
+            switch (mode) {
+                case 0:
+                    if (editable) toolbarEdit.dispatchEvent(event);
+                    else return;
+                case 1:
+                    if (!editable) toolbarEdit.dispatchEvent(event);
+                    else return;
+                default:
+                    throw new Error(`/script/utils/misc.js changeEditMode(${mode})`);
+            }
+        }
+    }
+    /**
+     * 跳转到指定块并可选聚焦
+     */
+    function windowjump(id, callback = null) {
+        const editor = document.querySelector('div.protyle-wysiwyg div[data-node-id] div[contenteditable][spellcheck]');
+        if (editor) {
+            let ref = document.createElement("span");
+            ref.setAttribute("data-type", "block-ref");
+            ref.setAttribute("data-subtype", "s");
+            ref.setAttribute("data-id", id);
+            editor.appendChild(ref);
+            ref.click();
+            ref.remove();
+
+            var reg = new RegExp('<[^>]+>', 'gi');  //过滤所有的html标签，不包括内容
+          
+            /**更改子窗口标题 */
+            setTimeout(()=>{
+                var title = document.querySelector("title");
+                if (id == null) {
+                    title.innerText = "[#] 思源子窗口 - HBuilderX-Light [#]";
+                    return;
+                };
+                titleTxt(id);
+
+                AddEvent(document.body, "click", (e) => {
+                    var title = document.querySelector("title");
+                    var TargetBlockID = getTargetBlockID(e.target);
+                    if (TargetBlockID == null) {
+                        title.innerText = "[#] 思源子窗口 - HBuilderX-Light [#]";
+                        return;
+                    };
+                    titleTxt(TargetBlockID);
+                })
+
+                function titleTxt(TargetBlockID){
+                
+                    以id获取文档聚焦内容(TargetBlockID, (v) => {
+                        var htmltxt = v.content;
+    
+                        var element = document.createElement("div");
+                        element.innerHTML=htmltxt;
+    
+                        htmltxt= diguiTooONE(element,(v)=>{
+                            return v.getAttribute("contenteditable")=="true";
+                        })
+                        
+                        var txt = (htmltxt.innerText).replace(reg, '');
+                        if (txt == "​"||txt=="") {
+                            txt = "[#] 思源子窗口 - HBuilderX-Light [#]";
+                            根据ID获取人类可读路径(TargetBlockID,(v)=>{
+                                title.innerText ="[#] "+v.substring(1, v.length)+" [#]";
+                            })
+                            return;
+                        }
+                        if(txt.length>25){
+                            title.innerText ="[#] "+txt.substring(0,25)+"...";
+                        }else{
+                            title.innerText ="[#] "+txt+" [#]";
+                        }
+                        
+                        element.remove();
+                       
+                    });
+                }
+            },2000)
+
+            if (typeof callback === 'function') setTimeout(callback, 250);
+        }
+        else setTimeout(() => windowjump(id, callback), 250);
+    }
+    /**
+     * 跳转到指定块并聚焦
+     * 问题: 文档名不改变
+     */
+    function focalize(id, callback = null) {
+        // console.log('focalize:', id);
+        const breadcrumbs = document.querySelector('.protyle-breadcrumb>.protyle-breadcrumb__bar');
+        if (breadcrumbs) {
+            let crumb = document.createElement("span");
+            crumb.className = 'protyle-breadcrumb__item';
+            crumb.setAttribute("data-node-id", id);
+            breadcrumbs.appendChild(crumb);
+            crumb.click();
+            // crumb.dispatchEvent(CTRL_CLICK_EVENT);
+            crumb.remove();
+            if (typeof callback === 'function') setTimeout(callback, 250);
+        }
+        else setTimeout(() => focalize(id, callback), 250);
+    }
+    async function windowGoto(id, focus = 0, editable = 0) {
+        // 是否聚焦
+        if (parseInt(focus) === 1 || focus === 'true') focalize(id);
+        else {
+            windowjump(id);
+        }
+
+        // 是否可编辑
+        if (parseInt(editable) === 1 || editable === 'true') setTimeout(() => changeEditMode(1), 0);
+        else setTimeout(() => changeEditMode(0), 0);
+    }
+    async function _jump(...args) {
+        try {
+            await windowGoto(...args);
+        } catch (e) {
+            if (e.message === args[0]) {
+                setTimeout(() => _jump(...args), 250);
+            }
+            else throw e;
+        }
+    }
+    function windowJumpToID() {
+        let url = new URL(window.location.href);
+        let id = url.searchParams.get('id');
+        let focus = url.searchParams.get('focus');
+        let editable = url.searchParams.get('editable');
+        if (_id.test(id)) {
+            setTimeout(() => _jump(id, focus, editable), 0);
+        }
+    }
+    setTimeout(() => {
+        try {
+            if (true) {
+                setTimeout(windowJumpToID, 0);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }, 0);
+
+
+    window.theme = {};
+    /**
+     * 新窗口打开
+     * @mode (string): 打开窗口模式('app', 'desktop', 'mobile')
+     * @url (string): URL
+     * @urlParams (object): URL 参数
+     * @windowParams (object): 窗体参数
+     * @menuTemplate (object): 窗口菜单栏模板
+     * @pathname (string): URL 路径名
+     * @hash (string): URL hash
+     * @consoleMessageCallback (function): 子窗口控制台输出回调
+     * @closeCallback (function): 关闭窗口时的回调函数
+     * @windowEventHandlers (array): 一组窗口的事件处理器
+     * @contentsEventHandlers (array): 一组内容的事件处理器
+     * @return (BrowserWindow): 窗口对象
+     */
+    window.theme.openNewWindow = function (
+        mode = 'mobile',
+        url = window.location.href,
+        urlParams = {},
+        windowParams = {
+            width: 720,
+            height: 480,
+            frame: true, // 是否显示边缘框
+            fullscreen: false, // 是否全屏显示
+        },
+        menuTemplate = null,
+        pathname = null,
+        hash = null,
+        consoleMessageCallback = null,
+        closeCallback = null,
+        windowEventHandlers = [],
+        contentsEventHandlers = [],
+    ) {
+        try {
+            // 优化思源内部 URL
+            url = window.theme.urlFormat(url);
+
+            // 设置窗口模式
+            if (mode) {
+                switch (mode.toLowerCase()) {
+                    case 'app':
+                        return;
+                    case 'desktop':
+                    case 'mobile':
+                        url.pathname = `/stage/build/${mode.toLowerCase()}/`;
+                        break;
+                    case 'editor':
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (pathname) url.pathname = pathname;
+            if (hash) url.hash = hash;
+            // 设置 URL 参数
+            for (const param in urlParams) {
+                url.searchParams.set(param, urlParams[param]);
+            }
+            // 打开新窗口
+            try {
+                const {
+                    BrowserWindow,
+                    Menu,
+                } = require('@electron/remote');
+                // 新建窗口(Electron 环境)
+                var newWin = new BrowserWindow(windowParams);
+                const menu = Menu.buildFromTemplate(menuTemplate);
+                console.log(url.href);
+
+                newWin.setMenu(menu);
+                newWin.loadURL(url.href);
+
+                // REF [Event: 'console-message'​](https://www.electronjs.org/docs/latest/api/web-contents#event-console-message)
+                newWin.webContents.on("console-message", (event, level, message, line, sourceId) => {
+                    if (level === 0) {
+                        switch (message) { // 通用的命令
+                            case 'WINDOW-SWITCH-PIN': // 切换窗口置顶状态
+                                // REF [win.setAlwaysOnTop(flag[, level][, relativeLevel])​](https://www.electronjs.org/zh/docs/latest/api/browser-window#winsetalwaysontopflag-level-relativelevel)
+                                newWin.setAlwaysOnTop(!newWin.isAlwaysOnTop());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    consoleMessageCallback && setTimeout(async () => consoleMessageCallback(newWin, event, level, message, line, sourceId));
+                });
+
+                if (mode) {
+                    switch (mode.toLowerCase()) {
+                        case 'editor':
+                        case 'desktop':
+                            newWin.removeMenu(); // 移除窗口的菜单栏
+                            break;
+                        case 'app':
+                        case 'mobile':
+                        default:
+                            break;
+                    }
+                }
+                for (const handler of windowEventHandlers) {
+                    newWin.on(handler.event, (...args) => handler.callback(newWin, ...args));
+                }
+                for (const handler of contentsEventHandlers) {
+                    newWin.webContents.on(handler.event, (...args) => handler.callback(newWin, ...args));
+                }
+                newWin.on('closed', () => {
+                    closeCallback && setTimeout(async () => closeCallback(newWin), 0);
+                    newWin = null;
+                })
+                return newWin;
+            }
+            catch (err) {
+                console.warn(err);
+                // 新建标签页(Web 环境)
+                // window.open(url.href, "_blank");
+                // REF [Window.open() - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/open)
+                // REF [Window open() 方法 | 菜鸟教程](https://www.runoob.com/jsref/met-win-open.html)
+                newWin = window.open(
+                    url.href,
+                    url.href,
+                    `
+                    popup = true,
+                    width = ${windowParams.width},
+                    height = ${windowParams.height},
+                `,
+                );
+                return newWin;
+            }
+        }
+        catch (err) {
+            console.error(err);
+            return null;
+        }
+    }
+    /**
+     * URL 格式化
+     * @params {string} url: 要格式化的 URL
+     * @reutrn {URL}: URL 对象
+     */
+    window.theme.urlFormat = function (url, ssl = true) {
+        switch (true) { // 格式化 URL
+            case url.startsWith('assets/'):
+            case url.startsWith('widgets/'):
+            case url.startsWith('emojies/'):
+            case url.startsWith('appearance/'):
+            case url.startsWith('export/'):
+                return new URL(`${window.location.origin}/${url}`);
+            case url.startsWith('//'):
+                return new URL(`${ssl ? 'https' : 'http'}:${url}`);
+            case url.startsWith('/'):
+                return new URL(`${window.location.origin}${url}`);
+            case url.startsWith('http://'):
+            case url.startsWith('https://'):
+                return new URL(url);
+            default:
+                return new URL(`${ssl ? 'https' : 'http'}://${url}`);
+        }
+    }
+    window.theme.languageMode = (() => window.siyuan.config.lang)();
+
+
+    function outfocusOpenAPP(id = getFocusedID(), urlParams = {}) {
+        if (id) {
+
+            urlParams.id = id;
+            urlParams.focus = 0;
+            urlParams.editable = 0;
+
+            _windowParams.width = 1360;
+            _windowParams.height = 768;
+
+            window.theme.openNewWindow(
+                undefined,
+                undefined,
+                urlParams,
+                _windowParams,
+                _menuParams,
+            );
+        }
+    }
+    function outfocusOpenWinPC(id = getFocusedID(), urlParams = {}) {
+        // 打开新窗口
+        if (id) {
+            urlParams.id = id;
+            urlParams.focus = 0;
+            urlParams.editable = 0;
+
+            const windowParams = merge({}, _windowParams, { alwaysOnTop: false })// 关闭置顶
+            windowParams.width = 1920;
+            windowParams.height = 1080;
+
+            window.theme.openNewWindow(
+                "desktop",
+                undefined,
+                urlParams,
+                windowParams,
+                _menuParams,
+            );
+        }
+    }
+    function openbrowser(target) {
+        window.theme.openNewWindow(
+            'browser',
+            target,
+            undefined,
+            _windowParams,
+            _menuParams,
+        );
+    }
+    async function middleClick(element, OpenWinFun) {
+        let target = getTargetBlockID(element);
+        // 目标非空, 是 ID 或者链接
+        if (target == "null") return;//兼容简单备注
+        if (target) {
+            if (_id.test(target)) {
+                await OpenWinFun(target);
+            } else {
+                // 是链接
+                openbrowser(target);
+            }
+        }
+    }
+
+
+    var flag = false;
+    var flag2 = false;
+    AddEvent(document.body, "mousedown", (e) => {
+
+        if (!flag && e.button == 2) {
+            flag = true; return;
+        }
+        if (flag && e.button == 1) {
+            e.preventDefault()
+            flag2 = true;
+            middleClick(e.target, outfocusOpenAPP); return;
+        }
+        if (e.altKey && e.button == 1) {
+            e.preventDefault()
+            flag2 = true;
+            middleClick(e.target, outfocusOpenWinPC); return;
+        }
+    });
+    AddEvent(document.body, "mouseup", (e) => {
+        flag = false;
+        if (flag2) {
+            setTimeout(() => {
+                var commonMenu = document.getElementById("commonMenu");
+                commonMenu.setAttribute("class", "b3-menu fn__none");
+                flag2 = false;
+            }, 0)
+        }
+
+    })
+}
+/*********************************************************Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版*****END*********************************/
+
+
+/**----------------------------------移动端双击解除只读模式---------------------------------- */
+function dblclickToReleaseReadOnly() {
+
+    AddEvent(document.body, "dblclick", (e) => {
+        if (e.button != 0) return;
+        var toolbarEdit = document.querySelector("svg#toolbarEdit.toolbar__icon");
+        var iconEdit = toolbarEdit.children[0];
+        var xlink_href = iconEdit.getAttribute("xlink:href");
+        if (xlink_href == "#iconEdit") {
+            toolbarEdit.dispatchEvent(new MouseEvent('click'));
+            e.preventDefault();
+        }
+    })
+
+}
+
 
 
 
@@ -2157,7 +2833,14 @@ async function 根据ID获取人类可读路径(内容块id, then, obj = null) {
     }).then((v) => then(v.data, obj))
 }
 
-
+async function 以id获取文档聚焦内容(id, then, obj = null) {
+    await 向思源请求数据('/api/filetree/getDoc', {
+        id: id,
+        k: "",
+        mode: 0,
+        size: 36,
+    }).then((v) => then(v.data, obj))
+}
 async function 设置思源块属性(内容块id, 属性对象) {
     let url = '/api/attr/setBlockAttrs'
     return 解析响应体(向思源请求数据(url, {
@@ -2484,7 +3167,7 @@ function diguiTooALL(element, judgeFun) {
 }
 
 /**
- * 递归DOM元素查找深度子级的第一个批符合条件的元素
+ * 递归DOM元素查找深度子级的第一个符合条件的元素
  * @param {*} element 要查找DOM元素
  * @param {*} judgeFun 查找函数 : fun(v) return true or false
  * @returns element
@@ -2515,6 +3198,19 @@ function diguiTooONE(element, judgeFun) {
 }
 
 /**
+ * 清除选中文本
+ */
+function clearSelections() {
+    if (window.getSelection) {
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+    } else if (document.selection && document.selection.empty) {
+        document.selection.empty();
+    }
+}
+
+
+/**
  * 控制台打印输出
  * @param {*} obj 
  */
@@ -2531,9 +3227,20 @@ setTimeout(() => {
 
         adjustDocumentLabelsWhile()//调整文档头部区域，在emj 标签，头图 各种情况下的布局
 
+        collapseExpand_Head_List()//鼠标中键标题、列表文本折叠/展开
+
+        simpleRemarks();//简单备注
+
+        removeDefaultIndent();//开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进
+
         hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
 
+        dblclickToReleaseReadOnly();//双击解除只读模式
 
+        newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改傻瓜便携搬运版
+
+
+        console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
     } else {
 
         createHBuiderXToolbar();//创建BuiderXToolbar
@@ -2571,6 +3278,8 @@ setTimeout(() => {
         removeDefaultIndent();//开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进
 
         hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
+
+        newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改傻瓜便携搬运版
 
         loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
         console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
