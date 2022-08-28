@@ -2196,7 +2196,18 @@ function newOpenWindow() {
                         toolbar.appendChild(items[index]);
                     }
                     windowControls=toolbar;
-                    item.remove();
+
+
+                    var drag=addinsertCreateElement(document.querySelector(".toolbar.toolbar--border"),"div");
+                        drag.style.position="fixed";
+                        drag.style.height="auto";
+                        drag.style.width="100px";
+                        drag.style.left="45%";
+                        drag.style.border="1px dashed rgba(255, 0, 0, 0.249)";
+                        drag.style.WebkitAppRegion="drag";
+                        drag.innerHTML="&#8203";
+                    
+                        item.remove();
                 }
                 else{
 
@@ -2471,7 +2482,7 @@ function newOpenWindow() {
                                     break;
                                 }
                     }
-
+                    console.log("aaa");
                     switch (message) {
                         case "最小化窗口":newWin.minimize();
                             break;
