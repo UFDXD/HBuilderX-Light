@@ -3237,7 +3237,7 @@ setTimeout(() => {
 
         dblclickToReleaseReadOnly();//双击解除只读模式
 
-        newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改傻瓜便携搬运版
+        newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
 
 
         console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
@@ -3279,7 +3279,7 @@ setTimeout(() => {
 
         hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
 
-        newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改傻瓜便携搬运版
+        newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
 
         loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
         console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
