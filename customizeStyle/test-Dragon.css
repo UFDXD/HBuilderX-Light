@@ -57,3 +57,34 @@ div.fn__flex-1.fn__flex-column.file-tree.sy__tag>.fn__flex-1{
     /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
     background-size: 100% 100%;
 }
+
+
+
+/*文字之间间距调整*/
+.protyle-content{
+    letter-spacing:0.2px;
+}
+
+/*让列表层级分明，更深层嵌套的文字更小*/
+[data-type="NodeListItem"]{
+    font-weight:300;
+   /* font-size: 99%;*/
+}
+
+[data-type="NodeListItem"]>.p:nth-child(2){
+    font-weight: 500 !important;
+   /* font-size: 101%;*/
+}
+
+/*让大纲树，文档树列表间距更小*/
+.b3-list-item:not([data-type="search-item"]):not([data-treetype="backlink"]){
+    line-height: 16px !important;
+}
+[data-treetype="backlink"]{
+    line-height: 22px;
+}
+  
+
+/*mark标签思源自动标记*/
+mark,[data-type="search-mark"]{
+}
