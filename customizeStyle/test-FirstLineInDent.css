@@ -5,12 +5,12 @@ head{
 }
 
 .p,#searchList>[data-type="search-item"]>.b3-list-item__text,#globalSearchList>[data-type="search-item"]>.b3-list-item__text{
-    text-indent: 2em;
+    text-indent: 1.75em;
 }
 
 
 [custom-indent="true"].p {
-    text-indent: 2em;
+    text-indent: 1.75em;
 }
 [custom-indent="false"].p{
     text-indent:0;
