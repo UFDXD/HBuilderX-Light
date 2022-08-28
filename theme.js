@@ -1997,6 +1997,9 @@ function newOpenWindow() {
     let _windowParams = {
         width: 1360, // 窗口宽度
         height: 768, // 窗口宽度
+        maximizable: true,
+        minimizable: true,
+        resizable: true,
         frame: true, // 是否显示边缘框
         fullscreen: false, // 是否全屏显示
         alwaysOnTop: false, // 是否置顶显示
@@ -2008,11 +2011,10 @@ function newOpenWindow() {
         }
     }
 
-
     let _id = /^\d{14}\-[0-9a-z]{7}$/;
     let _url = /^siyuan:\/\/blocks\/(\d{14}\-[0-9a-z]{7})\/*(?:(?:\?)(\w+=\w+)(?:(?:\&)(\w+=\w+))*)?$/;
 
-
+   
     function isObject(obj) {
         return Object.prototype.toString.call(obj) === '[object Object]'
     }
@@ -2171,6 +2173,97 @@ function newOpenWindow() {
             ref.click();
             ref.remove();
 
+            var isapp=false;
+            var toolbar = document.getElementById("toolbar");
+            if(toolbar==null){
+                isapp=true;
+                toolbar=document.querySelector(".toolbar.toolbar--border");
+            }
+            var windowControls=null;
+
+            if (toolbar != null) {
+                document.body.style.border="2px solid red";
+                if(isapp){
+                    var item = document.createElement("div");
+                    item.innerHTML = `<svg id="minWindow" class="toolbar__icon"><use xlink:href="#iconMin">
+                    </use></svg><svg id="maxWindow" class="toolbar__icon" style="display: flex;"><use xlink:href="#iconMax"></use></svg>
+                    <svg id="restoreWindow" class="toolbar__icon" style="display: none;"><use xlink:href="#iconRestore"></use></svg>
+                    <svg id="closeWindow" class="toolbar__icon"><use xlink:href="#iconClose"></use></svg>`;
+
+                    var items=Array.from(item.children);
+                    
+                    for (let index = 0; index < items.length; index++) {
+                        toolbar.appendChild(items[index]);
+                    }
+                    windowControls=toolbar;
+                    item.remove();
+                }
+                else{
+
+                    windowControls=addinsertCreateElement(toolbar,"div");
+                    windowControls.innerHTML = `
+                    <div class="fn__flex" style="top: -1px;z-index: 502;right: -1px;position: relative;" id="windowControls"><div class="toolbar__item toolbar__item--win b3-tooltips b3-tooltips__sw" aria-label="最小化" id="minWindow">
+                    <svg>
+                    <use xlink:href="#iconMin"></use>
+                    </svg>
+                    </div>
+                    <div aria-label="最大化" class="b3-tooltips b3-tooltips__sw toolbar__item toolbar__item--win" id="maxWindow" style="display: flex;">
+                    <svg style="height: 11px">
+                    <use xlink:href="#iconMax"></use>
+                    </svg>
+                </div>
+                <div aria-label="向下还原" class="b3-tooltips b3-tooltips__sw toolbar__item toolbar__item--win" id="restoreWindow" style="display: none;">
+                <svg>
+                <use xlink:href="#iconRestore"></use>
+                </svg>
+                </div>
+                <div aria-label="关闭" class="b3-tooltips b3-tooltips__sw toolbar__item toolbar__item--close" id="closeWindow">
+                    <svg>
+                    <use xlink:href="#iconClose"></use>
+                    </svg>
+                    </div></div>`;
+                }
+                    
+                diguiTooONE(windowControls, (v) => {
+                        if (v.id == "closeWindow") {
+                            AddEvent(v, "click", () => { console.log("关闭窗口"); })
+                            return true;
+                        }
+                    return false;
+                })
+
+                diguiTooONE(windowControls, (v) => {
+                    if (v.id == "minWindow") {
+                        AddEvent(v, "click", () => { console.log("最小化窗口"); })
+                        return true;
+                    }
+                    return false;
+                })
+                diguiTooONE(windowControls, (v) => {
+                    if (v.id == "restoreWindow") {
+                        AddEvent(v, "click", () => { 
+                            console.log("向下还原"); 
+                            v.style.display="none";
+                            v.previousElementSibling.style.display="flex";
+                        })
+                        return true;
+                    }
+                    return false;
+                })
+                diguiTooONE(windowControls, (v) => {
+                    if (v.id == "maxWindow") {
+                        AddEvent(v, "click", () => { 
+                            console.log("最大化窗口"); 
+                            v.style.display="none";
+                            v.nextElementSibling.style.display="flex";
+                        })
+                        return true;
+                    }
+                    return false;
+                })
+            }
+
+
             var reg = new RegExp('<[^>]+>', 'gi');  //过滤所有的html标签，不包括内容
           
             /**更改子窗口标题 */
@@ -2311,6 +2404,9 @@ function newOpenWindow() {
         windowParams = {
             width: 720,
             height: 480,
+            maximizable: true,
+            minimizable: true,
+            resizable: true,
             frame: true, // 是否显示边缘框
             fullscreen: false, // 是否全屏显示
         },
@@ -2321,8 +2417,10 @@ function newOpenWindow() {
         closeCallback = null,
         windowEventHandlers = [],
         contentsEventHandlers = [],
+        
     ) {
         try {
+
             // 优化思源内部 URL
             url = window.theme.urlFormat(url);
 
@@ -2366,12 +2464,25 @@ function newOpenWindow() {
                     if (level === 0) {
                         switch (message) { // 通用的命令
                             case 'WINDOW-SWITCH-PIN': // 切换窗口置顶状态
-                                // REF [win.setAlwaysOnTop(flag[, level][, relativeLevel])​](https://www.electronjs.org/zh/docs/latest/api/browser-window#winsetalwaysontopflag-level-relativelevel)
-                                newWin.setAlwaysOnTop(!newWin.isAlwaysOnTop());
+                            // REF [win.setAlwaysOnTop(flag[, level][, relativeLevel])​](https://www.electronjs.org/zh/docs/latest/api/browser-window#winsetalwaysontopflag-level-relativelevel)
+                            newWin.setAlwaysOnTop(!newWin.isAlwaysOnTop());
                                 break;
-                            default:
-                                break;
-                        }
+                                default:
+                                    break;
+                                }
+                    }
+
+                    switch (message) {
+                        case "最小化窗口":newWin.minimize();
+                            break;
+                        case "向下还原":newWin.unmaximize();
+                            break;
+                        case "最大化窗口":newWin.maximize();
+                            break;
+                        case "关闭窗口":newWin.close();
+                            break;
+                        default:
+                            break;
                     }
                     consoleMessageCallback && setTimeout(async () => consoleMessageCallback(newWin, event, level, message, line, sourceId));
                 });
@@ -2398,6 +2509,7 @@ function newOpenWindow() {
                     closeCallback && setTimeout(async () => closeCallback(newWin), 0);
                     newWin = null;
                 })
+
                 return newWin;
             }
             catch (err) {
@@ -2459,6 +2571,7 @@ function newOpenWindow() {
 
             _windowParams.width = 1360;
             _windowParams.height = 768;
+            _windowParams.frame=false;
 
             window.theme.openNewWindow(
                 undefined,
@@ -2477,8 +2590,9 @@ function newOpenWindow() {
             urlParams.editable = 0;
 
             const windowParams = merge({}, _windowParams, { alwaysOnTop: false })// 关闭置顶
-            windowParams.width = 1920;
-            windowParams.height = 1080;
+            windowParams.width = 1536;
+            windowParams.height = 840;
+            windowParams.frame=false;
 
             window.theme.openNewWindow(
                 "desktop",
