@@ -330,7 +330,7 @@
     border-bottom:none !important;
 }
 
-.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{s indig}"]{
+.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{s indigo}"]{
     color: rgb(0, 0, 0) !important;
     border-bottom:none !important;
     background-color: transparent !important;
@@ -432,7 +432,7 @@
     border-bottom:none !important;
 }
 
-.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{^ indig}"]{
+.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{^ indigo}"]{
     color: indigo !important;
     border-bottom:none !important;
     background-color: transparent !important;
@@ -543,7 +543,7 @@
     border-bottom:none !important;
 }
 
-.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{~ indig}"]{
+.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{~ indigo}"]{
     color: indigo !important;
     border-bottom:none !important;
     background-color: transparent !important;
@@ -651,7 +651,7 @@
     background-color:rgba(0, 0, 255, 0.505)!important;
 }
 
-.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{% indig}"]{
+.protyle-wysiwyg [data-node-id] span[data-type=a][data-title^="//{% indigo}"]{
     color: indigo !important;
     border-bottom:none !important;
     background-color: indigo !important;
