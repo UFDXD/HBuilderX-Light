@@ -60,6 +60,11 @@
 
 ![简单备注](https://user-images.githubusercontent.com/97731736/186078660-b3476f92-6e2d-4863-9b9f-10bccee0fd64.gif)
 
+**简单备注进阶秘籍**
+
+![image_279](https://user-images.githubusercontent.com/97731736/187065119-0c0521ea-22b0-4709-a735-112c087a9a70.png)
+
+
 ---
 
 **块备注鼠标悬浮更大的显示**
