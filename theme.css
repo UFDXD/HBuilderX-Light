@@ -4,10 +4,10 @@
 /*@import url(customizeStyle/test-FirstLineInDent.css);*/
 /*作者土嗨自用*/
 /*@import url(customizeStyle/test-Dragon.css);*/
-
-
  
 
+             
+      
 
 
 /*简单备注*/
@@ -281,8 +281,8 @@ div.b3-menu__submenu.b3-menu__submenu--row {
 .protyle-title {
     transition: none;
 }
-
-/*-----------------------------光标颜色*/
+        
+/*-----------------------------光标颜色*/ 
 body {
     caret-color: rgb(117, 177, 115);
 }
@@ -292,11 +292,7 @@ body {
 .protyle-gutters{
     z-index: 3;
 }
-
-
-.protyle-content{
-    letter-spacing:0.2px;
-}
+  
 
 
 /*+++++++++++++++++++++++++++++软件非编辑区域+++++++++++++++++++++++++++++*/
@@ -344,27 +340,10 @@ body.body--win32 {
 }
 
 /*订阅标志*/
-/*#toolbarVIP>div>svg{
-    animation: breathLamp 1000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
+#toolbarVIP{
+    margin-left: -5px;
 }
-@keyframes breathLamp{
-    
-    0% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-    50% {
-        transform: scale(1.01);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 0.7;
-    }
-  }
-*/
+
 /*缩小窗口,最大窗口按钮*/
 #windowControls {
     z-index: 0 !important;
@@ -1355,112 +1334,6 @@ div.block__popover.block__popover--move.block__popover--open>.block__content>.bl
 
 
 
-/*-----------------------------别名，命名，备注提示*/
-
-/*块别名，命名，备注提示容器*/
-.protyle-attr {
-    background-color: rgba(240, 248, 255, 0.443);
-    border-radius: 2px;
-    box-shadow: 0 0 0 1px rgba(189, 189, 189, 0.057) inset !important;
-    line-height: 1;
-    font-size: 14px;
-    z-index: 1;
-}
-
-/*别名*/
-.protyle-attr--alias {
-    line-height: 14px;
-}
-
-.protyle-attr--alias::before {
-    display: inline-block;
-    content: "+别名：";
-    border-radius: 15px;
-    color: rgb(35, 119, 34);
-    line-height: 14px;
-    font-weight: bolder;
-}
-
-/*书签*/
-.protyle-attr--bookmark {
-    line-height: 14px;
-}
-
-.protyle-attr--bookmark::before {
-    display: inline-block;
-    content: "+书签：";
-    border-radius: 15px;
-    color: rgb(35, 119, 34);
-    line-height: 14px;
-    font-weight: bolder;
-
-}
-
-/*命名*/
-.protyle-attr--name {
-    line-height: 14px;
-}
-
-.protyle-attr--name::before {
-    display: inline-block;
-    content: "+命名：";
-    border-radius: 15px;
-    color: rgb(35, 119, 34);
-    line-height: 14px;
-    font-weight: bolder;
-}
-
-.protyle-attr--memo>svg,
-.protyle-attr--name>svg,
-.protyle-attr--alias>svg {
-    width: 0px !important;
-    height: 0px !important;
-    /*animation: breathLamp 0.5s alternate infinite;*/
-}
-
-
-/*备注*/
-.protyle-attr>.b3-tooltips {
-    line-height: 14px;
-    padding-right: 2px;
-}
-
-/*备注伪元素*/
-.protyle-attr>.b3-tooltips::before {
-    position: static;
-    border: none !important;
-    margin-right: 0;
-    content: "+备注";
-    text-align: right;
-    color: rgb(35, 119, 34);
-    line-height: 14px;
-    font-weight: bolder;
-    opacity: 1;
-    transform: none;
-    transition: none;
-}
-.protyle-attr>.b3-tooltips:hover::before {
-    width: auto;
-}
-
-.protyle-attr>.b3-tooltips:hover::after {
-    /*鼠标经过备注，备注信息字体增大，面板增大*/
-    display: inline-block;
-    padding: 10px;
-    color: rgb(32, 33, 36);
-    opacity: 0.9;
-    font-size: 150%;
-    border-radius: 1px;
-    background-color: rgb(255, 253, 245);
-    box-shadow: var(--b3-point-shadow);
-    border: 1px solid rgb(101, 168, 99);
-    line-height: 28px;
-    transform-origin: 100% 0 0;
-    /*以左上角为起点*/
-    transform: scale(1);
-}
-
-
 
 
 
@@ -1678,6 +1551,129 @@ span[data-type="virtual-block-ref"] {
     background-color: rgb(219, 233, 184);
     /*color:#000000!important;*/
 }
+
+ 
+
+
+/*-----------------------------别名，命名，备注提示*/
+
+/*块别名，命名，备注提示容器*/
+.protyle-attr {
+    background-color: rgba(240, 248, 255, 0.443);
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(189, 189, 189, 0.057) inset !important;
+    line-height: 1;
+    font-size: 13px;
+    font-weight: normal !important;
+    z-index: 1;
+}
+
+.protyle-wysiwyg [data-node-id].bq>.protyle-attr,
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="row"]>.bq>.protyle-attr,
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"]>.bq>.protyle-attr,
+.b3-typography blockquote>.protyle-attr {
+    top: -15px;
+}
+
+
+
+
+/*别名*/
+.protyle-attr--alias {
+    line-height: 13px;
+}
+
+.protyle-attr--alias::before {
+    display: inline-block;
+    content: "+别名：";
+    border-radius: 15px;
+    color: rgb(35, 119, 34);
+    line-height: 13px;
+    font-weight: bolder;
+}
+
+/*书签*/
+.protyle-attr--bookmark {
+    line-height: 13px;
+}
+
+.protyle-attr--bookmark::before {
+    display: inline-block;
+    content: "+书签：";
+    border-radius: 15px;
+    color: rgb(35, 119, 34);
+    line-height: 13px;
+    font-weight: bolder;
+
+}
+
+/*命名*/
+.protyle-attr--name {
+    line-height: 13px;
+}
+
+.protyle-attr--name::before {
+    display: inline-block;
+    content: "+命名：";
+    border-radius: 15px;
+    color: rgb(35, 119, 34);
+    line-height: 13px;
+    font-weight: bolder;
+}
+
+.protyle-attr--memo>svg,
+.protyle-attr--name>svg,
+.protyle-attr--alias>svg {
+    width: 0px !important;
+    height: 0px !important;
+    /*animation: breathLamp 0.5s alternate infinite;*/
+}
+
+
+/*备注*/
+.protyle-attr>.b3-tooltips {
+    line-height: 13px;
+    padding-right: 2px;
+}
+
+/*备注伪元素*/
+.protyle-attr>.b3-tooltips::before {
+    position: static;
+    border: none !important;
+    margin-right: 0;
+    content: "+备注";
+    text-align: right;
+    color: rgb(35, 119, 34);
+    line-height: 13px;
+    font-weight: bolder;
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+.protyle-attr>.b3-tooltips:hover::before {
+    width: auto;
+}
+
+.protyle-attr>.b3-tooltips:hover::after {
+    /*鼠标经过备注，备注信息字体增大，面板增大*/
+    display: inline-block;
+    padding: 10px;
+    color: rgb(32, 33, 36);
+    opacity: 0.9;
+    font-size: 150%;
+    border-radius: 1px;
+    background-color: rgb(255, 253, 245);
+    box-shadow: var(--b3-point-shadow);
+    border: 1px solid rgb(101, 168, 99);
+    line-height: 28px;
+    transform-origin: 100% 0 0;
+    /*以左上角为起点*/
+    transform: scale(1);
+}
+
+
+
+
 
 /*-----------------------------文本删除线*/
 s {
@@ -2009,6 +2005,7 @@ table tr:hover {
     z-index: 3;
 }
 
+
 /* 列表项符号 */
 .protyle-wysiwyg [data-node-id].li>.protyle-action {
     color: rgb(35, 119, 34);
@@ -2062,8 +2059,13 @@ table tr:hover {
 
 /* 任务列表 */
 .protyle-task--done {
-    color: rgb(194, 178, 127);
-    text-decoration: line-through;
+    color: rgb(181, 154, 64);
+    text-decoration: line-through rgb(144, 121, 45);
+}
+
+.bq .protyle-task--done {
+    color: rgb(101, 101, 101);
+    text-decoration: line-through rgb(0, 0, 0);;
 }
 
 .protyle-task--done svg {
@@ -2302,6 +2304,10 @@ div[data-type="NodeList"] {
     font-weight: 900;
     text-shadow: 2px 2px 4px rgba(182, 211, 169);
 }
+
+
+            
+
 
 
 /*-----------------------------PDF */
@@ -2922,7 +2928,7 @@ div[data-key] .b3-dialog__container .fn__flex-column .b3-form__space--small {
     overflow-x: hidden !important;
     overflow-y: auto;
 }
-
+   
 /*列出条目改造*/
 #searchList,
 #globalSearchList {
