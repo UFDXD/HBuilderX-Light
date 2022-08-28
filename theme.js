@@ -2480,9 +2480,9 @@ function newOpenWindow() {
                                 break;
                                 default:
                                     break;
-                                }
+                                } 
                     }
-                    console.log("aaa");
+                    console.log(message);
                     switch (message) {
                         case "最小化窗口":newWin.minimize();
                             break;
@@ -2520,7 +2520,6 @@ function newOpenWindow() {
                     closeCallback && setTimeout(async () => closeCallback(newWin), 0);
                     newWin = null;
                 })
-
                 return newWin;
             }
             catch (err) {
@@ -2572,7 +2571,6 @@ function newOpenWindow() {
     }
     window.theme.languageMode = (() => window.siyuan.config.lang)();
 
-
     function outfocusOpenAPP(id = getFocusedID(), urlParams = {}) {
         if (id) {
 
@@ -2615,6 +2613,7 @@ function newOpenWindow() {
         }
     }
     function openbrowser(target) {
+        _windowParams.frame=true;
         window.theme.openNewWindow(
             'browser',
             target,
