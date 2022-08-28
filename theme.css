@@ -1689,13 +1689,14 @@ s {
 /*-----------------------------键盘按键kbd*/
 .b3-typography kbd,
 .protyle-wysiwyg kbd {
-    border: 1px solid rgba(216, 202, 158, 0.698);
+    border: 1px solid rgba(214, 197, 141, 0.698);
     border-bottom: 0.01em solid rgba(194, 181, 137, 0.412) !important;
     border-radius: 4px 4px 4px 4px;
     color: rgb(95, 99, 104);
     background-color: var(--b3-theme-background2);
     font-family: var(--b3-font-family-code);
     font-size: 0.8em;
+    text-shadow: 1px 1px 2px rgba(3, 3, 2, 0.329);
     /* vertical-align: -0.1em;*/
 }
 
@@ -1708,7 +1709,7 @@ s {
     border-radius: 3.5px;
     background-color: rgba(190, 215, 143, 0.396);
     font-size: 0.8em;
-
+    text-shadow: 1px 1px 3px rgba(182, 211, 169);
 }
 
 /*-----------------------------代码块样式*/
@@ -1720,7 +1721,6 @@ s {
     box-shadow: 0px 0px 2px 0px rgba(4, 27, 21, 0.365) !important;
     border-bottom: 0 !important;
     z-index: 0;
-
 }
 
 /* 代码块主体部分设置 */
@@ -1736,6 +1736,7 @@ s {
     background-image: none !important;
     background-color: rgba(239, 242, 216, 0.788) !important;
     border-bottom: 0px;
+    text-shadow: 1px 1px 2px rgba(182, 211, 169);
 
 }
 
