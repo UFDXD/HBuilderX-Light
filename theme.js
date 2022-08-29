@@ -1846,19 +1846,19 @@ function _findMatchingListEntries() {
 }
 
 /**----------------------------------开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进-------------------------------- */
-function removeDefaultIndent() {
+function Removefirstlineindent() {
 
     AddEvent(document.body, "dblclick", (e) => {
 
         var toolbarEdit = document.querySelector("svg#toolbarEdit.toolbar__icon");
-        if(toolbarEdit!=null){
+        if (toolbarEdit != null) {
             var iconEdit = toolbarEdit.children[0];
             var xlink_href = iconEdit.getAttribute("xlink:href");
             if (xlink_href == "#iconEdit") {
                 return;
             }
         }
-        
+
 
         if (getComputedStyle(document.getElementsByTagName("head")[0]).backgroundColor != "rgba(0, 0, 0, 0)") return;
         var element = e.target;
@@ -1915,7 +1915,30 @@ function hyperlinkClickColorChange() {
     }, 3000)
 }
 
+/**------------------------------------思源悬浮窗头栏中键关闭------------------------------------- */
+function theFloatingWindowIsClosed() {
+    AddEvent(document.body, "mousedown", (e) => {
+        if (e.button != 1) return;
+        var element = e.target;
+        var className = element.className;
+        if (className != "block__icons block__icons--border") {
 
+            if (className == "fn__space fn__flex-1") {
+                element = element.parentElement;
+            } else {
+                return;
+            };
+        }
+
+        diguiTooONE(element, (v) => {
+            if (v.getAttribute("data-type") == "close") {
+                v.click();
+                return true;
+            }
+            return false;
+        })
+    });
+}
 
 /*********************************************************Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版*****START*********************************/
 //感谢Dark作者，其他主题作者搬运需附加详情原出处来自Dark+。
@@ -1997,9 +2020,6 @@ function newOpenWindow() {
     let _windowParams = {
         width: 1360, // 窗口宽度
         height: 768, // 窗口宽度
-        maximizable: true,
-        minimizable: true,
-        resizable: true,
         frame: true, // 是否显示边缘框
         fullscreen: false, // 是否全屏显示
         alwaysOnTop: false, // 是否置顶显示
@@ -2010,11 +2030,11 @@ function newOpenWindow() {
             webSecurity: false, // 是否启用 Web 安全
         }
     }
-
+    
     let _id = /^\d{14}\-[0-9a-z]{7}$/;
     let _url = /^siyuan:\/\/blocks\/(\d{14}\-[0-9a-z]{7})\/*(?:(?:\?)(\w+=\w+)(?:(?:\&)(\w+=\w+))*)?$/;
 
-   
+
     function isObject(obj) {
         return Object.prototype.toString.call(obj) === '[object Object]'
     }
@@ -2173,112 +2193,10 @@ function newOpenWindow() {
             ref.click();
             ref.remove();
 
-            var isapp=false;
-            var toolbar = document.getElementById("toolbar");
-            if(toolbar==null){
-                isapp=true;
-                toolbar=document.querySelector(".toolbar.toolbar--border");
-            }
-            var windowControls=null;
-
-            if (toolbar != null) {
-                document.body.style.border="2px solid red";
-                if(isapp){
-                    var item = document.createElement("div");
-                    item.innerHTML = `<svg id="minWindow" class="toolbar__icon"><use xlink:href="#iconMin">
-                    </use></svg><svg id="maxWindow" class="toolbar__icon" style="display: flex;"><use xlink:href="#iconMax"></use></svg>
-                    <svg id="restoreWindow" class="toolbar__icon" style="display: none;"><use xlink:href="#iconRestore"></use></svg>
-                    <svg id="closeWindow" class="toolbar__icon"><use xlink:href="#iconClose"></use></svg>`;
-
-                    var items=Array.from(item.children);
-                    
-                    for (let index = 0; index < items.length; index++) {
-                        toolbar.appendChild(items[index]);
-                    }
-                    windowControls=toolbar;
-
-
-                    var drag=addinsertCreateElement(document.querySelector(".toolbar.toolbar--border"),"div");
-                        drag.style.position="fixed";
-                        drag.style.height="auto";
-                        drag.style.width="100px";
-                        drag.style.left="45%";
-                        drag.style.border="1px dashed rgba(255, 0, 0, 0.249)";
-                        drag.style.WebkitAppRegion="drag";
-                        drag.innerHTML="&#8203";
-                    
-                        item.remove();
-                }
-                else{
-
-                    windowControls=addinsertCreateElement(toolbar,"div");
-                    windowControls.innerHTML = `
-                    <div class="fn__flex" style="top: -1px;z-index: 502;right: -1px;position: relative;" id="windowControls"><div class="toolbar__item toolbar__item--win b3-tooltips b3-tooltips__sw" aria-label="最小化" id="minWindow">
-                    <svg>
-                    <use xlink:href="#iconMin"></use>
-                    </svg>
-                    </div>
-                    <div aria-label="最大化" class="b3-tooltips b3-tooltips__sw toolbar__item toolbar__item--win" id="maxWindow" style="display: flex;">
-                    <svg style="height: 11px">
-                    <use xlink:href="#iconMax"></use>
-                    </svg>
-                </div>
-                <div aria-label="向下还原" class="b3-tooltips b3-tooltips__sw toolbar__item toolbar__item--win" id="restoreWindow" style="display: none;">
-                <svg>
-                <use xlink:href="#iconRestore"></use>
-                </svg>
-                </div>
-                <div aria-label="关闭" class="b3-tooltips b3-tooltips__sw toolbar__item toolbar__item--close" id="closeWindow">
-                    <svg>
-                    <use xlink:href="#iconClose"></use>
-                    </svg>
-                    </div></div>`;
-                }
-                    
-                diguiTooONE(windowControls, (v) => {
-                        if (v.id == "closeWindow") {
-                            AddEvent(v, "click", () => { console.log("关闭窗口"); })
-                            return true;
-                        }
-                    return false;
-                })
-
-                diguiTooONE(windowControls, (v) => {
-                    if (v.id == "minWindow") {
-                        AddEvent(v, "click", () => { console.log("最小化窗口"); })
-                        return true;
-                    }
-                    return false;
-                })
-                diguiTooONE(windowControls, (v) => {
-                    if (v.id == "restoreWindow") {
-                        AddEvent(v, "click", () => { 
-                            console.log("向下还原"); 
-                            v.style.display="none";
-                            v.previousElementSibling.style.display="flex";
-                        })
-                        return true;
-                    }
-                    return false;
-                })
-                diguiTooONE(windowControls, (v) => {
-                    if (v.id == "maxWindow") {
-                        AddEvent(v, "click", () => { 
-                            console.log("最大化窗口"); 
-                            v.style.display="none";
-                            v.nextElementSibling.style.display="flex";
-                        })
-                        return true;
-                    }
-                    return false;
-                })
-            }
-
-
             var reg = new RegExp('<[^>]+>', 'gi');  //过滤所有的html标签，不包括内容
-          
+
             /**更改子窗口标题 */
-            setTimeout(()=>{
+            setTimeout(() => {
                 var title = document.querySelector("title");
                 if (id == null) {
                     title.innerText = "[#] 思源子窗口 - HBuilderX-Light [#]";
@@ -2296,37 +2214,37 @@ function newOpenWindow() {
                     titleTxt(TargetBlockID);
                 })
 
-                function titleTxt(TargetBlockID){
-                
+                function titleTxt(TargetBlockID) {
+
                     以id获取文档聚焦内容(TargetBlockID, (v) => {
                         var htmltxt = v.content;
-    
+
                         var element = document.createElement("div");
-                        element.innerHTML=htmltxt;
-    
-                        htmltxt= diguiTooONE(element,(v)=>{
-                            return v.getAttribute("contenteditable")=="true";
+                        element.innerHTML = htmltxt;
+
+                        htmltxt = diguiTooONE(element, (v) => {
+                            return v.getAttribute("contenteditable") == "true";
                         })
-                        
+
                         var txt = (htmltxt.innerText).replace(reg, '');
-                        if (txt == "​"||txt=="") {
+                        if (txt == "​" || txt == "") {
                             txt = "[#] 思源子窗口 - HBuilderX-Light [#]";
-                            根据ID获取人类可读路径(TargetBlockID,(v)=>{
-                                title.innerText ="[#] "+v.substring(1, v.length)+" [#]";
+                            根据ID获取人类可读路径(TargetBlockID, (v) => {
+                                title.innerText = "[#] " + v.substring(1, v.length) + " [#]";
                             })
                             return;
                         }
-                        if(txt.length>25){
-                            title.innerText ="[#] "+txt.substring(0,25)+"...";
-                        }else{
-                            title.innerText ="[#] "+txt+" [#]";
+                        if (txt.length > 25) {
+                            title.innerText = "[#] " + txt.substring(0, 25) + "...";
+                        } else {
+                            title.innerText = "[#] " + txt + " [#]";
                         }
-                        
+
                         element.remove();
-                       
+
                     });
                 }
-            },2000)
+            }, 2000)
 
             if (typeof callback === 'function') setTimeout(callback, 250);
         }
@@ -2415,9 +2333,6 @@ function newOpenWindow() {
         windowParams = {
             width: 720,
             height: 480,
-            maximizable: true,
-            minimizable: true,
-            resizable: true,
             frame: true, // 是否显示边缘框
             fullscreen: false, // 是否全屏显示
         },
@@ -2428,7 +2343,7 @@ function newOpenWindow() {
         closeCallback = null,
         windowEventHandlers = [],
         contentsEventHandlers = [],
-        
+
     ) {
         try {
 
@@ -2460,43 +2375,32 @@ function newOpenWindow() {
             try {
                 const {
                     BrowserWindow,
-                    Menu,
+                    Menu
                 } = require('@electron/remote');
+                
                 // 新建窗口(Electron 环境)
                 var newWin = new BrowserWindow(windowParams);
                 const menu = Menu.buildFromTemplate(menuTemplate);
                 console.log(url.href);
-
                 newWin.setMenu(menu);
                 newWin.loadURL(url.href);
 
                 // REF [Event: 'console-message'​](https://www.electronjs.org/docs/latest/api/web-contents#event-console-message)
+
                 newWin.webContents.on("console-message", (event, level, message, line, sourceId) => {
                     if (level === 0) {
                         switch (message) { // 通用的命令
                             case 'WINDOW-SWITCH-PIN': // 切换窗口置顶状态
-                            // REF [win.setAlwaysOnTop(flag[, level][, relativeLevel])​](https://www.electronjs.org/zh/docs/latest/api/browser-window#winsetalwaysontopflag-level-relativelevel)
-                            newWin.setAlwaysOnTop(!newWin.isAlwaysOnTop());
+                                // REF [win.setAlwaysOnTop(flag[, level][, relativeLevel])​](https://www.electronjs.org/zh/docs/latest/api/browser-window#winsetalwaysontopflag-level-relativelevel)
+                                newWin.setAlwaysOnTop(!newWin.isAlwaysOnTop());
                                 break;
-                                default:
-                                    break;
-                                } 
-                    }
-                    console.log(message);
-                    switch (message) {
-                        case "最小化窗口":newWin.minimize();
-                            break;
-                        case "向下还原":newWin.unmaximize();
-                            break;
-                        case "最大化窗口":newWin.maximize();
-                            break;
-                        case "关闭窗口":newWin.close();
-                            break;
-                        default:
-                            break;
+                            default:
+                                break;
+                        }
                     }
                     consoleMessageCallback && setTimeout(async () => consoleMessageCallback(newWin, event, level, message, line, sourceId));
                 });
+
 
                 if (mode) {
                     switch (mode.toLowerCase()) {
@@ -2580,7 +2484,6 @@ function newOpenWindow() {
 
             _windowParams.width = 1360;
             _windowParams.height = 768;
-            _windowParams.frame=false;
 
             window.theme.openNewWindow(
                 undefined,
@@ -2601,7 +2504,6 @@ function newOpenWindow() {
             const windowParams = merge({}, _windowParams, { alwaysOnTop: false })// 关闭置顶
             windowParams.width = 1536;
             windowParams.height = 840;
-            windowParams.frame=false;
 
             window.theme.openNewWindow(
                 "desktop",
@@ -2613,7 +2515,7 @@ function newOpenWindow() {
         }
     }
     function openbrowser(target) {
-        _windowParams.frame=true;
+        _windowParams.frame = true;
         window.theme.openNewWindow(
             'browser',
             target,
@@ -3254,7 +3156,26 @@ function IntervalFunTimes(time, frequency, Fun) {
     }
 }
 
-
+/**
+ * 获得当前浏览器缩放系数 默认值为1
+ * @returns 
+ */
+function detectZoom() {
+    var ratio = 0,   screen = window.screen, ua = navigator.userAgent.toLowerCase();
+    if (window.devicePixelRatio !== undefined) {
+        ratio = window.devicePixelRatio;
+    } else if (~ua.indexOf('msie')) {
+        if (screen.deviceXDPI && screen.logicalXDPI) {
+            ratio = screen.deviceXDPI / screen.logicalXDPI;
+        }
+    } else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+        ratio = window.outerWidth / window.innerWidth;
+    }
+    if (ratio) {
+        ratio = Math.round(ratio * 100);
+    }
+    return ratio*0.01;
+};
 /**
  * 递归DOM元素查找深度子级的一批符合条件的元素返回数组
  * @param {*} element 要查找DOM元素
@@ -3355,7 +3276,7 @@ setTimeout(() => {
 
         simpleRemarks();//简单备注
 
-        removeDefaultIndent();//开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进
+        Removefirstlineindent();//开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进
 
         hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
 
@@ -3399,11 +3320,13 @@ setTimeout(() => {
 
         findMatchingListEntries();//查找匹配列表条目前的图标可以鼠标悬停打开悬浮窗
 
-        removeDefaultIndent();//开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进
+        Removefirstlineindent();//开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进
 
         hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
 
         newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
+
+        theFloatingWindowIsClosed();//思源悬浮窗头栏中键关闭
 
         loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
         console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
