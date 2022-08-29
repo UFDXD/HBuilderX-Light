@@ -75,7 +75,9 @@ div.fn__flex-1.fn__flex-column.file-tree.sy__tag>.fn__flex-1{
     font-weight: 500 !important;
    /* font-size: 101%;*/
 }
-
+strong{
+    font-weight:900 !important;
+}
 /*让大纲树，文档树列表间距更小*/
 .b3-list-item:not([data-type="search-item"]):not([data-treetype="backlink"]){
     line-height: 16px !important;
