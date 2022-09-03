@@ -998,13 +998,11 @@ function DocumentCreationDate() {
         const element = allDocumentTitleElement[index];
         var documentCreatTimeElement = creatTimeSpanElement(element.parentElement);
         documentCreatTimeElement.innerText = "获取文档创建日期中……";
-
         tilteWhlie(element, documentCreatTimeElement);
     }
 }
 
 function tilteWhlie(element, documentCreatTimeElement) {
-
     var setID = setInterval(() => {
         var time = getDocumentTime(element);
         if (time != "") {
@@ -1013,7 +1011,6 @@ function tilteWhlie(element, documentCreatTimeElement) {
         };
     }, 3000);
 }
-
 
 /**获取所有打开文档的标题元素 */
 function getAllDocumentTitleElement() {
@@ -1028,45 +1025,37 @@ function getAllDocumentTitleElement() {
 
 /**为文档标题元素下创建时间容器元素 */
 function creatTimeSpanElement(tilteElement) {
-
     var item = tilteElement.children;
-
     for (let index = 0; index < item.length; index++) {
         const element = item[index];
-
-        if (element.getAttribute("documentCreatTimeElement") != null) {
-            return element;
-        }
+        if (element.getAttribute("documentCreatTimeElement") != null) return element;
     }
-
     var documentCreatTimeElement = addinsertCreateElement(tilteElement, "span");
     documentCreatTimeElement.setAttribute("documentCreatTimeElement", "true");
     documentCreatTimeElement.style.display = "block";
-
     documentCreatTimeElement.style.marginLeft = "7px";
     documentCreatTimeElement.style.marginBottom = "0px";
-
     documentCreatTimeElement.style.fontSize = "61%";
     documentCreatTimeElement.style.color = "#767676";
-
     return documentCreatTimeElement;
 }
 
 
 /**获得这个文档的创建时间 */
 function getDocumentTime(tilteElement) {
-    var tS = tilteElement.parentElement.previousElementSibling.getAttribute("data-node-id");
-
-    if (tS == null) return "";
-
-    var year = tS.substring(0, 4);
-    var moon = tS.substring(4, 6);
-    var day = tS.substring(6, 8);
-    var hour = tS.substring(8, 10);
-    var minute = tS.substring(10, 12);
-    var second = tS.substring(12, 14);
-
-    return year + "-" + moon + "-" + day + "  " + hour + ":" + minute + ":" + second;
+    try {
+        var tS = tilteElement.parentElement.parentElement.previousElementSibling.firstElementChild.firstElementChild.getAttribute("data-node-id");
+        if (tS == null) return "";
+        var year = tS.substring(0, 4);
+        var moon = tS.substring(4, 6);
+        var day = tS.substring(6, 8);
+        var hour = tS.substring(8, 10);
+        var minute = tS.substring(10, 12);
+        var second = tS.substring(12, 14);
+        return year + "-" + moon + "-" + day + "  " + hour + ":" + minute + ":" + second;
+    } catch (error) {
+        return "";
+    }
 }
 
 
