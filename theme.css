@@ -281,14 +281,13 @@ div.b3-menu__submenu.b3-menu__submenu--row {
 .protyle-background__iconw,
 .protyle-title {
     transition: none;
+   
 }
         
 /*-----------------------------光标颜色*/ 
 body {
     caret-color: rgb(117, 177, 115);
 }
-
-
 /*-----------------------------块标*/
 .protyle-gutters{
     z-index: 3;
@@ -304,6 +303,14 @@ body {
     margin-top: 2px !important;
     border-bottom: 1px dashed rgba(0, 0, 0, 0.249);
   }
+
+
+/*面板黑色遮罩层*/
+.b3-dialog__scrim{
+    opacity: 0.2 !important;
+}
+
+
 
 /*+++++++++++++++++++++++++++++软件非编辑区域+++++++++++++++++++++++++++++*/
 
@@ -708,7 +715,7 @@ ul.fn__flex.layout-tab-bar {
 
 
 /*页签hover*/
-.item:not(li.item.item--pin):not(.item--focus):not(div[data-type="open-search"]):hover {
+.item:not(li.item.item--pin):not(.item--focus):not(div[data-type="open-search"]):not(.item--readonly):hover {
     border-radius: 1px;
     font-size: 15px;
     background-color: rgb(218, 234, 206) !important;
@@ -771,7 +778,9 @@ li.item.item--pin>.fn__none {
     text-overflow: ellipsis;
 }
 
-
+.layout-tab-bar>.item.item--readonly span>svg:hover{
+    background-color: transparent!important;
+}
 /*-----------------------------面包屑*/
 /*面包屑父级*/
 .protyle-breadcrumb {
@@ -1701,7 +1710,11 @@ span[data-type="virtual-block-ref"] {
 
 
 
-
+/*-----------------------------文本斜体*/
+em{
+    color: rgb(152,149,142) !important;
+    background-color: rgba(255, 250, 234, 0.596);
+}
 
 /*-----------------------------文本删除线*/
 s {
@@ -1934,7 +1947,9 @@ code.hljs {
     padding-top: 1px !important;
     padding-bottom: 1px !important;
 }
-
+.table [contenteditable]{
+    overflow-x:hidden !important;
+}
 /* 表格100%宽度 */
 .protyle-wysiwyg table,
 .b3-typography table {
@@ -2384,14 +2399,6 @@ div[data-type="NodeList"] {
     background-color: yellow;
 }
 
-/*pdf文本选中*/
-
-.pdfViewer{
-    background-color: rgb(230,230,230);
-}
-.textLayer{
-    background-color: rgb(255,255,255);
-}
 /*-----------------------------鼠标经过元素的醒目变化*/
 
 /* 块标移动增加过渡 */
@@ -2892,6 +2899,10 @@ div *[custom-f="dt"]>[data-type="NodeListItem"]::after {
 
 
 
+/*钉住窗口增强*/
+[iswindowmin="true"] [data-doc-type]>[data-node-id]{
+    font-size: 87%;
+}
 
 
 
