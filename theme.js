@@ -421,7 +421,7 @@ function upSplitScreening() {
     }
 
     line.click();
-    trigger('mousedown', line, null);/**触发思源事件 */
+    trigger('mousedown', line, null);
 
 }
 
@@ -1060,47 +1060,61 @@ function getDocumentTime(tilteElement) {
 
 
 
-/**----------------------------------自动展开悬浮窗折叠列表-----体验优化----------------------------------*/
+/**----------------------------------自动展开悬浮窗折叠列表,展开搜索条目折叠列表,聚焦单独列表-----体验优化----------------------------------*/
 
 function autoOpenList() {
-    setInterval(autoOpenListEvent, 500);
-}
 
-function autoOpenListEvent() {
-    //找到所有的悬浮窗
-    var Preview = document.querySelectorAll("[data-oid]");
+    setInterval(() => {
+        //找到所有的悬浮窗
+        var Preview = document.querySelectorAll("[data-oid]");
 
-    //如果发现悬浮窗内首行是折叠列表就展开并打上标记
-    if (Preview.length != 0) {
-        for (let index = 0; index < Preview.length; index++) {
-            const element = Preview[index];
-            var item = element.children[1].children;
+        //如果发现悬浮窗内首行是折叠列表就展开并打上标记
+        if (Preview.length != 0) {
+            for (let index = 0; index < Preview.length; index++) {
+                const element = Preview[index];
+                var item = element.children[1].children;
 
-            for (let index = 0; index < item.length; index++) {
-                var obj = item[index].children[1]
-                if (obj == null) continue;
-                const element = obj.children[0].children[0];
-                if (element == null) continue;
-                if (element.className != "li") continue;//判断是否是列表
-                if (element.getAttribute("foldTag") != null) continue;//判断是否存在标记
-                if (element.getAttribute("foid") == 0) continue;//判断是折叠
+                for (let index = 0; index < item.length; index++) {
+                    var obj = item[index].children[1]
+                    if (obj == null) continue;
+                    const element = obj.children[0].children[0];
+                    if (element == null) continue;
+                    if (element.className != "li") continue;//判断是否是列表
+                    if (element.getAttribute("foldTag") != null) continue;//判断是否存在标记
+                    if (element.getAttribute("foid") == 0) continue;//判断是折叠
 
+                    element.setAttribute("fold", 0);
+                    element.setAttribute("foldTag", true);
+                }
+            }
+        }
+
+        var searchPreview = document.querySelector("#searchPreview [data-doc-type='NodeListItem'].protyle-wysiwyg.protyle-wysiwyg--attr>div:nth-child(1)");
+        if (searchPreview != null && searchPreview.getAttribute("data-type") == "NodeListItem" && searchPreview.getAttribute("fold") == 1) {
+            if (searchPreview.getAttribute("foldTag") != null) return;//判断是否存在标记
+            searchPreview.setAttribute("fold", 0);
+            searchPreview.setAttribute("foldTag", true);
+        }
+
+        var contentLIst = document.querySelectorAll(".layout-tab-container>.fn__flex-1.protyle:not(.fn__none) [data-doc-type='NodeListItem'].protyle-wysiwyg.protyle-wysiwyg--attr>div:nth-child(1)");
+        for (let index = 0; index < contentLIst.length; index++) {
+            const element = contentLIst[index];
+            if (element != null && element.getAttribute("data-type") == "NodeListItem" && element.getAttribute("fold") == 1) {
+                if (element.getAttribute("foldTag") != null) return;//判断是否存在标记
                 element.setAttribute("fold", 0);
                 element.setAttribute("foldTag", true);
             }
-
-
         }
-    }
 
+    }, 500)
 }
-
 
 
 /**----------------------------------列表折叠内容预览查看---------------------------------- */
 function collapsedListPreview() {
-    setInterval(collapsedListPreviewEvent, 3000);
+    mousemoveRunFun(collapsedListPreviewEvent, 3000)
 }
+
 
 
 function collapsedListPreviewEvent() {
@@ -1289,10 +1303,10 @@ function CreatetriggerBlock(e) {
     triggerBlock.innerHTML = "&#8203";
 
     //获取折叠列表ID,设置悬浮窗
+    //protyle-wysiwyg__embed data-id
     var previewID = objParent.parentElement.getAttribute("data-node-id");
     triggerBlock.setAttribute("class", "protyle-attr");
     triggerBlock.style.backgroundColor = "transparent";
-
     //在触发块内创建思源超链接 
     triggerBlock.innerHTML = "<span data-type='a' class='list-A' data-href=siyuan://blocks/" + previewID + ">####</span>";
     //将这个思源连接样式隐藏
@@ -1302,7 +1316,6 @@ function CreatetriggerBlock(e) {
     a.style.color = "transparent";
     a.style.textShadow = "none";
     a.style.border = "none";
-
     return triggerBlock;
 }
 
@@ -1380,6 +1393,7 @@ function collapseExpand_Head_List() {
         var elementParentElement = element.parentElement;
 
         if (elementParentElement.getAttribute("data-type") == "NodeHeading" && elementParentElement.getAttribute("fold") == 1) {
+            console.log("1");
             protyle_gutters_click(element);
         } else {
             commonMenu_click(elementParentElement.previousElementSibling);
@@ -1393,9 +1407,18 @@ function collapseExpand_Head_List() {
         var data_node_id = elementParentElement.getAttribute("data-node-id");
         var elementParentElementParentElement = elementParentElement.parentElement;
 
+
         if (elementParentElementParentElement.className == "protyle-wysiwyg protyle-wysiwyg--attr") {
             if (elementParentElementParentElement.children[0].getAttribute("data-node-id") == data_node_id) {
-                return;
+                var i = 0;
+                var item2 = elementParentElementParentElement;
+                while (item2) {
+                    if (i > 99) return;
+                    if (item2.getAttribute("data-oid") != null) return;
+                    item2 = item2.parentElement;
+                    i++;
+                }
+                elementParentElement.setAttribute("foldTag", true);
             }
         }
 
@@ -1437,7 +1460,7 @@ function collapseExpand_Head_List() {
 //https://github.com/siyuan-note/siyuan/issues/5476
 
 function VirtualReferenceEnhancements() {
-    setInterval(VirtualReference, 3000);
+    mousemoveRunFun(VirtualReference, 3000);
 }
 
 function VirtualReference() {
@@ -1652,7 +1675,10 @@ function floatingWindowSorting(newWindows, BookNodeName, path) {
             element.style.minHeight = height + "px";
         }
 
-        block__icons_block__icons_border_span.innerText = '存在同名虚拟引用，引用内容按相对最近路径排序处理';
+        block__icons_block__icons_border_span.innerText = '同名虚拟引用已排序';
+        block__icons_block__icons_border_span.style.overflow = "hidden";
+        block__icons_block__icons_border_span.style.whiteSpace = "nowrap";
+        block__icons_block__icons_border_span.style.textOverflow = "ellipsis";
 
     }, 700);
 
@@ -1670,7 +1696,7 @@ function floatingWindowSorting(newWindows, BookNodeName, path) {
 
 /**----------------------------------简单备注--------------------------------------*/
 function simpleRemarks() {
-    setInterval(_simpleRemarks, 1000);
+    mousemoveRunFun(_simpleRemarks, 1000);
 }
 
 function _simpleRemarks() {
@@ -1794,7 +1820,7 @@ function simpleRemarksEvent(e) {
 /**----------------------------------查找匹配列表条目前的图标可以鼠标悬停打开悬浮窗--------------------------------------*/
 
 function findMatchingListEntries() {
-    setInterval(_findMatchingListEntries, 3000);
+    mousemoveRunFun(_findMatchingListEntries, 3000);
 }
 
 function _findMatchingListEntries() {
@@ -1833,6 +1859,8 @@ function _findMatchingListEntries() {
         }
     };
 }
+
+
 
 /**----------------------------------开启实验特性：段落首行缩进的情况下，双击段落尾部去除缩进-------------------------------- */
 function Removefirstlineindent() {
@@ -2019,7 +2047,7 @@ function newOpenWindow() {
             webSecurity: false, // 是否启用 Web 安全
         }
     }
-    
+
     let _id = /^\d{14}\-[0-9a-z]{7}$/;
     let _url = /^siyuan:\/\/blocks\/(\d{14}\-[0-9a-z]{7})\/*(?:(?:\?)(\w+=\w+)(?:(?:\&)(\w+=\w+))*)?$/;
 
@@ -2366,7 +2394,7 @@ function newOpenWindow() {
                     BrowserWindow,
                     Menu
                 } = require('@electron/remote');
-                
+
                 // 新建窗口(Electron 环境)
                 var newWin = new BrowserWindow(windowParams);
                 const menu = Menu.buildFromTemplate(menuTemplate);
@@ -2469,7 +2497,7 @@ function newOpenWindow() {
 
             urlParams.id = id;
             urlParams.focus = 0;
-            urlParams.editable = 0;
+            urlParams.editable = 1;
 
             _windowParams.width = 1360;
             _windowParams.height = 768;
@@ -2503,6 +2531,48 @@ function newOpenWindow() {
             );
         }
     }
+
+    function infocusOpenAPP(id = getFocusedID(), urlParams = {}) {
+        if (id) {
+
+            urlParams.id = id;
+            urlParams.focus = 1;
+            urlParams.editable = 1;
+
+            _windowParams.width = 1360;
+            _windowParams.height = 768;
+
+            window.theme.openNewWindow(
+                undefined,
+                undefined,
+                urlParams,
+                _windowParams,
+                _menuParams,
+            );
+        }
+    }
+    function infocusOpenWinPC(id = getFocusedID(), urlParams = {}) {
+        // 打开新窗口
+        if (id) {
+            urlParams.id = id;
+            urlParams.focus = 1;
+            urlParams.editable = 0;
+
+            const windowParams = merge({}, _windowParams, { alwaysOnTop: false })// 关闭置顶
+            windowParams.width = 1536;
+            windowParams.height = 840;
+
+            window.theme.openNewWindow(
+                "desktop",
+                undefined,
+                urlParams,
+                windowParams,
+                _menuParams,
+            );
+        }
+    }
+
+
     function openbrowser(target) {
         _windowParams.frame = true;
         window.theme.openNewWindow(
@@ -2531,19 +2601,37 @@ function newOpenWindow() {
     var flag = false;
     var flag2 = false;
     AddEvent(document.body, "mousedown", (e) => {
+        if (!e.shiftKey) {
+            if (!flag && e.button == 2) {
+                flag = true; return;
+            }
 
-        if (!flag && e.button == 2) {
-            flag = true; return;
-        }
-        if (flag && e.button == 1) {
-            e.preventDefault()
-            flag2 = true;
-            middleClick(e.target, outfocusOpenAPP); return;
-        }
-        if (e.altKey && e.button == 1) {
-            e.preventDefault()
-            flag2 = true;
-            middleClick(e.target, outfocusOpenWinPC); return;
+            if (flag && e.button == 1) {
+                e.preventDefault()
+                flag2 = true;
+                middleClick(e.target, outfocusOpenAPP); return;
+            }
+            if (e.altKey && e.button == 1) {
+                e.preventDefault()
+                flag2 = true;
+                middleClick(e.target, outfocusOpenWinPC); return;
+            }
+        } else {
+            if (!flag && e.button == 2) {
+                flag = true; return;
+            }
+
+            if (flag && e.button == 1) {
+                e.preventDefault()
+                flag2 = true;
+                middleClick(e.target, infocusOpenAPP); return;
+            }
+            if (e.altKey && e.button == 1) {
+                e.preventDefault()
+                flag2 = true;
+                middleClick(e.target, infocusOpenWinPC); return;
+
+            }
         }
     });
     AddEvent(document.body, "mouseup", (e) => {
@@ -2577,8 +2665,203 @@ function dblclickToReleaseReadOnly() {
 
 }
 
+/**----------------------------------钉住悬浮窗增强---------------------- */
+//点击思源悬浮窗头栏中央触发块缩小窗口（默认设置钉住），再次点击恢复
+//记忆缩小、放大状态窗口大小调整红的状态
+//右键窗口中央触发块调整缩小状态窗口透明度
+function zoomOutToRestoreTheFloatingWindow() {
+
+    mousemoveRunFun(() => {
+        var pins = document.querySelectorAll("[data-type='pin']:not([WindowMin])");
+
+        for (let index = 0; index < pins.length; index++) {
+            const pin = pins[index];
+            pin.setAttribute("WindowMin", true);
+
+            var siYuanWindown = pin.parentElement.parentElement;
+
+            var maxMinButton = addinsertCreateElement(pin.parentElement, "div");
+            maxMinButton.style.width = "80px";
+            maxMinButton.style.position = "absolute";
+            maxMinButton.style.left = ((parseFloat(getComputedStyle(siYuanWindown).width) * 0.5) - 40) + "px";
+            maxMinButton.style.height = "23px";
+            maxMinButton.style.top = "2px"
+            maxMinButton.style.border = "1px dashed rgb(239,241,220)";
+            maxMinButton.style.backgroundColor = "rgba(239, 241, 220, 0.077)";
+            maxMinButton.style.zIndex = "99";
+            maxMinButton.style.cursor = "pointer";
 
 
+            //窗口状态
+            var isWindowMin = false;
+            var isMove = false;
+
+            var WindowMinWidth = "355.4px";
+            var WindowMinheight = "200px";
+            var WindowMinOpacity = 0.4;
+            var WindowMinOpacitytransformscale = "scale(0.7)";
+
+            var danqTime = 0;
+
+
+
+            AddEvent(maxMinButton, "click", WindowMin);
+            AddEvent(maxMinButton, "mousedown", maxMinButtonMousedown);
+            AddEvent(siYuanWindown, "mousedown", siYuanWindownMousedown);
+            AddEvent(siYuanWindown.children[1], "mouseenter", siYuanWindownMouseenter);
+            AddEvent(siYuanWindown.children[1], "mouseleave", siYuanWindownMouseleave);
+
+            function WindowMin(e) {
+
+                if (isMove) { isMove = false; return; }
+
+                siYuanWindown.setAttribute("isWindowMin", isWindowMin = !isWindowMin);
+
+                //默认变为钉住状态
+                if (pin.getAttribute("aria-label") == "钉住") pin.click();
+
+                var siYuanWindownClassStyle = getComputedStyle(siYuanWindown);
+                if (isWindowMin) {//缩小状态
+                    //保存
+                    siYuanWindown.setAttribute("WindowMaxWidth", siYuanWindownClassStyle.width);
+                    siYuanWindown.setAttribute("WindowMaxHeight", siYuanWindownClassStyle.height);
+                    //设置
+                    siYuanWindown.style.width = WindowMinWidth;
+                    siYuanWindown.style.height = WindowMinheight;
+                    siYuanWindown.style.opacity = WindowMinOpacity;
+                    siYuanWindown.style.fontSize = "80%";
+                    //siYuanWindown.style.transform=WindowMinOpacitytransformscale;
+
+                } else {//恢复原状态
+                    siYuanWindown.style.width = siYuanWindown.getAttribute("WindowMaxWidth");
+                    siYuanWindown.style.height = siYuanWindown.getAttribute("WindowMaxHeight");;
+                    siYuanWindown.style.opacity = "1";
+                    // siYuanWindown.style.transform="none";
+                    siYuanWindown.style.fontSize = "100%";
+
+                }
+                maxMinButton.style.left = ((parseFloat(getComputedStyle(siYuanWindown).width) * 0.5) - 40) + "px";
+            }
+
+            function maxMinButtonMousedown(e) {
+                if (e.button == 1) {
+                    maxMinButton.previousElementSibling.click();
+                    return;
+                }
+                if (e.button == 0) {
+                    danqTime = Date.now();
+                    AddEvent(maxMinButton, "mousemove", maxMinButtonMousemove);
+                    AddEvent(maxMinButton, "mouseup", maxMinButtonMouseup);
+                }
+
+                if (e.button == 2) {
+                    if (!isWindowMin) return;
+                    WindowMinOpacity += 0.2;
+                    if (WindowMinOpacity > 1) WindowMinOpacity = 0.4;
+                    siYuanWindown.style.opacity = WindowMinOpacity;
+                }
+            }
+
+            function maxMinButtonMouseup() {
+                if (isMove) {
+                    if (((Date.now()) - danqTime) < 200) isMove = false;
+                    danqTime = 0;
+                }
+                myRemoveEvent(maxMinButton, "mousemove", maxMinButtonMousemove);
+                myRemoveEvent(maxMinButton, "mouseup", maxMinButtonMouseup);
+            }
+
+            function maxMinButtonMousemove() {
+                isMove = true;
+            }
+
+            function siYuanWindownMousedown(e) {
+                if (e.button != 0) return;
+
+                var elem = e.target;
+                var className = elem.className;
+                if (className != "block__ns" && className != "block__ew" && className != "block__nwse") return
+                AddEvent(document.body, "mousemove", () => {
+                    var siYuanWindownClassStyle = getComputedStyle(siYuanWindown);
+                    if (isWindowMin) {
+                        //console.log("拖动窗口大小", "设置缩小窗口");
+                        WindowMinWidth = siYuanWindownClassStyle.width;
+                        WindowMinheight = siYuanWindownClassStyle.height;
+                    } else {
+                        // console.log("拖动窗口大小", "设置放大窗口");
+                        siYuanWindown.setAttribute("WindowMaxWidth", siYuanWindownClassStyle.width);
+                        siYuanWindown.setAttribute("WindowMaxHeight", siYuanWindownClassStyle.height);
+                    }
+                    maxMinButton.style.left = ((parseFloat(getComputedStyle(siYuanWindown).width) * 0.5) - 40) + "px";
+                });
+            }
+
+            function siYuanWindownMouseenter() {
+                if (!isWindowMin) return;
+                siYuanWindown.style.opacity = "1";
+            }
+            function siYuanWindownMouseleave() {
+                if (!isWindowMin) return;
+                siYuanWindown.style.opacity = WindowMinOpacity;
+            }
+        }
+    }, 300)
+}
+
+
+/**-------------------------------------------------------列表中支持插入TAB(双击Shift键)-------------------------------------*/
+function listTAB() {
+    var item=Date.now();
+    AddEvent(document.body, "keyup",TAB)
+    function TAB(e){
+        if (e.key != "Shift") return;
+        
+        if((Date.now()-item)>300){
+            item=Date.now();
+            return;
+        }
+        var element = getFocusedBlock();
+        if (element.className != "p") return;
+        var elementP=element.parentElement;
+        if (elementP.className != "li") return;
+        var draggable = element.previousElementSibling;
+        if (draggable == null || draggable.getAttribute("draggable") == "true") return;
+        
+       // var id=element.getAttribute("data-node-id");
+        //elementP.setAttribute("TAB",true);
+        var contenteditable=element.children[0];
+        var str=contenteditable.innerHTML;
+        //console.log(str);
+        var strLength=str.length;
+        var index=getPosition(contenteditable);
+        
+        if(strLength==0){
+            insertContent(" \t&#8203");
+            index=3;
+        }else if(index==0){
+            insertContent(" \t");
+            index=2;
+        }else if(index==strLength){
+            return;
+        }else{
+            index+=1;
+            insertContent("\t");
+        }
+
+        /*
+        更新块(id, "dom",contenteditable.innerHTML,()=>{
+            diguiTooONE(document.querySelector("[TAB]"),(v)=>{
+                if(v.getAttribute("data-node-id")==id){
+                    elementP.removeAttribute("TAB");
+                    if(v.children[0].innerHTML.length==0)return;
+                    setCursor(v.children[0],index);
+                    return true;
+                }
+                    return false;
+            });
+        });*/
+}
+}
 
 
 /**----------------------------------父子文档显示----------------计划中----------------------*/
@@ -2590,7 +2873,290 @@ function dblclickToReleaseReadOnly() {
 
 
 
-
+/****************************最近打开文档****************************************** */
+//https://ld246.com/article/1662697317986 来自社区分享
+function init() {
+    // 日期-时间格式化
+    Date.prototype.Format = function (fmt) {
+      var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        S: this.getMilliseconds(), //毫秒
+      };
+      if (/(y+)/.test(fmt))
+        fmt = fmt.replace(
+          RegExp.$1,
+          (this.getFullYear() + "").substr(4 - RegExp.$1.length)
+        );
+      for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+          fmt = fmt.replace(
+            RegExp.$1,
+            RegExp.$1.length == 1
+              ? o[k]
+              : ("00" + o[k]).substr(("" + o[k]).length)
+          );
+      return fmt;
+    };
+    // 历史条目保存到该数组
+    let historyArr = [];
+    if (localStorage.getItem("historyArr")) {
+      historyArr = JSON.parse(localStorage.getItem("historyArr"));
+    }
+    // 新打开页签后更新历史记录
+    function update_history_tags(newTag) {
+      if (!newTag) return;
+      let tag = undefined;
+      if (newTag.tagName === "DIV") {
+        tag = newTag.querySelector("li[data-type='tab-header']");
+      } else if (newTag.tagName === "LI") {
+        tag = newTag;
+      } else {
+        return;
+      }
+      // 历史记录条目的默认图标
+      let historyItemIcon = `<use xlink:href="#icon-1f4c4"></use>`;
+      let docIcon = tag.querySelector(".item__icon > svg");
+      // 如果设置了其他图标，就换成其他图标
+      if (docIcon) {
+        historyItemIcon = docIcon.innerHTML;
+      }
+  
+      // 页签标题
+      let nodeText = tag.querySelector("span.item__text").innerText;
+      // 页签打开的时间
+      let timeStamp = tag.getAttribute("data-activetime");
+      timeStamp = new Date(parseInt(timeStamp)).Format("yyyy-MM-dd hh:mm:ss");
+      let data_id = tag.getAttribute("data-id");
+      setTimeout(() => {
+        let current_doc = document.querySelector(
+          `div.fn__flex-1.protyle[data-id="${data_id}"] >div.protyle-content>div.protyle-background`
+        );
+        if (current_doc) {
+          let doc_link =
+            "siyuan://blocks/" + current_doc.getAttribute("data-node-id");
+          let newTag = `${timeStamp}--${nodeText}--${doc_link}--${historyItemIcon}`;
+          if (!historyArr.includes(newTag)) {
+            historyArr.push(newTag);
+          }
+          //只保留最近200条历史记录
+          while (historyArr.length > 200) {
+            historyArr.shift();
+          }
+          localStorage.setItem("historyArr", JSON.stringify(historyArr));
+        }
+      }, 700);
+    }
+  
+    // 标签页容器ul，观测其子元素的变动
+    let tab_containers = document.querySelectorAll(
+      "div[data-type='wnd'] > div.fn__flex ul.fn__flex.layout-tab-bar.fn__flex-1"
+    );
+    const config = { attributes: false, childList: true, subtree: false };
+  
+    // 新增标签页时，更新历史记录
+    const tag_change = function (mutationsList, observer) {
+      if (
+        mutationsList[0].type === "childList" &&
+        mutationsList[0].addedNodes.length
+      ) {
+        update_history_tags(mutationsList[0].addedNodes[0]);
+      }
+    };
+  
+    // 标签页容器发生变化——通常是出现分屏、关闭分屏 或者关闭了所有标签页的情况，此时需要更新观测的节点
+    const tab_container_change = function (mutationsList, observer) {
+      if (mutationsList[0].type === "childList") {
+        update_history_tags(mutationsList[0].addedNodes[0]);
+        updateNode();
+      }
+    };
+  
+    // 创建实例——观测页签的新增
+    const tabs_observer = new MutationObserver(tag_change);
+    // 创建实例——观测标签容器发生的变动
+    const tabs_container_observer = new MutationObserver(tab_container_change);
+  
+    // 初始化
+    for (let tab_container of tab_containers) {
+      tabs_observer.observe(tab_container, config);
+    }
+  
+    // 更新观测的节点
+    function updateNode() {
+      tabs_observer.disconnect();
+      // 重新获取节点
+      tab_containers = document.querySelectorAll(
+        "div[data-type='wnd'] > div.fn__flex ul.fn__flex.layout-tab-bar.fn__flex-1"
+      );
+      // 对节点重新进行观测
+      for (let tab_container of tab_containers) {
+        tabs_observer.observe(tab_container, config);
+      }
+    }
+  
+  
+    let parentNode = document.querySelector(
+      "div#layouts > div.fn__flex.fn__flex-1 >div.layout__center.fn__flex.fn__flex-1"
+    );
+    tabs_container_observer.observe(parentNode, config);
+  
+  
+    // 【设置】按钮的前面添加一个【历史记录】按钮
+    var settingBtn = document.getElementById("barSetting");
+    settingBtn.insertAdjacentHTML(
+      "beforebegin",
+      '<div id="history"class="toolbar__item b3-tooltips b3-tooltips__se" aria-label="历史记录" ></div>'
+    );
+    // 历史记录面板
+    settingBtn.insertAdjacentHTML(
+      "afterend",
+      '<div id="myHistory" style="position:fixed;z-index:1000;top:43%;left:18%;width:30vw;height:74vh;background-color: rgb(253,250,239);box-shadow: 0px 0px 6px 0px #0000008c;visibility:hidden;transform: translate(-50%, -50%);overflow:auto;padding:10px 27px;"><div style="position:sticky;top:0px;padding-top:10px;margin-bottom:20px;" class="topBar"><input id="history_input"style="margin-left:5px; border:1px solid black ;" type="text" placeholder="搜索历史记录"  size="30"><button id = "showAllHistory"  style="margin-left:5px;">显示全部</button><button id = "clearHistory"  style="position:absolute;right:10px;">清除历史</button></div><div id ="historyContainer"></div></div>'
+    );
+  
+    let showAllHistoryBtn = document.getElementById("showAllHistory");
+    let historyInputArea = document.getElementById("history_input");
+    var historyDom = document.getElementById("history");
+    historyDom.style.width = "auto";
+    var historyIcon ='<svg id="_x30_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M437.11,74.98c-99.974-99.974-262.064-99.973-362.038,0.001l0,0c-12.09-12.09-32.776-5.827-36.129,10.939L24.801,156.63   c-2.996,14.979,10.211,28.186,25.19,25.19l70.711-14.142c16.766-3.353,23.029-24.039,10.939-36.129l0,0   c68.622-68.622,180.279-68.622,248.901-0.001c68.9,68.899,68.9,180.003,0,248.903c-68.623,68.622-180.279,68.622-248.901-0.001   C97.329,346.14,80.174,301.07,80.174,256h-0.082c0-22.215-18.109-40.2-40.37-39.998c-22.076,0.2-39.694,18.688-39.629,40.765   c0.194,65.26,25.187,130.46,74.98,180.253c99.974,99.974,262.064,99.974,362.038,0.001C536.84,337.291,536.84,174.709,437.11,74.98   z"/><path d="M336.837,267.978l-50.746-29.298v-88.596c0-16.569-13.431-30-30-30h0c-16.569,0-30,13.431-30,30V256   c0,11.103,6.036,20.79,15.002,25.978l-0.002,0.003l65.746,37.958c14.349,8.284,32.696,3.368,40.981-10.981v0   C356.102,294.61,351.186,276.262,336.837,267.978z"/></g></svg>';
+      historyDom.innerHTML = historyIcon;
+    let myHistory = document.getElementById("myHistory");
+    
+    // DOM——放置历史条目的容器
+    let historyContainer = document.getElementById("historyContainer");
+  
+    // 打开某个历史文档
+    function openHistoryDoc(e) {
+      e.stopPropagation();
+      if (e.target.tagName == "SPAN" && e.target.getAttribute("data-href")) {
+        try {
+          window.open(e.target.getAttribute("data-href"));
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  
+    // 点击某一条历史记录后——跳转到对应的文档
+    myHistory.addEventListener("click", openHistoryDoc, false);
+  
+    let clearHistory = document.getElementById("clearHistory");
+    // callback——清空历史
+    function clearAllHistory(e) {
+      e.stopPropagation();
+      historyArr = [];
+      localStorage.setItem("historyArr", JSON.stringify(historyArr));
+      historyContainer.innerHTML = "";
+      myHistory.style.visibility = "hidden";
+    }
+    clearHistory.addEventListener("click", clearAllHistory, false);
+  
+    // callback——显示最近打开过的文档
+    function showAllHistoryItems(e) {
+      e.stopPropagation();
+      if (myHistory.style.visibility === "hidden") {
+        myHistory.style.visibility = "visible";
+      }
+      if (
+        localStorage.getItem("historyArr") &&
+        JSON.parse(localStorage.getItem("historyArr")).length > 0
+      ) {
+        historyArr = JSON.parse(localStorage.getItem("historyArr"));
+        const fragment = document.createDocumentFragment();
+        historyContainer.innerHTML = "";
+        // 时间最新的记录显示在上方
+        let tempArr = [...historyArr];
+        tempArr.reverse();
+        tempArr.forEach((value) => {
+          let [item_time, item_text, href, history_item_icon] = value.split("--");
+          item_text = item_text.replace(/</g, "&lt;");
+          item_text = item_text.replace(/>/g, "&gt;");
+          const elem_div = document.createElement("div");
+          elem_div.className = "historyItem";
+          elem_div.style.marginTop = "10px";
+          elem_div.innerHTML = `<span class="historyTimeStamp" style="color: black;margin-right: 2em;">${item_time}</span>
+        <span><svg class="history-icon" style="height:16px;width:16px;vertical-align: middle;">${history_item_icon}</svg></span>
+        <span style="color:#3481c5;margin-left:5px;cursor: pointer;" data-href="${href}" title="${href}">${item_text}</span>`;
+          fragment.appendChild(elem_div);
+        });
+        historyContainer.appendChild(fragment);
+      }
+    }
+  
+    // 简要处理一下防抖
+    function debounce(func, wait = 500) {
+      let timer = null;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args);
+        }, wait);
+      };
+    }
+  
+    // 处理提交的关键词
+    function historyKeySubmit(e) {
+      if (historyInputArea.value.trim()) {
+        let keyword = historyInputArea.value.trim();
+        if (
+          localStorage.getItem("historyArr") &&
+          JSON.parse(localStorage.getItem("historyArr")).length > 0
+        ) {
+          historyArr = JSON.parse(localStorage.getItem("historyArr"));
+          const fragment = document.createDocumentFragment();
+          historyContainer.innerHTML = "";
+          let tempArr = [...historyArr];
+          tempArr.reverse();
+          tempArr = tempArr.filter((item) => item.includes(keyword));
+          tempArr.forEach((value) => {
+            let [item_time, item_text, href, history_item_icon] =
+              value.split("--");
+            const regExp = new RegExp(`${keyword}`, "g");
+            item_text = item_text
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(regExp, function (value) {
+                return `<span style="background-color:#ffe955;color:black;">${value}</span>`;
+              });
+            item_time = item_time.replace(regExp, function (value) {
+              return `<span style="background-color:#ffe955;color:black;">${value}</span>`;
+            });
+            const elem_div = document.createElement("div");
+            elem_div.className = "historyItem";
+            elem_div.style.marginTop = "10px";
+            elem_div.innerHTML = `<span class="historyTimeStamp" style="color: black;margin-right: 2em;">${item_time}</span>
+          <span><svg class="history-icon" style="height:16px;width:16px;vertical-align: middle;">${history_item_icon}</svg></span>
+          <span style="color:#3481c5;margin-left:5px;cursor: pointer;" data-href="${href}" title="${href}">${item_text}</span>`;
+            fragment.appendChild(elem_div);
+          });
+          historyContainer.appendChild(fragment);
+        }
+      } else {
+        showAllHistoryItems(e);
+      }
+    }
+    // 顶栏【历史记录】图标
+    historyDom.addEventListener("click", showAllHistoryItems, false);
+    // 按钮——显示全部
+    showAllHistoryBtn.addEventListener("click", showAllHistoryItems, false);
+    // 输入框——搜索历史记录
+    historyInputArea.addEventListener("input", debounce(historyKeySubmit), false);
+  
+    // 隐藏历史面板
+    function hideHistoryPanel() {
+      if (myHistory.style.visibility === "visible") {
+        myHistory.style.visibility = "hidden";
+      }
+    }
+    // 点击其他区域时，隐藏历史面板
+    window.addEventListener("click", hideHistoryPanel, false);
+  
+  }
+  
 
 
 
@@ -2856,6 +3422,17 @@ async function 以id获取文档聚焦内容(id, then, obj = null) {
         size: 36,
     }).then((v) => then(v.data, obj))
 }
+
+async function 更新块(id, dataType, data, then = null, obj = null) {
+    await 向思源请求数据('/api/block/updateBlock', {
+        id: id,
+        dataType: dataType,
+        data: data,
+    }).then((v) => {
+        if (then) then(v.data, obj);
+    })
+}
+
 async function 设置思源块属性(内容块id, 属性对象) {
     let url = '/api/attr/setBlockAttrs'
     return 解析响应体(向思源请求数据(url, {
@@ -2883,6 +3460,86 @@ async function 解析响应体(response) {
 
 
 //+++++++++++++++++++++++++++++++++辅助API++++++++++++++++++++++++++++++++++++
+/**
+ * 在DIV光标位置插入内容
+ * @param {*} content 
+ */
+function insertContent(content) {
+    if (content) {
+        var sel = window.getSelection();
+        if (sel.rangeCount > 0) {
+            var range = sel.getRangeAt(0); //获取选择范围
+            range.deleteContents(); //删除选中的内容
+            var el = document.createElement("div"); //创建一个空的div外壳
+            el.innerHTML = content; //设置div内容为我们想要插入的内容。
+            var frag = document.createDocumentFragment(); //创建一个空白的文档片段，便于之后插入dom树
+            var node = el.firstChild;
+            var lastNode = frag.appendChild(node);
+            range.insertNode(frag); //设置选择范围的内容为插入的内容
+            var contentRange = range.cloneRange(); //克隆选区
+
+                contentRange.setStartAfter(lastNode); //设置光标位置为插入内容的末尾
+                contentRange.collapse(true); //移动光标位置到末尾
+                sel.removeAllRanges(); //移出所有选区
+                sel.addRange(contentRange); //添加修改后的选区
+    
+                    }
+    }
+}
+
+
+/**
+ * 获取DIV文本光标位置
+ * @param {*} element 
+ * @returns 
+ */
+function getPosition(element) {
+    var caretOffset = 0;
+    var doc = element.ownerDocument || element.document;
+    var win = doc.defaultView || doc.parentWindow;
+    var sel;
+    if (typeof win.getSelection != "undefined") {
+        //谷歌、火狐
+        sel = win.getSelection();
+        if (sel.rangeCount > 0) {
+            var range = sel.getRangeAt(0);
+            var preCaretRange = range.cloneRange(); //克隆一个选区
+            preCaretRange.selectNodeContents(element); //设置选区的节点内容为当前节点
+            preCaretRange.setEnd(range.endContainer, range.endOffset); //重置选中区域的结束位置
+            caretOffset = preCaretRange.toString().length;
+        }
+    } else if ((sel = doc.selection) && sel.type != "Control") {
+        //IE
+        var textRange = sel.createRange();
+        var preCaretTextRange = doc.body.createTextRange();
+        preCaretTextRange.moveToElementText(element);
+        preCaretTextRange.setEndPoint("EndToEnd", textRange);
+        caretOffset = preCaretTextRange.text.length;
+    }
+    return caretOffset;
+};
+/**
+ * 在指定DIV索引位置设置光标
+ * @param {*} element 
+ * @param {*} index 
+ */
+ function setCursor(element,index) {
+    var codeEl =element.firstChild;
+    var selection= window.getSelection();
+    // 创建新的光标对象
+    let range = selection.getRangeAt(0);
+    // 光标对象的范围界定为新建的代码节点
+    range.selectNodeContents(codeEl)
+    // 光标位置定位在代码节点的最大长度
+    // console.log(codeEl.length);
+    range.setStart(codeEl, index);
+    // 使光标开始和光标结束重叠
+    range.collapse(true)
+    selection.removeAllRanges()
+    selection.addRange(range)
+}
+
+
 /**
  * 获得文本的占用的宽度
  * @param {*} text 字符串文班
@@ -3150,7 +3807,7 @@ function IntervalFunTimes(time, frequency, Fun) {
  * @returns 
  */
 function detectZoom() {
-    var ratio = 0,   screen = window.screen, ua = navigator.userAgent.toLowerCase();
+    var ratio = 0, screen = window.screen, ua = navigator.userAgent.toLowerCase();
     if (window.devicePixelRatio !== undefined) {
         ratio = window.devicePixelRatio;
     } else if (~ua.indexOf('msie')) {
@@ -3163,7 +3820,7 @@ function detectZoom() {
     if (ratio) {
         ratio = Math.round(ratio * 100);
     }
-    return ratio*0.01;
+    return ratio * 0.01;
 };
 /**
  * 递归DOM元素查找深度子级的一批符合条件的元素返回数组
@@ -3230,7 +3887,37 @@ function diguiTooONE(element, judgeFun) {
         return null;
     }
 }
+/**
+ * 不断查找元素父级的父级知道这个父级符合条件函数
+ * @param {*} element 起始元素
+ * @param {*} judgeFun 条件函数
+ * @param {*} upTimes 限制向上查找父级次数
+ * @returns 返回符合条件的父级，或null
+ */
+function isFatherFather(element, judgeFun, upTimes) {
+    var i = 0;
+    for (; ;) {
+        if (!element) return null;
+        if (upTimes < 1) return null;
+        if (judgeFun(element)) return element;
+        element = element.parentElement;
+        i++;
+    }
+}
 
+
+/**
+ * 获得焦点所在的块
+ * @return {HTMLElement} 光标所在块
+ * @return {null} 光标不在块内
+ */
+function getFocusedBlock() {
+    let block = window.getSelection()
+        && window.getSelection().focusNode
+        && window.getSelection().focusNode.parentElement; // 当前光标
+    while (block != null && block.dataset.nodeId == null) block = block.parentElement;
+    return block;
+}
 /**
  * 清除选中文本
  */
@@ -3243,6 +3930,56 @@ function clearSelections() {
     }
 }
 
+/**
+ * Body中检测鼠标移动执行
+ * @param {*} fun(e) 执行函数,e：事件对象
+ * @param {*} accurate 精确度：每隔多少毫秒检测一次是否鼠标移动
+ * @param {*} delay 检测到鼠标移动后延时执行的ms
+ * @param {*} frequency 执行后再延时重复执行几次
+ * @param {*} frequencydelay 执行后再延时重复执行之间的延时时间ms
+ */
+function mousemoveRunFun(fun, accurate = 100, delay = 0, frequency = 1, frequencydelay = 16) {
+    var isMove = true;
+    var _e = null;
+    AddEvent(document.body, "mousemove", (e) => { isMove = true; _e = e })
+    setInterval(() => {
+        if (!isMove) return;
+        isMove = false;
+        setTimeout(() => {
+            fun(_e);
+            if (frequency == 1) return;
+            if (frequencydelay < 16) frequencydelay = 16;
+
+            var _frequencydelay = frequencydelay;
+            for (let index = 0; index < frequency; index++) {
+                setTimeout(() => { fun(_e); }, frequencydelay);
+                frequencydelay += _frequencydelay;
+            }
+
+        }, delay);
+    }, accurate);
+}
+
+/**
+ * 为元素添加思源悬浮打开指定ID块内容悬浮窗事件
+ * @param {*} element 绑定的元素
+ * @param {*} id 悬浮窗内打开的块的ID
+ */
+function suspensionToOpenSiyuanSuspensionWindow(element, id) {
+    element.setAttribute("data-defids", '[""]');
+    element.classList.add("popover__block");
+    element.setAttribute("data-id", id);
+}
+
+/**
+ * 为元素添加思源点击打开指定ID块内容悬浮窗事件
+ * @param {*} element 绑定的元素
+ * @param {*} id 悬浮窗内打开的块的ID
+ */
+function clickToOpenSiyuanFloatingWindow(element, id) {
+    element.classList.add("protyle-wysiwyg__embed");
+    element.setAttribute("data-id", id);
+}
 
 /**
  * 控制台打印输出
@@ -3316,6 +4053,12 @@ setTimeout(() => {
         newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
 
         theFloatingWindowIsClosed();//思源悬浮窗头栏中键关闭
+
+        zoomOutToRestoreTheFloatingWindow();//钉住悬浮窗增强
+
+        listTAB();//列表中支持TAB
+
+        init()//最近打开文档
 
         loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
         console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
