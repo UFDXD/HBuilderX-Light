@@ -1,0 +1,8 @@
+/*聚焦正常*/
+div.protyle-content>[data-doc-type]{
+}
+
+[data-fullwidth="true"]>[data-doc-type]{
+    padding: 16px 26px 191.5px !important;
+}
+

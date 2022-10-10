@@ -1,0 +1,42 @@
+body {
+    filter: hue-rotate(30deg);
+}
+
+
+img,
+/*图片*/
+video,
+/*视频*/
+canvas:not(.pdfViewer canvas),
+/*canvas，排除PDF*/
+.protyle-background__icon,
+/*文档头部emj图标*/
+#toolbarVIP,
+/*订阅用户图标*/
+[data-type="tag"]::before,
+/*标签图标*/
+[data-type="file-annotation-ref"]::before,
+/*pdf引用图标*/
+.code-block::after,
+/*pdf引用图标*/
+.b3-list-item__icon,
+/*菜单列表项图标*/
+.b3-list-item__graphic:not(.popover__block),
+/*大纲文档名图标*/
+.emojis__item,
+/*emj面板图标*/
+.emojis__type,
+/*emj面板图标类型图标*/
+.toolbar__item::after,
+/*头栏信息提示泡*/
+.iframe-content>iframe,
+/*iframe*/
+.item__preview
+
+/*集市包预览图*/
+    {
+    filter: hue-rotate(330deg);
+}
+
+/*
+svg:not(.b3-list-item__icon svg):not(.protyle-breadcrumb__bar>svg):not(#toolbar svg):not(#status svg):not(.protyle-gutters svg):not([data-type="NodeHeading"] svg):not(#dockLeft svg):not(#dockRight svg):not(.protyle-action svg):not(.b3-list-item__toggle svg),*/
