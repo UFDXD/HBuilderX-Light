@@ -462,7 +462,6 @@ body.body--win32 {
 .file-tree .fn__flex-1,
 .b3-list--background:not(#searchList):not(#globalSearchList) {
     overflow: overlay !important;
-    z-index: 1 !important;
 }
 
 
