@@ -1,0 +1,102 @@
+body {
+    filter: invert(92.5%);
+}
+
+
+img,
+/*图片*/
+video,
+/*视频*/
+canvas:not(.pdfViewer canvas),
+/*canvas，排除PDF*/
+.protyle-background__icon,
+/*文档头部emj图标*/
+#toolbarVIP,
+/*订阅用户图标*/
+[data-type="tag"]::before,
+/*标签图标*/
+[data-type="file-annotation-ref"]::before,
+/*pdf引用图标*/
+.code-block::after,
+/*pdf引用图标*/
+.b3-list-item__icon,
+/*菜单列表项图标*/
+.b3-list-item__graphic:not(.popover__block),
+/*大纲文档名图标*/
+.emojis__item,
+/*emj面板图标*/
+.emojis__type,
+/*emj面板图标类型图标*/
+.toolbar__item::after,
+/*头栏信息提示泡*/
+.iframe-content>iframe,
+/*iframe*/
+.item__preview
+
+/*集市包预览图*/
+    {
+    filter: invert(107.5%);
+}
+
+/*某信息泡样式*/
+.tooltip {
+    background-color: white !important;
+    color: black !important;
+}
+
+/*深色模式下为透明背景黑的图标添加白色背景*/
+.img img {
+    background-color: white !important;
+}
+
+/*文档正文标题*/
+.protyle-title__input {
+    color: black !important;
+}
+
+/* 未中的标签页 */
+.layout-tab-bar .item--focus .item__text {
+    color: rgb(255, 255, 255) !important;
+}
+
+/* 选中的标签页 */
+.layout__wnd--active .layout-tab-bar .item--focus .item__text {
+    color: black !important;
+}
+
+/* ——————————————————————鼠标光标选中文本样式———————————————————————— */
+.protyle-wysiwyg ::selection {
+    background-color: rgb(172, 255, 169);
+    color: rgb(0, 0, 0) !important;
+}
+
+
+/*-----------------------------思源引用*/
+/*动态描文本*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"] {
+    background-color: rgba(176, 218, 134, 0.481) !important;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"]:hover {
+    background-color: rgb(176, 218, 134) !important;
+}
+
+/*静态描文本*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"] {
+    background-color: rgba(176, 218, 134, 0.481) !important;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-type~="block-ref"]::after {
+    filter: drop-shadow(rgb(98, 133, 98) 9999999px 0) !important;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"]:hover {
+    background-color: rgb(176, 218, 134) !important;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"]:hover {
+    background-color: rgb(176, 218, 134) !important;
+}
+
+/*
+svg:not(.b3-list-item__icon svg):not(.protyle-breadcrumb__bar>svg):not(#toolbar svg):not(#status svg):not(.protyle-gutters svg):not([data-type="NodeHeading"] svg):not(#dockLeft svg):not(#dockRight svg):not(.protyle-action svg):not(.b3-list-item__toggle svg),*/

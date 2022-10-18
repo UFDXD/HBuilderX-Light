@@ -1,0 +1,8 @@
+/*列表层级醒目增强*/
+.list:not(#lz-comment-box>.list):hover {
+    border-radius: 1px;
+    /* box-shadow: 0 0 0 1px rgb(120,18,172) inset !important;*/
+    outline: 1px solid rgb(0, 103, 0);
+    /*box-shadow: 0 0 0 1px rgb(0, 103, 0) !important;*/
+    background-color: rgba(255, 250, 233, 0.062) !important;
+}
