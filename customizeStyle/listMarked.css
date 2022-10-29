@@ -1,0 +1,18 @@
+/*列表层级醒目增强*/
+/*.list:not(#lz-comment-box>.list):hover {
+    border-radius: 1px;
+    outline: 1px solid rgb(0, 103, 0);
+    background-color: rgba(255, 250, 233, 0.062) !important;
+}*/
+
+/*列表层级醒目增强*/
+.li:hover {
+    border-radius: 1px;
+    box-shadow: inset 0px 0px 0px 1px rgb(0, 103, 0) !important;
+    background-color: rgba(255, 250, 233, 0.062) !important;
+}
+
+.li>:nth-child(2):hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
