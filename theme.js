@@ -3413,7 +3413,44 @@ function bulletListAuxiliaryLine() {
 
 
 
+/**-------------------------------主题文档树，大纲列表等其他列表更加紧凑----------------------- */
+function moreCompact() {
 
+    HBuiderXThemeToolbarAddButton(
+        "更加紧凑",
+        "开启后文档树、大纲树、等其他项更加紧凑",
+        "/appearance/themes/HBuilderX-Light/src/更加紧凑2.png",
+        "/appearance/themes/HBuilderX-Light/src/更加紧凑1.png",
+        () => {
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/moreCompact.css", "moreCompact");
+        },
+
+        () => {
+            document.getElementById("moreCompact").remove();
+        },
+        true
+    );
+}
+
+
+/**-------------------------------标题序号----------------------- */
+function automaticSerialNumber() {
+
+    HBuiderXThemeToolbarAddButton(
+        "标题序号",
+        "开启后标题自动编号，注意受动态加载影响",
+        "/appearance/themes/HBuilderX-Light/src/标题序号2.png",
+        "/appearance/themes/HBuilderX-Light/src/标题序号1.png",
+        () => {
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/automaticSerialNumber.css", "automaticSerialNumber");
+        },
+
+        () => {
+            document.getElementById("automaticSerialNumber").remove();
+        },
+        true
+    );
+}
 
 
 
@@ -4876,6 +4913,7 @@ function getcommonMenu_Bolck() {
 }
 
 
+
 /**++++++++++++++++++++++++++++++++按需调用++++++++++++++++++++++++++++++ */
 
 
@@ -4902,6 +4940,8 @@ function getcommonMenu_Bolck() {
 
                 listMarked();//列表块醒目增强。
                 //bulletListAuxiliaryLine()//子弹列表辅助线-有缺陷
+                automaticSerialNumber();//标题序号
+
 
                 InverseButton();//主题反色 
                 BlackWhiteButton();//主题黑白
@@ -4937,6 +4977,9 @@ function getcommonMenu_Bolck() {
 
                 listMarked();//列表块醒目增强。
                 //bulletListAuxiliaryLine()//子弹列表辅助线
+
+                moreCompact();//主题文档树，大纲列表等其他列表更加紧凑
+                automaticSerialNumber();//标题序号
 
                 InverseButton();//主题反色 
                 BlackWhiteButton();//主题黑白
