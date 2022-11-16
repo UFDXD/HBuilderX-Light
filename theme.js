@@ -4936,7 +4936,7 @@ function getcommonMenu_Bolck() {
                 Removefirstlineindent();//开启段落首行缩进的情况下，双击段落尾部去除缩进
 
                 listMarked()//列表块醒目增强。
-                bulletListAuxiliaryLine()//子弹列表辅助线
+                //bulletListAuxiliaryLine()//子弹列表辅助线
 
                 InverseButton()//主题反色 
                 BlackWhiteButton()//主题黑白
