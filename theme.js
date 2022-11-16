@@ -4891,22 +4891,22 @@ function getcommonMenu_Bolck() {
 
             if (isPhone()) {
 
-                adjustDocumentLabelsWhile()//调整文档头部区域，在emj 标签，头图 各种情况下的布局
+                adjustDocumentLabelsWhile();//调整文档头部区域，在emj 标签，头图 各种情况下的布局
 
-                collapseExpand_Head_List()//鼠标中键标题、列表文本折叠/展开
+                collapseExpand_Head_List();//鼠标中键标题、列表文本折叠/展开
 
                 simpleRemarks();//简单备注
 
-                FirstLineInDent()//开启段落自动缩进
+                FirstLineInDent();//开启段落自动缩进
                 Removefirstlineindent();//开启段落首行缩进的情况下，双击段落尾部去除缩进
 
-                listMarked()//列表块醒目增强。
+                listMarked();//列表块醒目增强。
                 //bulletListAuxiliaryLine()//子弹列表辅助线-有缺陷
 
-                InverseButton()//主题反色 
-                BlackWhiteButton()//主题黑白
-                ReduceColorContrast()//主题降低颜色对比度
-                HueRotateButton()//主题色相旋转
+                InverseButton();//主题反色 
+                BlackWhiteButton();//主题黑白
+                ReduceColorContrast();//主题降低颜色对比度
+                HueRotateButton();//主题色相旋转
 
 
                 hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
@@ -4915,7 +4915,7 @@ function getcommonMenu_Bolck() {
 
                 newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
 
-                setAliasName()//右键快速设置命名、别名
+                setAliasName();//右键快速设置命名、别名
 
 
                 console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
@@ -4927,21 +4927,21 @@ function getcommonMenu_Bolck() {
 
                 HighlightBecomesHidden();//高亮变隐藏
 
-                QuickDropDownButton()//快捷下分栏按钮
+                QuickDropDownButton();//快捷下分栏按钮
 
-                FocusingOnAmplification()//聚焦内容放大200%
+                FocusingOnAmplification();//聚焦内容放大200%
 
 
-                FirstLineInDent()//开启段落自动缩进
+                FirstLineInDent();//开启段落自动缩进
                 Removefirstlineindent();//开启段落首行缩进的情况下，双击段落尾部去除缩进
 
-                listMarked()//列表块醒目增强。
+                listMarked();//列表块醒目增强。
                 //bulletListAuxiliaryLine()//子弹列表辅助线
 
-                InverseButton()//主题反色 
-                BlackWhiteButton()//主题黑白
-                ReduceColorContrast()//主题降低颜色对比度
-                HueRotateButton()//主题色相旋转
+                InverseButton();//主题反色 
+                BlackWhiteButton();//主题黑白
+                ReduceColorContrast();//主题降低颜色对比度
+                HueRotateButton();//主题色相旋转
 
                 // getTXTSum()//选中文字计数------已官方实现 
 
@@ -4957,7 +4957,7 @@ function getcommonMenu_Bolck() {
 
                 collapsedListPreview();//折叠列表内容预览查看
 
-                collapseExpand_Head_List()//鼠标中键标题、列表文本折叠/展开
+                collapseExpand_Head_List();//鼠标中键标题、列表文本折叠/展开
 
 
                 VirtualReferenceEnhancements();//将同名虚拟引用的悬浮窗，本笔记相关内容放到前面
@@ -4977,9 +4977,9 @@ function getcommonMenu_Bolck() {
 
                 zoomOutToRestoreTheFloatingWindow();//钉住悬浮窗增强
 
-                init()//最近打开文档
+                init();//最近打开文档
 
-                setAliasName()//右键快速设置命名、别名
+                setAliasName();//右键快速设置命名、别名
 
                 loadScript("/appearance/themes/HBuilderX-Light/comment/index.js");//js批注评论
 
@@ -4989,7 +4989,7 @@ function getcommonMenu_Bolck() {
 
             //作者土嗨自用
             loadStyle("/appearance/themes/HBuilderX-Light/personal/personal.css", "personal");
-            loadScript("/appearance/themes/HBuilderX-Light/personal/personal.js")
+            loadScript("/appearance/themes/HBuilderX-Light/personal/personal.js");
 
         }, 1000);
     }
