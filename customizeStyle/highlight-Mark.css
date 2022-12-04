@@ -1,0 +1,6 @@
+
+
+.b3-typography mark, .b3-typography span[data-type~=mark], .protyle-wysiwyg mark, .protyle-wysiwyg span[data-type~=mark]{
+    background-color: rgb(255,233,85) !important;
+    color: black !important;
+}

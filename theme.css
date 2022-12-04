@@ -1,0 +1,3613 @@
+/*目标：能看就行*/
+
+/*简单备注*/
+@import url(customizeStyle/simpleRemarks.css);
+
+:root {
+    /* 主色 */
+    --b3-theme-primary: rgb(121, 187, 138);
+    /*左右边栏面板激活图标颜色-块进度条圆点颜色*/
+    --b3-theme-primary-light: rgba(103, 184, 125, 0.439);
+    /*搜索面板，小开关开启背景色*/
+
+    --b3-theme-primary-lighter: rgba(103, 184, 125, 0.439);
+    /*块精度条，页签上边框颜色*/
+    --b3-theme-primary-lightest: rgba(190, 215, 143, 0.341);
+    /*块框选区域蒙版，选中块色*/
+    --b3-theme-secondary: rgb(243, 169, 47);
+
+    --b3-theme-background: rgb(255, 250, 233);
+    /*编辑界面背景颜色-FFFAE8*/
+    --b3-theme-surface: rgb(255, 250, 232);
+    /*左右大纲文档树区域背景色*/
+
+
+    --b3-theme-background-light: rgba(255, 253, 245, 0.878);
+    /*软件上横条-文档树大纲树列表项选中颜色*/
+    --b3-theme-surface-light: rgba(243, 243, 243, .86);
+    --b3-theme-error: rgb(210, 63, 49);
+
+    /* 文字颜色 */
+    --b3-theme-on-primary: rgb(255, 255, 255);
+    --b3-theme-on-secondary: rgb(255, 255, 255);
+    --b3-theme-on-background: rgb(95, 99, 104);
+    --b3-theme-on-surface: rgb(32, 33, 36);
+    --b3-theme-on-error: rgb(255, 255, 255);
+
+    /* 字体 */
+    --b3-font-family: "HarmonyOS Sans Medium", "阿里巴巴普惠体 2.0 Medium", "quote", "Helvetica Neue", "Luxi Sans", "DejaVu Sans", "Hiragino Sans GB", "Microsoft Yahei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
+    --b3-font-family-code: "JetBrainsMono-Regular", mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
+    --b3-font-family-graph: mononoki;
+    --b3-font-family-emoji: "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji";
+    --b3-font-family-math: KaTeX_Math;
+
+    /* 线条 */
+    --b3-border-color: rgb(216, 202, 158);
+    /*左右面板和编辑区域的分割线，引述块的左竖线*/
+
+    /* 滚动条 */
+    --b3-scroll-color: rgba(190, 216, 165, 0.549);
+    /*滚动条*/
+
+    /* 列表 */
+    --b3-list-hover: rgba(214, 226, 185, 0.525);
+
+    /* 菜单 */
+    --b3-menu-background: rgb(255, 253, 245);
+    /*菜单面板*/
+
+    /* 提示 */
+    --b3-tooltips-color: rgba(0, 0, 0, 0.486);
+    /**/
+
+    /* 卡片背景 */
+    --b3-card-error-color: rgb(97, 26, 21);
+    --b3-card-error-background: rgb(253, 236, 234);
+    --b3-card-warning-color: rgb(102, 60, 0);
+    --b3-card-warning-background: rgb(255, 244, 229);
+    --b3-card-info-color: rgb(13, 60, 97);
+    --b3-card-info-background: rgba(219, 232, 196, 0.443);
+    /*嵌入快背景色*/
+    --b3-card-success-color: rgb(30, 70, 32);
+    --b3-card-success-background: rgb(247, 237, 237);
+
+    /* 自定义文字 */
+    --b3-font-color1: var(--b3-card-error-color);
+    --b3-font-color2: var(--b3-card-warning-color);
+    --b3-font-color3: var(--b3-card-info-color);
+    --b3-font-color4: var(--b3-card-success-color);
+    --b3-font-color5: var(--b3-theme-on-surface);
+    --b3-font-color6: var(--b3-theme-primary);
+    --b3-font-color7: var(--b3-theme-secondary);
+    --b3-font-color8: var(--b3-theme-error);
+    --b3-font-color9: rgb(245, 83, 158);
+    --b3-font-color10: rgb(148, 65, 148);
+    --b3-font-color11: rgb(101, 184, 77);
+    --b3-font-color12: rgb(245, 130, 46);
+    --b3-font-color13: var(--b3-theme-background);
+    --b3-font-background1: var(--b3-card-error-background);
+    --b3-font-background2: var(--b3-card-warning-background);
+    --b3-font-background3: var(--b3-card-info-background);
+    --b3-font-background4: var(--b3-card-success-background);
+    --b3-font-background5: var(--b3-theme-surface);
+    --b3-font-background6: var(--b3-theme-primary-light);
+    --b3-font-background7: rgba(217, 211, 215, 0.5);
+    --b3-font-background8: rgba(255, 193, 153, 0.5);
+    --b3-font-background9: rgba(189, 201, 255, 0.5);
+    --b3-font-background10: rgba(239, 218, 251, 0.5);
+    --b3-font-background11: rgba(234, 202, 220, 0.5);
+    --b3-font-background12: rgba(253, 198, 200, 0.5);
+    --b3-font-background13: var(--b3-theme-on-background);
+
+    /* 动画效果 */
+    --b3-transition: all .15s cubic-bezier(0, 0, .2, 1) 0ms;
+    --b3-width-transition: width .15s cubic-bezier(0, 0, .2, 1) 0ms;
+    /* 动画效果 */
+    --b3-transition: all .15s cubic-bezier(.5, 0, .5, 1) 0ms;
+    --b3-width-transition: width .15s cubic-bezier(.5, 0, .5, 1) 0ms;
+    /*--b3-width-transition: none;*/
+    /* 阴影 */
+    --b3-point-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    --b3-dialog-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+
+    /* diff */
+    --b3-diff-add: rgb(222, 255, 222);
+    --b3-diff-add-surface: rgb(151, 242, 149);
+    --b3-diff-del: rgb(254, 232, 233);
+    --b3-diff-del-surface: rgb(255, 182, 186);
+
+    /* 图表颜色 */
+    --b3-graph-p-point: rgb(7, 111, 126);
+    --b3-graph-heading-point: rgb(102, 14, 122);
+    --b3-graph-math-point: rgb(128, 255, 165);
+    --b3-graph-code-point: rgb(0, 221, 255);
+    --b3-graph-table-point: rgb(55, 162, 255);
+    --b3-graph-list-point: rgb(255, 0, 135);
+    --b3-graph-todo-point: rgb(255, 191, 0);
+    --b3-graph-olist-point: rgb(179, 0, 95);
+    --b3-graph-listitem-point: rgb(246, 91, 0);
+    --b3-graph-bq-point: rgb(141, 72, 227);
+    --b3-graph-super-point: rgb(221, 121, 255);
+    --b3-graph-doc-point: rgb(32, 33, 36);
+    --b3-graph-tag-point: rgb(219, 243, 47);
+    --b3-graph-asset-point: rgb(5, 192, 145);
+    --b3-graph-line: rgb(95, 99, 104);
+    --b3-graph-ref-line: rgb(210, 63, 49);
+    --b3-graph-tag-line: rgb(95, 107, 6);
+    --b3-graph-tag-tag-line: rgb(219, 243, 47);
+    --b3-graph-asset-line: rgb(3, 116, 87);
+    --b3-graph-hl-point: rgb(243, 169, 47);
+    --b3-graph-hl-line: rgb(66, 133, 244);
+
+    /* 编辑器搜索颜色 */
+    --b3-protyle-search-background: rgb(255, 233, 85);
+    --b3-protyle-search-border-color: rgb(242, 230, 128);
+    --b3-protyle-search-current-background: rgb(165, 211, 254);
+
+    /* 代码片段背景 */
+    --b3-protyle-code-background: rgba(234, 239, 204, 0.91);
+    /*行内代码背景色*/
+
+    /* 所见即所得行内元素颜色 */
+    --b3-protyle-inline-strong-color: rgb(32, 33, 36);
+    --b3-protyle-inline-em-color: rgb(32, 33, 36);
+    --b3-protyle-inline-s-color: rgb(32, 33, 36);
+    --b3-protyle-inline-link-color: rgb(66, 133, 244);
+    --b3-protyle-inline-mark-background: rgb(255, 233, 85);
+    --b3-protyle-inline-mark-color: rgb(32, 33, 36);
+    --b3-protyle-inline-tag-color: rgb(95, 99, 104);
+    --b3-protyle-inline-blockref-color: rgb(102, 14, 122);
+
+    /* PDF */
+    --b3-pdf-selection: rgb(198, 228, 159);
+    --b3-pdf-sidebar-width: 200px;
+    --b3-pdf-offset: 0;
+    /*--b3-pdf-background1: var(--b3-theme-error);*/
+    --b3-pdf-background1: rgb(255, 118, 118);
+    --b3-pdf-background2: rgb(245, 130, 46);
+    /*--b3-pdf-background3: var(--b3-theme-secondary);*/
+    --b3-pdf-background3: rgb(243, 169, 47);
+    --b3-pdf-background4: rgb(101, 184, 77);
+    --b3-pdf-background5: rgb(245, 83, 158);
+    /*--b3-pdf-background6: var(--b3-theme-primary);*/
+    --b3-pdf-background6: rgb(121, 187, 138);
+    --b3-pdf-background7: rgb(148, 65, 148);
+
+    /* 表格 */
+    --b3-table-border-color: rgba(121, 187, 137, 0.275);
+    --b3-table-th-color: rgb(209, 236, 241);
+    --b3-table-trn-color: rgb(247, 247, 247);
+    --b3-table-tr2n-color: rgb(255, 255, 255);
+
+    /* 边框 */
+    --b3-border-color1: rgb(207, 206, 206);
+    --b3-border-normal: 1px solid rgb(207, 206, 206);
+    --b3-border-wider: 2px solid rgb(204, 223, 189);
+    /*列表竖线*/
+    --b3-border-dashed: 1px dashed rgb(207, 206, 206);
+    --b3-border-dashed-gray: 1px dashed rgba(128, 128, 128, 0.502);
+    --b3-border-dashed-gray-wider: 2px dashed rgba(128, 128, 128, 0.502);
+    --b3-border-column: 1px solid rgba(255, 255, 255, 0.302);
+    --b3-border-column-item: 1px solid rgba(128, 128, 128, 0.2);
+
+
+    /*——————————————列表转导图——————————————*/
+    --b3-border-daotu: 2px solid rgb(203, 217, 182);
+    --b3-block-daotu: rgb(255, 255, 255);
+    /* ———————————— 列表转看板 ———————————— */
+    --kbline-boarditem-minwidth: 14rem;
+    /*看板卡片的最小宽度*/
+    --kb--li--background: rgb(255, 255, 255);
+
+    /*——————————————列表转表格————————————*/
+    --surface-border-color: rgb(203, 217, 182);
+
+    /* ————————————————————大纲文字颜色———————————————————— */
+    --b3-catalog-h1-color: var(--b3-font-color1);
+    --b3-catalog-h2-color: var(--b3-font-color2);
+    --b3-catalog-h3-color: var(--b3-font-color3);
+    --b3-catalog-h4-color: var(--b3-font-color4);
+    --b3-catalog-h5-color: var(--b3-font-color5);
+    --b3-catalog-h6-color: var(--b3-font-color6);
+
+
+
+}
+
+
+
+
+/*+++++++++++++++++++++++++++++杂项+++++++++++++++++++++++++++++ */
+
+
+/*-----------------------------某些块右上角的图标背景色*/
+.protyle-icon {
+    background-color: rgba(0, 0, 0, 0.533);
+}
+
+.protyle-icons:not(.protyle-background__img .protyle-icons) {
+    z-index: 9 !important;
+}
+
+/*-----------------------------菜单列表*/
+
+/*块菜单中外观字体区域增大*/
+.b3-menu__submenu.b3-menu__submenu--row {
+    transform-origin: 0 100% 0;
+    transform: scale(1.35);
+}
+
+/*面板列表项鼠标经过样式*/
+.b3-list--background .b3-list-item:hover:not(.b3-list-item--focus) {
+    background-color: rgba(202, 219, 186, 0.449) !important;
+    font-weight: bold;
+    /*margin-left: -1px !important;*/
+    text-shadow: 2px 2px 4px rgba(182, 211, 169);
+}
+
+/*面板列表项点击选中样式*/
+.b3-list--background .b3-list-item--focus {
+    background-color: rgba(202, 219, 186, 0.788) !important;
+    font-weight: bold;
+    margin-left: -1px !important;
+    text-shadow: 2px 2px 4px rgba(182, 211, 169);
+}
+
+
+/*-----------------------------引用计数*/
+.counter:not(.listCount):not(.listMCount) {
+    margin-left: 4px;
+    line-height: 20px;
+    padding: 0 6px;
+    color: white;
+    border-radius: 2px;
+    font-size: 12px;
+    user-select: none;
+    height: 20px;
+    background-color: rgb(101, 168, 99);
+    margin-right: 3px !important;
+}
+
+.counter:hover:not(.listCount):not(.listMCount) {
+    transform: scale(1.2);
+    background-color: rgb(101, 168, 99) !important;
+    color: white !important;
+}
+
+/*-----------------------------各面板输入框*/
+.b3-form__icon-input,
+.fn__size200:not(.b3-slider) {
+    /*忽略滑动条*/
+    background-color: rgb(255, 253, 245);
+}
+
+/*-----------------------------窗口分割拖动线*/
+.layout__resize--lr {}
+
+/*-----------------------------自动宽度动画*/
+.protyle-wysiwyg,
+.protyle-background__iconw,
+.protyle-title {
+    transition: none;
+
+}
+
+/*-----------------------------光标颜色*/
+body {
+    caret-color: rgb(117, 177, 115);
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/*-----------------------------块标*/
+.protyle-gutters {
+    z-index: 3;
+}
+
+/*tooltip 提示框*/
+/*
+#tooltip{
+    color: rgb(60,62,60);
+    background-color: rgba(252, 251, 241, 0.814);
+    border: 1px solid rgb(114,175,110);
+    font-size: 105%;
+}*/
+
+/*-----------------------/ [[ 引用 嵌入块 匹配弹窗 ---------------------------*/
+/*弹窗窗口*/
+[data-close] {
+    border: 1px solid rgb(238, 230, 206);
+    overflow-x: hidden !important;
+}
+
+/*/弹窗按钮*/
+.protyle-hint.hint--menu button {
+    width: 100% !important;
+    margin-left: 0px !important;
+}
+
+
+/*[[ {{ 选择引用 展开或匹配条目，路径醒目*/
+.b3-list-item__meta.b3-list-item__showall:not(.fn__flex) {
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+    color: rgb(101, 168, 99);
+}
+
+/*[[ {{ 选择引用 展开匹配或引用条目*/
+.protyle-hint:not(.hint--menu) button:not(.b3-menu.b3-list.b3-list--background.hint--menu>button):not(.emojis__content button):hover {
+    width: 100% !important;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.249) !important;
+}
+
+.protyle-hint:not(.hint--menu) button:not(.b3-menu.b3-list.b3-list--background.hint--menu>button):not(.emojis__content button) {
+    width: 100% !important;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.249) !important;
+}
+
+/*选择引用弹窗列表按钮容器*/
+.protyle-hint>.b3-text-field+div {
+    overflow: overlay !important;
+}
+
+
+
+/*-------------------------面板黑色遮罩层*/
+.b3-dialog__scrim {
+    opacity: 0.2 !important;
+}
+
+
+.block__icons:not(.block__icons--border) {
+    height: 25px;
+    margin-bottom: 8px;
+}
+
+/*+++++++++++++++++++++++++++++软件非编辑区域+++++++++++++++++++++++++++++*/
+
+
+
+/*-----------------------------背景纸张纹理 */
+/*来自Tsundoku Green主题 背景图片，修改*/
+.layout-tab-container.fn__flex-1 {
+    background-image: url('src/paper3.png');
+}
+
+.protyle-content {
+    background-image: url('src/背景.png');
+    /* 背景图垂直、水平均居中 */
+    background-position: center center;
+    /* 背景图不平铺 */
+    background-repeat: no-repeat;
+    /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+    background-size: 100% 100%;
+}
+
+
+.protyle-title__input,
+.protyle-breadcrumb {
+    background-color: transparent !important;
+}
+
+li[data-type="toggle"] {
+    background-color: rgb(255, 250, 233);
+}
+
+
+/*-----------------------------软件边框*/
+.body--win32 {
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    /*解决反色打开搜索弹窗思源整体提升问题*/
+    position: fixed !important;
+    width: 100% !important;
+}
+
+/*-----------------------------软件头栏*/
+#toolbar {
+    height: 22px;
+    border-top: 1px solid rgb(239, 231, 204);
+    border-bottom: 1px solid rgba(216, 202, 158, 0.412) !important;
+    /*边框实现*/
+    border-right: 1px solid rgba(216, 202, 158, 0.412);
+    border-left: 1px solid rgba(216, 202, 158, 0.412);
+    background-color: rgb(253, 250, 239);
+}
+
+/*头栏信息文字*/
+#drag {
+    line-height: 18px !important;
+    color: black !important;
+}
+
+/*订阅标志*/
+#toolbarVIP {
+    margin-left: -10px;
+}
+
+/*头栏按钮*/
+#toolbar .toolbar__item {
+    padding-left: 8px;
+}
+
+#toolbar .toolbar__item svg {
+    width: 16px;
+    height: 16px;
+}
+
+/*头栏左边区域按钮*/
+#barTopHelp,
+#barSearch,
+#barReadonly,
+#barMode,
+#history,
+#barSetting {
+    padding-left: 7px !important;
+    padding-right: 5px !important;
+    color: rgb(60, 116, 57);
+
+}
+
+/*缩小窗口,最大窗口按钮*/
+#windowControls {
+    z-index: auto !important;
+}
+
+#minWindow,
+#maxWindow,
+#restoreWindow,
+#closeWindow {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#minWindow {
+    padding-left: 9px !important;
+}
+
+#minWindow:hover,
+#maxWindow:hover {
+    border: none !important;
+    background-color: transparent !important;
+}
+
+
+
+
+
+
+
+/*-----------------------------软件底栏*/
+#status {
+    height: 22px;
+    line-height: 22px;
+    border-top: 1px solid rgb(238, 230, 206);
+    border-left: 1px solid rgba(216, 202, 158, 0.412);
+    border-right: 1px solid rgba(216, 202, 158, 0.412);
+    border-bottom: 1px solid rgb(239, 231, 204);
+    background-color: rgb(253, 250, 239);
+    z-index: 4 !important;
+}
+
+/*底栏图标*/
+#barDock>svg,
+#barHelp>svg {
+    color: rgb(47, 107, 45);
+}
+
+#barDock>svg:hover,
+#barHelp>svg:hover {
+    color: rgb(95, 99, 104);
+}
+
+#barDock {
+    margin-left: -10px;
+}
+
+#barHelp {
+    margin-right: -10px;
+}
+
+#barDock .b3-menu {
+    bottom: 22px !important;
+}
+
+#barHelp .b3-menu {
+    bottom: 22px !important;
+}
+
+
+
+/*-----------------------------软件滚动条 */
+/*滚动条整体*/
+::-webkit-scrollbar {
+    border-radius: 1 !important;
+    width: 9px !important;
+    background-color: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+    /*滚动条滑块*/
+    border-radius: 1px;
+    background-color: transparent;
+    border-left: 7px solid transparent !important;
+    border-right: 0px;
+    box-shadow: inset 0px 0px 9px 9px rgba(101, 168, 99, 0.404) !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    /*鼠标移动到滑块上的效果*/
+    border-left: 9px solid rgb(101, 167, 99) !important;
+    box-shadow: inset 0px 0px 9px 9px rgb(101, 167, 99) !important;
+}
+
+
+/*-----------------------------滚动条适配*/
+
+
+#layouts {
+    overflow-y: hidden !important;
+}
+
+#layouts>div:nth-child(3) {
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+}
+
+.fn__flex-column.fn__flex-1,
+.fn__flex-1.fn__flex {
+    overflow-y: hidden !important;
+}
+
+.protyle-content {
+
+    overflow-x: hidden !important;
+}
+
+.layout__center.fn__flex.fn__flex-1 {
+    overflow-x: hidden !important;
+}
+
+/*反链提及区域*/
+.fn__flex-1.fn__flex-column.file-tree.sy__backlink {
+    overflow-x: hidden !important;
+}
+
+/*资源面板*/
+#assetsList {
+    overflow-x: hidden !important;
+}
+
+.file-tree .fn__flex-1,
+.protyle-content {
+    overflow: overlay;
+    z-index: 0;
+}
+
+protyle-util,
+.block__popover.block__popover--move>.block__content,
+.b3-list--background:not(#searchList):not(#globalSearchList):not(#menu.b3-list--background) {
+    overflow: overlay;
+}
+
+/*-----------------------------左右边栏槽-----------*/
+/*左栏按钮槽*/
+#dockLeft {
+    width: 22px;
+    background-color: rgb(255, 251, 236);
+    border-left: 1px solid rgba(216, 202, 158, 0.412);
+    border-right: 1px solid rgba(216, 202, 158, 0.412) !important;
+    margin-right: -1.5px !important;
+    z-index: 4;
+}
+
+/*右栏按钮槽*/
+#dockRight {
+    width: 22px;
+    background-color: rgb(255, 251, 236);
+    border-right: 1px solid rgba(216, 202, 158, 0.412);
+    border-left: 1px solid rgba(216, 202, 158, 0.412) !important;
+}
+
+/*底栏按钮槽*/
+#dockBottom {
+    height: 22px;
+    padding-left: 27px;
+    padding-right: 27px;
+    background-color: rgb(255, 251, 236);
+    border-top: 1px solid rgba(216, 202, 158, 0.412) !important;
+}
+
+/*左右按钮槽图标大小*/
+#dockBottom .dock__item,
+#dockRight .dock__item,
+#dockLeft .dock__item {
+    padding: 5px;
+    margin: 0px !important;
+}
+
+
+/*按钮槽图标上下间隔*/
+#dockLeft span.dock__item svg,
+#dockRight span.dock__item svg {
+    height: 17px;
+}
+
+
+/*按钮槽图标上下间隔*/
+#dockBottom span.dock__item svg {
+    width: 12px;
+    height: 10px;
+}
+
+
+.b3-tooltips__se {
+    color: rgb(47, 107, 45);
+}
+
+/*激活工具栏字体图标*/
+.dock__item--active {
+    color: rgb(73, 138, 71);
+}
+
+/*未激活工具栏字体图标*/
+.dock__item:not(.dock__item--active) {
+    color: rgb(121, 101, 48);
+}
+
+/*鼠标经过时未激活工具栏样式*/
+.dock__item:not(.dock__item--active):hover {
+    color: rgb(73, 138, 71);
+}
+
+/*-----------------------------左右边栏展开区域*/
+
+/*固定左右栏面板列表树列表头背景颜色*/
+.block__icons {
+    background-color: rgb(255, 250, 232);
+}
+
+/*左区域*/
+/*div.fn__flex-column.fn__flex-shrink {}*/
+
+/*右区域*/
+/*#layouts>.fn__flex.fn__flex-1>div:last-child {
+    border-left: 1px solid rgb(216, 202, 158);
+}*/
+
+
+/*-----------------------------大纲区域*/
+
+.file-tree ul.b3-list.b3-list--background [data-subtype] svg.b3-list-item__graphic {
+    width: 1.1em;
+    height: 1.1em;
+    color: rgb(191, 136, 3);
+    margin-left: 0px;
+    margin-right: 2px;
+}
+
+
+.file-tree ul.b3-list.b3-list--background [data-subtype="h1"] svg.b3-list-item__graphic {
+    color: var(--b3-catalog-h1-color);
+}
+
+.file-tree ul.b3-list.b3-list--background [data-subtype="h2"] svg.b3-list-item__graphic {
+    color: var(--b3-catalog-h2-color);
+}
+
+.file-tree ul.b3-list.b3-list--background [data-subtype="h3"] svg.b3-list-item__graphic {
+    color: var(--b3-catalog-h3-color);
+}
+
+.file-tree ul.b3-list.b3-list--background [data-subtype="h4"] svg.b3-list-item__graphic {
+    color: var(--b3-catalog-h4-color);
+}
+
+.file-tree ul.b3-list.b3-list--background [data-subtype="h5"] svg.b3-list-item__graphic {
+    color: var(--b3-catalog-h5-color);
+}
+
+.file-tree ul.b3-list.b3-list--background [data-subtype="h6"] svg.b3-list-item__graphic {
+    color: var(--b3-catalog-h6-color);
+}
+
+/*-----------------------------提及反向链接区域*/
+/*提及和反链分割线*/
+.backlinkList+.block__icons {
+    border-top: 1px solid rgb(216, 202, 158);
+}
+
+/*反链，提及搜索*/
+
+input[placeholder="过滤文档名 Enter"] {
+    height: 20px !important;
+    box-shadow: 0px 0px 1px 1px rgba(199, 196, 183);
+    font-size: 80%;
+    background-color: transparent;
+}
+
+/*反链接，提及计数*/
+.listCount,
+.listMCount {
+    font-size: 100%;
+    color: rgb(101, 168, 99);
+}
+
+.listCount:hover,
+.listMCount:hover {
+    transform: scale(1.2);
+    color: rgb(101, 168, 99);
+}
+
+
+
+
+/*-----------------------------文档树区域*/
+/*文档树文件夹左边子项点击展开按钮*/
+.b3-list-item__toggle--hl {
+    display: inline-block !important;
+    height: 100%;
+    margin-left: -5px;
+}
+
+.b3-list-item__toggle--hl:hover {
+    border-radius: 1px;
+    background-color: rgba(101, 168, 99, 0.549);
+}
+
+
+/*更多按钮*/
+span[aria-label="更多"]:hover {
+    background-color: transparent !important;
+}
+
+/*新建文档按钮*/
+span[aria-label="新建文档"]:hover {
+    background-color: transparent !important;
+}
+
+
+
+/*鼠标经过*/
+/*.b3-list-item:hover:not(li[data-type="toggle"]) {
+    font-weight: bold;
+    margin-left: -2px !important;
+    text-shadow: 2px 2px 4px rgba(182, 211, 169);
+}*/
+
+
+/*文档树字体颜色*/
+.b3-list-item__text {
+
+    color: rgb(70, 67, 60);
+    font-size: 108.5%;
+    /*字体放大一点，在整体界面缩小的时候，文档树和大纲可以看得更清楚点*/
+}
+
+/*文档树emjio图标样式*/
+.b3-list-item__icon svg,
+.b3-list-item__icon img {
+    height: 18px;
+    width: 18px;
+    margin-left: -3px;
+    margin-right: -1px;
+}
+
+/*文档树修改emj，hover*/
+.b3-list-item__icon:hover {
+    background-color: transparent !important;
+}
+
+/* 文件树拖拽增强 */
+.file-tree .dragover__bottom {
+    box-shadow: 0 2px 0 rgba(101, 168, 99), inset 0px -2px 0 rgba(101, 168, 99);
+}
+
+.file-tree .dragover__top {
+    box-shadow: 0 -2px 0 rgba(101, 168, 99), inset 0px 2px 0 rgba(101, 168, 99);
+}
+
+/*.b3-list-item.b3-list-item--hide-action .b3-list-item__toggle.fn__hidden {}*/
+
+
+
+
+/*-----------------------------关闭笔记本区域*/
+/*关闭笔记面板和文档树面板分割线*/
+.b3-list:not(.b3-list--background) {
+    border-top: 1px solid rgb(216, 202, 158);
+}
+
+/*-----------------------------设置面板*/
+.b3-dialog__container {
+    border-radius: 1px !important;
+    border: 1px solid rgb(238, 230, 206);
+}
+
+.b3-dialog--open>.b3-dialog>.b3-dialog__container>div>.fn__flex-column>div.fn__flex-1.fn__flex>ul {
+    border-right: 1px solid rgb(238, 230, 206);
+}
+
+/*------------------局部关系图---------------------*/
+
+
+
+/*-----------------------------资源面板*/
+/*资源列表项*/
+#assetsList>li:hover {
+    transform: scale(1.005);
+}
+
+/*-----------------------------思源标签索引窗口*/
+
+/*思源标签查找窗口上*/
+#globalSearchList {
+    border-bottom: 1px solid rgb(216, 202, 158);
+
+}
+
+/*思源标签查找窗口下*/
+/*#searchPreview>.protyle-content>.protyle-wysiwyg {}*/
+
+
+
+
+/*-----------------------------思源标签页 */
+
+
+[data-type="wnd"]>.fn__flex {
+    display: block;
+    height: 24.5px;
+}
+
+
+.layout-tab-bar .item:not(.item--readonly) {
+    line-height: 24.5px;
+    padding-right: 15px;
+    cursor: pointer;
+    user-select: none;
+    display: block;
+    align-items: flex-start;
+    text-align: center;
+    transition: none;
+    position: relative;
+    height: 24.5px;
+    min-height: 24.5px;
+    flex-shrink: 0;
+    overflow: hidden;
+    max-width: 100%;
+    width: 200px;
+    border-radius: 1px;
+    border-right: 1px solid rgba(216, 202, 158, 0.384);
+    text-overflow: ellipsis;
+    color: rgb(109, 109, 109);
+}
+
+.layout-tab-bar .item__text {
+    text-align: center;
+    -webkit-font-smoothing: subpixel-antialiased;
+    color: var(--b3-theme-on-surface);
+    transition: none;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-mask-image: none;
+    color: rgb(109, 109, 109);
+}
+
+.layout-tab-bar .item__close {
+    display: inline-block;
+    padding: 0px;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
+.layout-tab-bar .item--focus:after {
+    display: none;
+}
+
+.layout-tab-bar .item__close svg {
+    border-radius: 10px;
+    height: 8px;
+    width: 8px;
+    color: var(--b3-theme-on-surface);
+    transition: none;
+    padding: 4px;
+    opacity: 1;
+}
+
+/*页签hover*/
+.item:not(li.item.item--pin):not(.item--focus):not(div[data-type="open-search"]):not(.item--readonly):hover {
+    background-color: rgb(218, 234, 206) !important;
+    color: black !important;
+}
+
+.item .item__text:not(li.item.item--pin .item__text):not(.item--focus .item__text):not(div[data-type="open-search"]):not(.item--readonly):hover {
+    color: black !important;
+}
+
+
+/*选中页签*/
+.layout-tab-bar .item--focus {
+    line-height: 24.5px;
+    background-color: rgb(101, 168, 99) !important;
+    color: white !important;
+    text-overflow: ellipsis;
+}
+
+.layout-tab-bar .item--focus>.item__text {
+    color: white !important;
+}
+
+.layout-tab-bar .item--focus>.item__close {
+    display: inline-block;
+    align-items: flex-start;
+}
+
+
+/*未选中钉住页签*/
+.layout-tab-bar .item--pin:not(.item--readonly) {
+    background-color: rgb(255, 250, 232);
+    padding-right: 0px;
+    color: rgb(101, 168, 99) !important;
+    width: 106px !important;
+}
+
+.layout-tab-bar .item--pin>.item__text {
+    color: rgb(101, 168, 99) !important;
+}
+
+.layout-tab-bar .item--pin>.item__close {
+    display: none !important;
+}
+
+.layout-tab-bar .item--pin:not(.item--readonly):hover {
+    color: rgb(101, 168, 99) !important;
+}
+
+
+
+/*选中钉住页签*/
+.layout-tab-bar .item--focus.item--pin:not(.item--readonly) {
+    background-color: rgb(255, 250, 232);
+    padding-right: 0px;
+    color: white !important;
+    width: 106px !important;
+}
+
+.layout-tab-bar .item--focus.item--pin>.item__text {
+    color: white !important;
+}
+
+.layout-tab-bar .item--focus.item--pin>.item__close {
+    display: none !important;
+}
+
+
+/*失焦窗口页签*/
+.layout-tab-bar .item--focus:not(.layout__wnd--active .layout-tab-bar .item--focus),
+.layout-tab-bar .item--focus .item__text:not(.layout__wnd--active .layout-tab-bar .item--focus .item__text) {
+    color: black !important;
+}
+
+/*功能页签图标*/
+.layout-tab-bar .item__graphic {
+    padding: 0px;
+}
+
+
+/*页签新建更多*/
+.layout-tab-bar--readonly {
+    display: block;
+    position: relative;
+    float: right;
+    margin-top: -24.5px;
+    min-width: auto;
+    flex: none;
+    line-height: 24.5px;
+    cursor: pointer;
+    user-select: none;
+    align-items: flex-start;
+    transition: none;
+    min-height: 24.5px !important;
+    height: 24.5px !important;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.layout-tab-bar--readonly [data-type="new"] {
+    position: relative !important;
+    top: -5px;
+}
+
+.layout-tab-bar--readonly [data-type="more"] {
+    position: relative !important;
+    top: -5px;
+}
+
+/*去除页签emj图标*/
+.item>.item__icon {
+    display: none;
+}
+
+/*显示钉住页emj存在情况下文字*/
+li.item.item--pin>.fn__none {
+    display: block !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-----------------------------面包屑*/
+/*面包屑父级*/
+.protyle-breadcrumb {
+    position: absolute;
+    width: 99.8%;
+    margin-top: -3px;
+    left: 1px;
+    padding-left: 0px;
+    background-color: transparent !important;
+    z-index: 2;
+}
+
+/*路径*/
+.protyle-breadcrumb__bar>span {
+    border-radius: 1px;
+    background-color: rgba(255, 250, 233, 0.49) !important;
+    text-shadow: 2px 2px 4px rgba(142, 146, 139, 0.267);
+}
+
+/*路径节点*/
+.protyle-breadcrumb__bar>svg {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgba(255, 250, 233, 0.49) !important;
+
+}
+
+/*最后一个路径*/
+.protyle-breadcrumb__bar>span:last-child {
+    border-radius: 1px;
+    padding-right: 20px;
+    background-color: rgba(255, 250, 233, 0.49) !important;
+}
+
+
+/*更多按钮*/
+button.b3-tooltips.b3-tooltips__w.block__icon {
+    margin-right: -11px;
+    padding-left: 8px;
+    padding-right: 6px;
+    border-radius: 1px;
+    background-color: transparent !important;
+}
+
+/*聚焦路径*/
+.protyle-breadcrumb__item--active,
+.protyle-breadcrumb__item--active>svg {
+    color: rgb(101, 168, 99);
+}
+
+/*+++++++++++++++++++++++++++++软件非编辑区域+++++++++++++++++++++++++++++*/
+
+
+
+
+/*+++++++++++++++++++++++++++++软件编辑区域+++++++++++++++++++++++++++++*/
+
+/*-----------------------------头图*/
+.protyle-background__img {
+    position: static !important;
+}
+
+.protyle-background__img>img {
+    height: 271px !important;
+}
+
+div.protyle-content>.protyle-background {
+    min-height: 0px !important;
+    transition: all 300ms linear;
+}
+
+/*-----------------------------头图标签*/
+.protyle-background__tags {
+    display: block !important;
+    transform: none !important;
+}
+
+/*标签项*/
+div[data-type="open-search"] {
+    border-radius: 1px !important;
+}
+
+div[data-type="open-search"]::before {
+    content: "🔖 ";
+}
+
+/*标签小x*/
+svg[data-type="remove-tag"] {
+    background-color: transparent !important;
+}
+
+/*-----------------------------emg图标*/
+/*emg图标距离左边距距离*/
+.protyle-background__iconw {
+    position: static !important;
+    margin-left: 26px !important;
+}
+
+.protyle-background__icon:hover {
+    /*文档emj图标*/
+    /*animation: breathLamp1 300s;*/
+    /*animation-timing-function: linear;*/
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+@keyframes breathLamp {
+    2% {
+        transform: translate(6px, -2px) rotate(3.5deg);
+    }
+
+    4% {
+        transform: translate(5px, 8px) rotate(-0.5deg);
+    }
+
+    6% {
+        transform: translate(6px, -3px) rotate(-2.5deg);
+    }
+
+    8% {
+        transform: translate(4px, -2px) rotate(1.5deg);
+    }
+
+    10% {
+        transform: translate(-6px, 8px) rotate(-1.5deg);
+    }
+
+    12% {
+        transform: translate(-5px, 5px) rotate(1.5deg);
+    }
+
+    14% {
+        transform: translate(4px, 10px) rotate(3.5deg);
+    }
+
+    16% {
+        transform: translate(0px, 4px) rotate(1.5deg);
+    }
+
+    18% {
+        transform: translate(-1px, -6px) rotate(-0.5deg);
+    }
+
+    20% {
+        transform: translate(6px, -9px) rotate(2.5deg);
+    }
+
+    22% {
+        transform: translate(1px, -5px) rotate(-1.5deg);
+    }
+
+    24% {
+        transform: translate(-9px, 6px) rotate(-0.5deg);
+    }
+
+    26% {
+        transform: translate(8px, -2px) rotate(-1.5deg);
+    }
+
+    28% {
+        transform: translate(2px, -3px) rotate(-2.5deg);
+    }
+
+    30% {
+        transform: translate(9px, -7px) rotate(-0.5deg);
+    }
+
+    32% {
+        transform: translate(8px, -6px) rotate(-2.5deg);
+    }
+
+    34% {
+        transform: translate(-5px, 1px) rotate(3.5deg);
+    }
+
+    36% {
+        transform: translate(0px, -5px) rotate(2.5deg);
+    }
+
+    38% {
+        transform: translate(2px, 7px) rotate(-1.5deg);
+    }
+
+    40% {
+        transform: translate(6px, 3px) rotate(-1.5deg);
+    }
+
+    42% {
+        transform: translate(1px, -5px) rotate(-1.5deg);
+    }
+
+    44% {
+        transform: translate(10px, -4px) rotate(-0.5deg);
+    }
+
+    46% {
+        transform: translate(-2px, 2px) rotate(3.5deg);
+    }
+
+    48% {
+        transform: translate(3px, 4px) rotate(-0.5deg);
+    }
+
+    50% {
+        transform: translate(8px, 1px) rotate(-1.5deg);
+    }
+
+    52% {
+        transform: translate(7px, 4px) rotate(-1.5deg);
+    }
+
+    54% {
+        transform: translate(10px, 8px) rotate(-1.5deg);
+    }
+
+    56% {
+        transform: translate(-3px, 0px) rotate(-0.5deg);
+    }
+
+    58% {
+        transform: translate(0px, -1px) rotate(1.5deg);
+    }
+
+    60% {
+        transform: translate(6px, 9px) rotate(-1.5deg);
+    }
+
+    62% {
+        transform: translate(-9px, 8px) rotate(0.5deg);
+    }
+
+    64% {
+        transform: translate(-6px, 10px) rotate(0.5deg);
+    }
+
+    66% {
+        transform: translate(7px, 0px) rotate(0.5deg);
+    }
+
+    68% {
+        transform: translate(3px, 8px) rotate(-0.5deg);
+    }
+
+    70% {
+        transform: translate(-2px, -9px) rotate(1.5deg);
+    }
+
+    72% {
+        transform: translate(-6px, 2px) rotate(1.5deg);
+    }
+
+    74% {
+        transform: translate(-2px, 10px) rotate(-1.5deg);
+    }
+
+    76% {
+        transform: translate(2px, 8px) rotate(2.5deg);
+    }
+
+    78% {
+        transform: translate(6px, -2px) rotate(-0.5deg);
+    }
+
+    80% {
+        transform: translate(6px, 8px) rotate(0.5deg);
+    }
+
+    82% {
+        transform: translate(10px, 9px) rotate(3.5deg);
+    }
+
+    84% {
+        transform: translate(-3px, -1px) rotate(3.5deg);
+    }
+
+    86% {
+        transform: translate(1px, 8px) rotate(-2.5deg);
+    }
+
+    88% {
+        transform: translate(-5px, -9px) rotate(2.5deg);
+    }
+
+    90% {
+        transform: translate(2px, 8px) rotate(0.5deg);
+    }
+
+    92% {
+        transform: translate(0px, -1px) rotate(1.5deg);
+    }
+
+    94% {
+        transform: translate(-8px, -1px) rotate(0.5deg);
+    }
+
+    96% {
+        transform: translate(-3px, 8px) rotate(-1.5deg);
+    }
+
+    98% {
+        transform: translate(4px, 8px) rotate(0.5deg);
+    }
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0);
+    }
+}
+
+
+/*-----------------------------文档标题*/
+/*文档内标题块距离左边距的距离*/
+[data-fullwidth="true"] .protyle-title.protyle-wysiwyg--attr {
+    margin-top: 0px !important;
+    margin-left: 26px !important;
+    margin-right: 26px !important;
+}
+
+/*文档标题输入框*/
+/*.protyle-title__input {}*/
+
+span[aria-label="点击 打开菜单<br>⇧Click 修改属性"]>svg {
+    margin-top: -18px;
+    margin-left: -2px;
+    width: 25px;
+    height: 25px;
+}
+
+/*-----------------------------文档正文区域*/
+/*正文宽度*/
+[data-fullwidth="true"]>[data-doc-type="NodeDocument"] {
+    padding: 16px 26px 191.5px !important;
+}
+
+
+/*-----------------------------文档内块滚动条*/
+.protyle-scroll.b3-tooltips.b3-tooltips__s {
+    right: -89px !important;
+}
+
+/*-----------------------------文档内引用计数*/
+.protyle-attr--refcount {
+    background-color: rgb(101, 168, 99);
+    color: rgb(255, 255, 255);
+}
+
+.protyle-attr--refcount:hover {
+    transform: scale(1.2);
+    background-color: rgb(101, 168, 99) !important;
+    color: white !important;
+}
+
+/*去定去低*/
+.protyle-scroll {
+    height: 20%;
+    top: 50% !important;
+    right: 0px !important;
+}
+
+
+/*-----------------------------文档内触发悬浮窗*/
+/*引用悬浮窗标签背景色 */
+.block__icons--border {
+    background-color: rgba(101, 168, 99, 0.533);
+    border-radius: 1 !important;
+    height: 27px;
+
+}
+
+/**/
+.block__popover--open {
+    animation: menu 0.2s ease-in-out;
+}
+
+@keyframes menu {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.01);
+        transform-origin: 0 0;
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/*修改思源悬浮窗默认宽度，由原来的60vm 到40vm。*/
+.block__popover {
+    width: 40vw;
+}
+
+/*悬浮窗文档内容边距*/
+.block__popover.block__popover--move.block__popover--open>.block__content>.block__edit.fn__flex-1.protyle>.protyle-content>.protyle-wysiwyg.protyle-wysiwyg--attr {
+    margin-top: 15px !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+}
+
+/*悬浮窗内的面包屑*/
+.block__popover.block__popover--move.block__popover--open>.block__content>.block__edit.fn__flex-1.protyle>.protyle-breadcrumb {
+    margin-top: -2px !important;
+    margin-left: -2px !important;
+}
+
+.block__popover {
+    border-radius: 1 !important;
+}
+
+/*悬浮窗拖动块*/
+.block__nwse {
+    width: 16px !important;
+    right: -16px !important;
+    bottom: -16px !important;
+    height: 24px !important;
+}
+
+.block__ew {
+    width: 16px !important;
+    right: -16px !important;
+}
+
+.block__ns {
+    height: 16px !important;
+    bottom: -16px !important;
+}
+
+/* ——————————————————————鼠标光标选中文本样式———————————————————————— */
+.protyle-wysiwyg ::selection {
+    background-color: rgb(101, 168, 99);
+    color: white;
+}
+
+/* 鼠标划选区域*/
+.protyle-select {
+    /* background-color: var(--b3-theme-tm1) !important; */
+    background-color: rgba(190, 215, 143, 0.137) !important;
+}
+
+/*---挂件选择列表--*/
+.protyle-util {
+    padding: 0px;
+}
+
+/*-----------------------------文本选中工具栏样式*/
+.protyle-toolbar {
+    background-color: rgb(255, 253, 245);
+    box-shadow: var(--b3-dialog-shadow);
+    z-index: 99;
+    transition: none !important;
+}
+
+.protyle-toolbar>button {
+    color: rgb(27, 71, 27);
+    transform: scale(1.05);
+}
+
+.protyle-toolbar>button:hover {
+    background-color: rgb(227, 240, 219) !important;
+}
+
+.protyle-toolbar>button>svg:hover {
+    transform: scale(1.2);
+}
+
+/*按钮点击未松开*/
+.protyle-toolbar>button:focus {
+    background-color: rgb(227, 240, 219) !important;
+}
+
+/*点击后*/
+.protyle-toolbar__item--current {
+    color: rgb(101, 168, 99) !important;
+    background-color: transparent !important;
+}
+
+.protyle-toolbar__item--current>svg {
+    transform: scale(1.2);
+}
+
+/*-----------------------------工具栏字体样式面板*/
+.protyle-util {
+    transform-origin: 0 0 0;
+    transform: scale(1.2);
+}
+
+/* 弹出工具条字体颜色选择 */
+.b3-color__square[data-type="color"] {
+    border-radius: 3px;
+    width: 22px;
+    height: 22px;
+    background-color: transparent !important;
+    box-shadow: 0 0 0 1px var(--b3-color--square) inset;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color1)"]::before {
+    content: "A";
+    color: var(--b3-font-color1);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color2)"]::before {
+    content: "A";
+    color: var(--b3-font-color2);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color3)"]::before {
+    content: "A";
+    color: var(--b3-font-color3);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color4)"]::before {
+    content: "A";
+    color: var(--b3-font-color4);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color5)"]::before {
+    content: "A";
+    color: var(--b3-font-color5);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color6)"]::before {
+    content: "A";
+    color: var(--b3-font-color6);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color7)"]::before {
+    content: "A";
+    color: var(--b3-font-color7);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color8)"]::before {
+    content: "A";
+    color: var(--b3-font-color8);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color9)"]::before {
+    content: "A";
+    color: var(--b3-font-color9);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color10)"]::before {
+    content: "A";
+    color: var(--b3-font-color10);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color11)"]::before {
+    content: "A";
+    color: var(--b3-font-color11);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color12)"]::before {
+    content: "A";
+    color: var(--b3-font-color12);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[style="background-color:var(--b3-font-color13)"]::before {
+    content: "A";
+    color: var(--b3-font-color13);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square[data-type="backgroundColor"] {
+    border-radius: 3px;
+    width: 22px;
+    height: 22px;
+    box-shadow: 0 0 0 1px var(--b3-color--square) inset;
+}
+
+.b3-color__square[data-type="backgroundColor"]::before {
+    content: "A";
+    color: var(--b3-theme-on-background);
+    margin-top: -2px;
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.b3-color__square {
+    box-shadow: 0 0 0 1px rgb(149, 195, 147) inset !important;
+}
+
+
+
+
+
+
+
+
+/*-----------------------------超级快*/
+/*来自Zhang Light主题*/
+.sb {
+    margin-top: 0.1em !important;
+    margin-bottom: 0.1em !important;
+}
+
+/* 次超级块大小*/
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"] .sb {
+    /* border: 0.1em dashed rgba(101, 168, 99, 0.137);*/
+    box-sizing: border-box;
+    margin: 0.1em 0 0.1em 0.1em;
+}
+
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"] .sb:nth-last-child(2) {
+    margin-right: 0.1em;
+}
+
+/* 每个子超级块 */
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"]>div {
+    border: 0.1em dashed rgba(101, 168, 99, 0.137);
+    box-sizing: border-box;
+    margin: 0.1em 0 0.1em 0.1em;
+}
+
+
+/* 超级块中的横排引述块*/
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"]>.bq {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    border: 0.1em dashed rgba(101, 168, 99, 0.137) !important;
+    box-shadow: inset 0px 0.2em 0px 0px rgba(101, 168, 99, 0.898), 0px 0px 3px 0px rgba(4, 27, 21, 0.247) !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+/* 超级块中的竖排引述块*/
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="row"]>.bq {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    border: 0.1em dashed rgba(101, 168, 99, 0.137) !important;
+    box-shadow: inset 0.2em 0px 0px 0px rgba(101, 168, 99, 0.898), 0px 0px 3px 0px rgba(4, 27, 21, 0.247) !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+/* 最后一个子超级块不设置右边距 */
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"]>div:nth-last-child(2) {
+    margin-right: 0.1em;
+}
+
+.protyle-attr {
+    border: none !important;
+}
+
+/*-----------------------------分割线*/
+.hr {
+    margin-top: -1px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    height: 1px !important;
+    background-color: rgba(119, 167, 82, 0.48);
+
+}
+
+.hr>div {
+    border-bottom: none !important;
+}
+
+
+/*段落块行线*/
+.p {
+    /*    box-shadow: 0px 1px 0px 0px rgb(239, 230, 201);*/
+    padding-bottom: 0px !important;
+    border-bottom: 1px dashed rgb(228, 218, 185);
+}
+
+/*嵌入块内段落块的行线*/
+.protyle-wysiwyg [data-node-id].render-node[data-type="NodeBlockQueryEmbed"]>.protyle-wysiwyg__embed .p {
+    /* box-shadow: 0px 1px 0px 0px rgba(46, 33, 50, 0.09);*/
+    padding-bottom: 0px !important;
+    border-bottom: 1px solid rgba(46, 33, 50, 0.09) !important;
+}
+
+/*引述块内段落块的行线*/
+.protyle-wysiwyg [data-node-id].bq .p {
+    /*box-shadow: 0px 1px 0px 0px rgba(46, 33, 50, 0.09);*/
+    padding-bottom: 0px !important;
+    border-bottom: 1px solid rgba(46, 33, 50, 0.09) !important;
+}
+
+/*横排超级块内段落块行线*/
+.sb[data-sb-layout="col"] .p {
+    padding-bottom: 0px !important;
+    border-bottom: 1px solid rgba(239, 230, 201, 0.451) !important;
+}
+
+.sb[style]>.p {
+    padding-bottom: 0px !important;
+    border-bottom: 1px solid rgba(205, 205, 205, 0.214) !important;
+}
+
+
+/*-----------------------------引述块*/
+
+.protyle-wysiwyg .bq,
+blockquote {
+    /*竖线*/
+    padding: 0.3em 1em;
+    border-left: 0.25em solid rgba(101, 168, 99, 0.898) !important;
+    border-radius: 1 5px 5px 0;
+    margin: 0 0 0.3em 0;
+}
+
+.protyle-wysiwyg [data-node-id].bq,
+.b3-typography blockquote {
+    /*引述块背景颜色*/
+    margin-top: 6px;
+    margin-bottom: 4.8px;
+    border-radius: 1px;
+    background-color: rgb(255, 254, 252);
+
+    padding-top: 2px;
+    padding-left: 8px;
+    padding-right: 7px;
+    padding-bottom: 2px;
+
+    border-top: 1px solid rgba(4, 27, 21, 0.08);
+    border-right: 1px solid rgba(4, 27, 21, 0.08);
+    border-bottom: 1px solid rgba(4, 27, 21, 0.11);
+}
+
+.li .bq {
+    padding-right: 8px !important;
+}
+
+
+
+
+
+
+/*-----------------------------嵌入块*/
+.protyle-wysiwyg [data-node-id].render-node[data-type="NodeBlockQueryEmbed"] {
+    margin-top: 5px;
+    background-color: rgb(255, 253, 245);
+    /*box-shadow: 0px 0px 3px 0px rgba(4, 27, 21, 0.247);*/
+
+    padding-top: 3px;
+    padding-left: 7px;
+    padding-right: 6px;
+    padding-bottom: 3px;
+
+
+    border-top: 1px solid rgba(4, 27, 21, 0.08);
+    border-left: 2px dashed rgb(190, 177, 131);
+    border-right: 1px solid rgba(4, 27, 21, 0.08);
+    border-bottom: 1px solid rgba(4, 27, 21, 0.11);
+
+}
+
+.protyle-wysiwyg [data-node-id].render-node[data-type="NodeBlockQueryEmbed"]:before {
+    margin-left: -1px;
+}
+
+/* SQL查询分割线颜色 */
+/*.render-node .protyle-wysiwyg__embed {
+    border-top: 0.1em dashed rgba(128, 128, 128, 0.3);
+}*/
+
+
+
+/*-----------------------------图片*/
+div [data-type="img"] {
+    margin-top: -3px !important;
+
+    /*box-shadow: 0px 0px 2px 0px rgba(4, 27, 21, 0.148) !important;*/
+
+    border-top: 1px solid rgba(4, 27, 21, 0.08);
+    border-left: 1px solid rgba(4, 27, 21, 0.08);
+    border-right: 1px solid rgba(4, 27, 21, 0.08);
+    border-bottom: 1px solid rgba(4, 27, 21, 0.11);
+
+}
+
+/*------------------------------文字加粗------------------*/
+/*覆盖默认样式,加粗就只加粗*/
+.protyle-wysiwyg span[data-type~=strong] {
+    font-weight: 900;
+    color: inherit;
+}
+
+/*-----------------------------思源标签*/
+.protyle-wysiwyg [data-node-id] span[data-type='tag'] {
+    padding-bottom: 1px;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-type='tag']::before {
+    content: "🔖";
+}
+
+/*-----------------------------思源超链接*/
+
+/*.protyle-wysiwyg [data-node-id] span[data-type=a]:hover {}*/
+
+
+.protyle-wysiwyg [data-node-id] span[data-type~="a"]::after {
+    display: inline-block;
+    position: relative;
+    background: url('src/超链接.svg');
+    background-size: cover;
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    top: -0.8em;
+    margin-right: -0.8em;
+    left: -10000003px;
+    filter: drop-shadow(rgb(76, 139, 244) 9999999px 0);
+}
+
+/*-----------------------------虚拟引用*/
+span[data-type~="virtual-block-ref"] {
+    padding: 0px 0px 0px 0px !important;
+    border-bottom: 1px dashed rgba(32, 33, 36, 0.463) !important;
+    transition: none !important;
+}
+
+/*-----------------------------思源引用*/
+/*动态描文本*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"] {
+    font-size: 96%;
+    padding: 0px 0px 0px 0px;
+    color: inherit;
+    background-color: rgba(224, 237, 211, 0.279);
+    border-bottom: none;
+    transition: none !important;
+}
+
+/*动态描文本 hover*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"]:hover {
+    background-color: rgb(219, 233, 184);
+    transition: none !important;
+}
+
+/*静态描文本*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"] {
+    font-size: 96%;
+    padding: 0px 0px 0px 0px;
+    color: inherit;
+    background-color: rgba(224, 237, 211, 0.279);
+    border-bottom: none;
+    transition: none !important;
+}
+
+/*静态描文本 hover*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"]:hover {
+    background-color: rgb(219, 233, 184);
+    border-bottom: none;
+    transition: none !important;
+}
+
+
+/*动态描文本 尾标*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"]::after {
+    display: inline-block;
+    position: relative;
+    background: url('src/引用描文本2.svg');
+    background-size: cover;
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    top: -0.8em;
+    margin-right: -0.8em;
+    left: -10000006px;
+    filter: drop-shadow(rgb(98, 133, 98) 9999999px 0);
+}
+
+/*静态描文本 尾标*/
+.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"]::after {
+    display: inline-block;
+    position: relative;
+    background: url('src/引用描文本.svg');
+    background-size: cover;
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    top: -0.8em;
+    margin-right: -0.8em;
+    left: -10000006px;
+    filter: drop-shadow(rgb(98, 133, 98) 9999999px 0);
+}
+
+
+/*
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"] {
+    font-size: 96%;
+    padding: 0px 5px 0px 5px;
+    color: inherit;
+    background-color: rgba(224, 237, 211, 0.467);
+    border-bottom: 1px dashed rgb(32, 33, 36);
+    transition: none !important;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"]:hover {
+    background-color: rgb(219, 233, 184);
+    transition: none !important;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"] {
+    font-size: 96%;
+    padding: 0px 5px 0px 5px;
+    color: inherit;
+    background-color: rgba(224, 237, 211, 0.467);
+    border-bottom: 1px solid rgba(32, 33, 36, 0.519);
+    transition: none !important;
+}
+
+.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"]:hover {
+    background-color: rgb(219, 233, 184);
+    border-bottom: 1px solid rgba(32, 33, 36, 0.64);
+    transition: none !important;
+}
+
+
+.protyle-wysiwyg [data-node-id] span[data-type~="block-ref"]::after {
+    display: inline-block;
+    position: relative;
+    background: url('src/引用描文本.svg');
+    background-size: cover;
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    top: -0.8em;
+    margin-right: -0.8em;
+    left: -10000006px;
+    filter: drop-shadow(rgb(98, 133, 98) 9999999px 0);
+}
+
+*/
+
+
+
+
+
+
+
+
+/*上标*/
+.protyle-wysiwyg span[data-type~=sup] {
+    top: -0.5em;
+    position: relative;
+    font-size: 75% !important;
+    line-height: 0;
+    vertical-align: baseline;
+}
+
+/*下标*/
+.protyle-wysiwyg span[data-type~=sub] {
+    bottom: -0.25em;
+    position: relative;
+    font-size: 75% !important;
+    line-height: 0;
+    vertical-align: baseline;
+}
+
+
+
+
+
+
+
+
+
+/*---------------------------别名，命名，备注提示*/
+
+/*块别名，命名，备注提示容器*/
+.protyle-attr {
+    background-color: rgba(240, 248, 255, 0.443);
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(189, 189, 189, 0.057) inset !important;
+    line-height: 1;
+    font-size: 12.5px;
+    top: -6px;
+    font-weight: normal !important;
+    z-index: 1;
+}
+
+.protyle-wysiwyg [data-node-id].bq>.protyle-attr,
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="row"]>.bq>.protyle-attr,
+.protyle-wysiwyg [data-node-id].sb[data-sb-layout="col"]>.bq>.protyle-attr,
+.b3-typography blockquote>.protyle-attr {
+    top: -15px;
+}
+
+
+
+
+/*别名*/
+.protyle-attr--alias {
+    line-height: 12.5px;
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+}
+
+.protyle-attr--alias::before {
+    display: inline-block;
+    content: "+别名：";
+    border-radius: 15px;
+    color: rgb(35, 119, 34);
+    line-height: 12.5px;
+    font-weight: bolder;
+}
+
+/*书签*/
+.protyle-attr--bookmark {
+    line-height: 12.5px;
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+}
+
+.protyle-attr--bookmark::before {
+    display: inline-block;
+    content: "+书签：";
+    border-radius: 15px;
+    color: rgb(35, 119, 34);
+    line-height: 12.5px;
+    font-weight: bolder;
+
+}
+
+/*命名*/
+.protyle-attr--name {
+    line-height: 12.5px;
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+}
+
+.protyle-attr--name::before {
+    display: inline-block;
+    content: "+命名：";
+    border-radius: 15px;
+    color: rgb(35, 119, 34);
+    line-height: 12.5px;
+    font-weight: bolder;
+}
+
+.protyle-attr--memo>svg,
+.protyle-attr--name>svg,
+.protyle-attr--alias>svg {
+    width: 0px !important;
+    height: 0px !important;
+    /*animation: breathLamp 0.5s alternate infinite;*/
+}
+
+
+/*备注*/
+.protyle-attr>.b3-tooltips {
+    line-height: 12.5px;
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+}
+
+/*备注伪元素*/
+.protyle-attr>.b3-tooltips::before {
+    position: static;
+    border: none !important;
+    margin-right: 0;
+    content: "+备注";
+    text-align: right;
+    color: rgb(35, 119, 34);
+    line-height: 12.5px;
+    font-weight: bolder;
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+.protyle-attr>.b3-tooltips:hover::before {
+    width: auto;
+}
+
+.protyle-attr>.b3-tooltips:hover::after {
+    /*鼠标经过备注，备注信息字体增大，面板增大*/
+    display: inline-block;
+    padding: 10px;
+    color: rgb(32, 33, 36);
+    opacity: 0.9;
+    font-size: 150%;
+    border-radius: 1px;
+    background-color: rgb(255, 253, 245);
+    box-shadow: var(--b3-point-shadow);
+    border: 1px solid rgb(101, 168, 99);
+    line-height: 28px;
+    transform-origin: 100% 0 0;
+    /*以左上角为起点*/
+    transform: scale(1);
+}
+
+
+
+/*-----------------------------文本斜体*/
+[data-type~="em"]:not([aria-label]) {}
+
+/*-----------------------------文本删除线*/
+[data-type~="s"]:not([aria-label]) {
+    text-decoration: line-through rgba(255, 96, 35) !important;
+}
+
+/*-----------------------------文本下划线*/
+/*u {
+    text-decoration: underline wavy red !important;
+    border-bottom: 1px solid red !important;
+}*/
+/*下划线 和动态描文本一起存在*/
+[data-type~="u"][data-type~="block-ref"][data-subtype="d"]:not([aria-label]) {
+    border-bottom: 1px dashed !important;
+}
+
+/*-----------------------------键盘按键kbd*/
+[data-type~="kbd"][data-id]:not([aria-label]) {
+    border: 1px solid rgba(214, 197, 141, 0.698);
+    border-bottom: 0.01em solid rgba(194, 181, 137, 0.412) !important;
+    border-radius: 4px 4px 4px 4px;
+    color: rgb(95, 99, 104);
+    background-color: var(--b3-theme-background2);
+    font-family: var(--b3-font-family-code);
+    font-size: 0.85em !important;
+    text-shadow: 1px 1px 2px rgba(3, 3, 2, 0.329);
+    /* vertical-align: -0.1em;*/
+}
+
+/*键盘按键空白符*/
+[data-type~="kbd"]:not([aria-label]):not([data-id]) {
+    border: none;
+    background-color: transparent;
+}
+
+/*行内备注文本*/
+.protyle-wysiwyg span[data-type~=inline-memo] {
+    text-decoration: underline wavy rgba(98, 133, 98);
+    border-bottom: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.protyle-wysiwyg span[data-type~=inline-memo]::after {
+    display: inline-block;
+    position: relative;
+    background: url('src/备注.svg');
+    background-size: cover;
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    top: -0.8em;
+    margin-right: -0.8em;
+    left: -10000003px;
+    filter: drop-shadow(rgb(98, 133, 98) 9999999px 0);
+}
+
+.tooltip--memo {
+    transform: none !important;
+    min-width: 360px;
+    max-width: 660px;
+    min-height: fit-content;
+    font-size: 19px;
+    line-height: 28px;
+    text-align: justify;
+    color: rgb(110, 109, 109);
+    background-color: rgb(252, 247, 231);
+    box-shadow: var(--b3-dialog-shadow);
+    padding: 5px 10px;
+    border-top: 16px solid rgb(101, 168, 99);
+    border-radius: 3px;
+
+}
+
+.tooltip--memo::before {
+    content: "行内备注";
+    display: block;
+    position: relative;
+    color: white;
+    font-size: 60%;
+    margin-top: -27px;
+    margin-bottom: -1px;
+    text-align: center;
+}
+
+
+
+
+/*-----------------------------行内代码块*/
+[data-type~="code"]:not([aria-label]):not(.hljs) {
+    color: rgb(95, 99, 104);
+    border-radius: 3.5px;
+    background-color: rgba(190, 215, 143, 0.396);
+    font-size: 0.85em !important;
+    text-shadow: 1px 1px 3px rgba(182, 211, 169);
+}
+
+/*-----------------------------代码块样式*/
+.code-block {
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+    border-radius: 1 !important;
+    background-color: rgba(239, 242, 216, 0.788);
+    /*box-shadow: 0px 0px 2px 0px rgba(4, 27, 21, 0.365) !important;*/
+
+    border-left: 1px solid rgba(4, 27, 21, 0.08);
+    border-right: 1px solid rgba(4, 27, 21, 0.08);
+    border-bottom: 1px solid rgba(4, 27, 21, 0.11);
+    /*border-bottom: 0 !important;*/
+    z-index: 0;
+}
+
+/* 代码块主体部分设置 */
+.protyle-reset .hljs,
+.protyle-wysiwyg .hljs,
+.b3-typography .hljs {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    padding-left: 16px;
+    font-size: 0.85em;
+    font-family: var(--b3-font-family-code);
+    background-size: 20px 20px;
+    background-image: none !important;
+    background-color: rgba(239, 242, 216, 0.788) !important;
+    border-bottom: 0px;
+    text-shadow: 0px 0px 2px rgba(182, 211, 169);
+}
+
+/* 代码块上方部分设置 */
+.protyle-wysiwyg .code-block,
+.b3-typography .code-block {
+    position: relative;
+    display: block;
+    border-radius: 1px;
+    padding-top: 32px !important;
+    /*box-shadow: 0px 0px 2px 0px rgba(4, 27, 21, 0.22);*/
+    /*border-bottom: var(--b3-border-wider);*/
+    border-top: 3px solid rgb(46, 161, 33);
+}
+
+div[data-type="NodeCodeBlock"]>.protyle-action {
+    top: 0px !important;
+    padding-top: 4px !important;
+    left: 0px !important;
+    right: 0px !important;
+    height: 18px;
+    background-color: rgba(252, 248, 237, 0.992) !important;
+}
+
+/* 设置顶部三个mac按钮样式 */
+.code-block::after {
+    content: ' ';
+    position: absolute;
+    background: rgb(250, 98, 92);
+    box-shadow: 23px 0 rgb(253, 188, 64), 45px 0 rgb(53, 205, 75);
+    top: 5px;
+    left: 15px;
+    height: 12px;
+    width: 12px;
+    z-index: 1;
+}
+
+
+/*代码行溢出，滚动条整体*/
+.hljs::-webkit-scrollbar {
+    height: 10px;
+    background-color: transparent;
+}
+
+/*代码行溢出，滚动条滑块*/
+.hljs::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 1;
+    border-bottom: 0;
+    border-top: 5px solid transparent !important;
+    box-shadow: inset 0px 0px 10px 10px rgba(101, 167, 99, 0.561);
+
+}
+
+/*代码行溢出，鼠标移动到滑块上的效果*/
+.hljs::-webkit-scrollbar-thumb:hover {
+    border-left: 0 solid rgb(255, 250, 232);
+    border-top: 0px solid transparent !important;
+    box-shadow: inset 0px 0px 10px 10px rgb(101, 167, 99);
+}
+
+
+
+
+/*代码块行数*/
+.protyle-linenumber__rows {
+    margin-top: 14px !important;
+    background-color: transparent;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    font-size: 0.8em;
+    font-family: var(--b3-font-family-code);
+    border-top-left-radius: 4px;
+}
+
+.protyle-linenumber__rows span::before {
+    color: rgba(2, 2, 2, 0.5);
+}
+
+/*代码块行数和代码之间的竖线*/
+.protyle-linenumber__rows {
+    border-right: 1px solid rgba(205, 208, 210, 0.659);
+    margin-top: 32px !important;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+
+/* 代码块的语言代码 */
+.b3-typography .code-block .protyle-action .protyle-action__language,
+.protyle-wysiwyg .code-block .protyle-action .protyle-action__language {
+    position: absolute;
+    top: 5px;
+    right: 3em;
+    border-radius: 4px;
+    opacity: 1 !important;
+    font-family: var(--b3-font-family-code);
+    color: rgb(128, 128, 128);
+    font-size: 71%;
+}
+
+/* 代码块的语言代码 */
+.b3-typography .code-block .protyle-action .protyle-action__language::after,
+.protyle-wysiwyg .code-block .protyle-action .protyle-action__language::after {
+    content: "›";
+    display: inline-block !important;
+    margin-left: 3px;
+    margin-right: 3px;
+    font-family: var(--b3-font-family-code);
+    color: rgba(128, 128, 128, 0.502);
+    opacity: 1;
+}
+
+/*复制更多*/
+.code-block .protyle-icon {
+    margin-top: -4px;
+}
+
+.protyle-action__language+span:hover {
+    background-color: transparent;
+    box-shadow: none !important;
+}
+
+
+
+
+/* 集市里代码块*/
+code.hljs {
+    border: 1px solid var(--b3-border-color1);
+}
+
+/* 集市里代码块复制和设置按钮样式 */
+.b3-typography .code-block .protyle-action .protyle-icon,
+.b3-typography .code-block .protyle-action .protyle-action__language,
+.protyle-wysiwyg .code-block .protyle-action .protyle-icon,
+.protyle-wysiwyg .code-block .protyle-action .protyle-action__language {
+    opacity: 1 !important;
+    background-color: transparent !important;
+}
+
+/*集市里代码块*/
+.b3-typography .code-block .protyle-action .protyle-icon svg,
+.b3-typography .code-block .protyle-action .protyle-action__language svg,
+.protyle-wysiwyg .code-block .protyle-action .protyle-icon svg,
+.protyle-wysiwyg .code-block .protyle-action .protyle-action__language svg {
+    color: rgb(128, 128, 128);
+}
+
+
+
+/*-----------------------------HTML块*/
+
+/*div[data-type="NodeHTMLBlock"] {}*/
+
+/*-----------------------------视频块*/
+/*div[data-type="NodeVideo"]{
+
+}*/
+
+/*-----------------------------IFrame块*/
+.iframe[data-type="NodeWidget"]>.iframe-content>iframe {
+    border: none !important;
+}
+
+.iframe[data-type="NodeIFrame"]>.iframe-content>iframe {
+    border: none !important;
+}
+
+/*-----------------------------数学公式块块*/
+/*div[data-type="NodeMathBlock"] {}*/
+
+
+/*-----------------------------表格start*/
+/*来自Zhang Light主题*/
+.table {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+}
+
+.table [contenteditable] {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+}
+
+/* 表格100%宽度 */
+.protyle-wysiwyg table,
+.b3-typography table {
+    display: table;
+    width: 100%;
+}
+
+/*设置表格表头样式，颜色，背景，加粗，居中对齐*/
+.protyle-wysiwyg table th {
+    font-weight: bold;
+    color: var(--b3-theme-primary);
+    background-color: rgb(252, 248, 237);
+    /* opacity: 1; */
+}
+
+.protyle-wysiwyg table th[align="center"] {
+    text-align: center;
+}
+
+.protyle-wysiwyg table th[align="left"] {
+    text-align: left;
+}
+
+.protyle-wysiwyg table th[align="right"] {
+    text-align: right;
+}
+
+
+/* 设置表格内部边框 */
+th,
+td {
+    min-width: 1em;
+    border: 1px solid var(--b3-table-border-color) !important;
+    border-collapse: collapse;
+    color: inherit;
+    font-size: 80%;
+    background-color: rgba(252, 248, 237, 0.412);
+
+}
+
+/* 表格奇偶行不同颜色 */
+.protyle-wysiwyg tbody tr:nth-child(2n) {
+    background-color: rgb(255, 255, 255);
+}
+
+.protyle-wysiwyg tbody tr:nth-child(2n + 1) {
+    background-color: var(--b3-theme-background2);
+}
+
+table th {
+    color: rgb(35, 119, 34) !important;
+    border-top: 2.5px solid var(--b3-theme-primary) !important;
+}
+
+/* 设置表头高亮  */
+table th:hover {
+    color: rgb(35, 119, 34) !important;
+}
+
+/* 设置表格行悬浮高亮 */
+table tr:hover {
+    background-color: var(--b3-theme-hover2) !important;
+    color: rgb(35, 119, 34) !important;
+}
+
+
+.protyle-wysiwyg [data-node-id][custom-f~=auto] table {
+    width: auto !important;
+    white-space: nowrap;
+}
+
+/* 表头和表行格式一致 */
+.protyle-wysiwyg [data-node-id][custom-t~=biaotou] table th {
+    background-color: rgba(252, 248, 237, 0.412) !important;
+    border-top: 1px solid var(--b3-table-border-color) !important;
+    font-weight: normal;
+    color: inherit !important;
+}
+
+/* 表头和表行格式一致 */
+.protyle-wysiwyg [data-node-id][custom-t~=biaotou] table th:hover {
+    background-color: rgba(204, 226, 156, 0.123) !important;
+    color: rgb(35, 119, 34) !important;
+}
+
+
+
+
+
+/*-----------------------------列表样式*/
+.list {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-right: 0px !important;
+}
+
+.li>.p {
+    padding-left: 1px !important;
+}
+
+
+.li {
+    padding-top: 1px !important;
+    padding-bottom: 0px !important;
+}
+
+/*
+.li>div:nth-last-child(2):not(.li>div:nth-child(2)){
+    padding-top: 3px !important;
+}
+.li>div:nth-child(3){
+    padding-top: 3px !important;
+}*/
+
+.protyle-wysiwyg [data-node-id].li>div:nth-child(2):not(.hr) {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.bq>.list:nth-child(1) {
+    margin-top: 3px !important;
+}
+
+.protyle-wysiwyg [data-node-id].li:before {
+    content: "";
+    position: absolute;
+    height: calc(100% - 35px);
+    border-left: 0.5px solid rgba(204, 223, 189, 0.539);
+    top: 35px;
+    left: 17px;
+}
+
+.protyle-wysiwyg [data-node-id].li>[data-node-id]:before {
+    content: "";
+    position: absolute;
+    border-left: 1px solid rgba(204, 223, 189, 0.539);
+    top: 4px;
+    left: -18px;
+}
+
+
+/* 列表项符号 */
+.protyle-wysiwyg [data-node-id].li>.protyle-action {
+    color: rgb(35, 119, 34);
+}
+
+.protyle-wysiwyg [data-node-id].li>.protyle-action:hover {
+    color: rgb(35, 119, 34);
+}
+
+
+
+/*列表折叠*/
+.protyle-wysiwyg [data-node-id].li[fold="1"] {
+    font-weight: normal !important;
+    text-shadow: 2px 2px 4px rgba(182, 211, 169);
+}
+
+
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h1>[spellcheck]:not(.fn__flex-1.history__text.protyle [data-node-id].li[fold="1"]>.h1>[spellcheck])::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h2>[spellcheck]:not(.fn__flex-1.history__text.protyle [data-node-id].li[fold="1"]>.h2>[spellcheck])::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h3>[spellcheck]:not(.fn__flex-1.history__text.protyle [data-node-id].li[fold="1"]>.h3>[spellcheck])::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h4>[spellcheck]:not(.fn__flex-1.history__text.protyle [data-node-id].li[fold="1"]>.h4>[spellcheck])::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h5>[spellcheck]:not(.fn__flex-1.history__text.protyle [data-node-id].li[fold="1"]>.h5>[spellcheck])::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.h6>[spellcheck]:not(.fn__flex-1.history__text.protyle [data-node-id].li[fold="1"]>.h6>[spellcheck])::after,
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.p>[spellcheck]:not(.fn__flex-1.history__text.protyle [data-node-id].li[fold="1"]>.p>[spellcheck])::after {
+    content: "​​ ​​ · · ·​​ ​​ ​";
+    font-family: "Trebuchet MS";
+    display: inline;
+    font-weight: bold;
+    vertical-align: 5%;
+    font-size: 75%;
+    color: rgb(95, 99, 104);
+    word-break: break-all;
+    border: 1px solid rgb(95, 99, 104);
+    margin-left: 9px;
+    border-radius: 5px;
+}
+
+/*无序列表项鼠标经过，列表折叠颜色颜色*/
+.protyle-wysiwyg [data-node-id].li[fold="1"]>.protyle-action:after,
+.protyle-wysiwyg [data-node-id].li>.protyle-action:hover:after {
+    background-color: rgba(101, 168, 99, 0.475) !important;
+}
+
+/* 有序列表项鼠标经过，列表折叠颜色颜色 */
+.protyle-wysiwyg [data-node-id].li>.protyle-action--order:hover:after {
+    background-color: rgba(101, 168, 99, 0.475) !important;
+    padding: 4px;
+    margin: -12px 0 0 -13px;
+}
+
+
+/* 任务列表 */
+.protyle-task--done {
+    color: rgb(181, 154, 64);
+    text-decoration: line-through rgb(144, 121, 45);
+}
+
+
+.bq .protyle-task--done {
+    color: rgb(101, 101, 101);
+    text-decoration: line-through rgb(0, 0, 0);
+}
+
+.protyle-task--done svg {
+    color: rgb(101, 168, 99) !important;
+}
+
+.protyle-task--done:hover svg {
+    color: rgb(44, 219, 41) !important;
+}
+
+.protyle-wysiwyg [data-node-id].li>.protyle-action--task:hover:after {
+    display: none;
+}
+
+/*列表和列表子项缩进*/
+div[data-type="NodeListItem"] {
+    margin-left: -10px !important;
+}
+
+/*列表缩进复位*/
+div[data-type="NodeList"] {
+    /*margin-left: 6px !important;*/
+    padding-left: 6px !important;
+}
+
+
+/*无序列表层级改变图标*/
+/*来自于Roy的Notion主题 */
+.list[data-subtype="u"]>.li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/dot.svg) no-repeat;
+    mask: url(src/LIst/dot.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/circle.svg) no-repeat;
+    mask: url(src/LIst/circle.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/square-u.svg) no-repeat;
+    mask: url(src/LIst/square-u.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/dot.svg) no-repeat;
+    mask: url(src/LIst/dot.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/circle.svg) no-repeat;
+    mask: url(src/LIst/circle.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/square-u.svg) no-repeat;
+    mask: url(src/LIst/square-u.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/dot.svg) no-repeat;
+    mask: url(src/LIst/dot.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/circle.svg) no-repeat;
+    mask: url(src/LIst/circle.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/square-u.svg) no-repeat;
+    mask: url(src/LIst/square-u.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/dot.svg) no-repeat;
+    mask: url(src/LIst/dot.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/circle.svg) no-repeat;
+    mask: url(src/LIst/circle.svg) no-repeat;
+}
+
+.list[data-subtype="u"]>.li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"] .li[data-subtype="u"]>.protyle-action svg {
+    background-color: var(--b3-theme-on-background);
+    -webkit-mask: url(src/LIst/square-u.svg) no-repeat;
+    mask: url(src/LIst/square-u.svg) no-repeat;
+}
+
+
+
+
+
+/*------当列表中有内容列表首项自动加粗-------*/
+.li:has(div+div+div+div) {
+    text-shadow: 0px 0px;
+    /*font-weight: 500;*/
+}
+
+.li .p:not(.li>div:nth-child(2)) {
+    font-weight: 400;
+    opacity: 0.95;
+    text-shadow: none;
+}
+
+.li:has(> .protyle-action+div+.protyle-attr) {
+    font-weight: 400;
+    opacity: 0.95;
+    text-shadow: none;
+}
+
+.li:has(div+div+div+div) {
+    text-shadow: 0px 0px;
+    /* font-weight: 500;*/
+}
+
+/*------当列表中有内容列表首项自动加粗-------*/
+
+
+
+
+
+
+
+/* ---------------------------------------------------------标题样式------------------------------------------------------------- */
+/* 标题居左对齐，采用彩虹色前6色 红橙黄绿青蓝 */
+.protyle-wysiwyg [data-node-id].h1,
+.b3-typography h1 {
+    color: var(--b3-font-color1);
+}
+
+.protyle-wysiwyg [data-node-id].h2,
+.b3-typography h2 {
+    color: var(--b3-font-color2);
+}
+
+.protyle-wysiwyg [data-node-id].h3,
+.b3-typography h3 {
+    color: var(--b3-font-color3);
+}
+
+.protyle-wysiwyg [data-node-id].h4,
+.b3-typography h4 {
+    color: var(--b3-font-color4);
+}
+
+.protyle-wysiwyg [data-node-id].h5,
+.b3-typography h5 {
+    color: var(--b3-font-color5);
+}
+
+.protyle-wysiwyg [data-node-id].h6,
+.b3-typography h6 {
+    color: var(--b3-font-color6);
+}
+
+
+
+
+
+
+
+/*标题基本标识*/
+.h1>div:nth-child(1):before,
+.h2>div:nth-child(1):before,
+.h3>div:nth-child(1):before,
+.h4>div:nth-child(1):before,
+.h5>div:nth-child(1):before,
+.h6>div:nth-child(1):before {
+    position: absolute;
+    display: inline-block;
+    font-size: 0.7em;
+    color: rgb(36, 120, 35);
+}
+
+.h1>div:nth-child(1):before {
+    content: ".";
+    top: -0.5em;
+    left: 0.23em;
+}
+
+.h2>div:nth-child(1)::before {
+    content: "..";
+    top: -0.5em;
+    left: 0.28em;
+}
+
+.h3>div:nth-child(1)::before {
+    content: "...";
+    top: -0.7em;
+    left: 0.32em;
+}
+
+.h4>div:nth-child(1)::before {
+    content: "....";
+    top: -0.65em;
+    left: 0.35em;
+}
+
+.h5>div:nth-child(1)::before {
+    content: ".....";
+    top: -0.57em;
+    left: 0.37em;
+}
+
+.h6>div:nth-child(1)::before {
+    content: "......";
+    top: -0.57em;
+    left: 0.4em;
+}
+
+.li>.h1>div:nth-child(1):before {
+    top: -1.18em !important;
+}
+
+.li>.h2>div:nth-child(1):before {
+    top: -1.15em !important;
+}
+
+.li>.h3>div:nth-child(1):before {
+    top: -1.11em !important;
+}
+
+.li>.h4>div:nth-child(1):before {
+    top: -1.1em !important;
+}
+
+.li>.h5>div:nth-child(1):before {
+    top: -1.1em !important;
+}
+
+.li>.h6>div:nth-child(1):before {
+    top: -1.1em !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*折叠点击展开标志*/
+.protyle-wysiwyg div[fold="1"][data-type="NodeHeading"]:before {
+    content: "";
+    height: 0px !important;
+    width: 0px;
+    background: transparent;
+    display: block;
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    border-radius: 1px;
+    margin-top: -6px;
+    border-top: 7px solid transparent !important;
+    border-left: 6px solid rgba(182, 211, 169) !important;
+    border-right: 7px solid transparent !important;
+    border-bottom: 7px solid transparent !important;
+}
+
+/*折叠中的标题*/
+.protyle-wysiwyg div[fold="1"][data-type="NodeHeading"] {
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(182, 211, 169);
+}
+
+
+
+
+
+
+/*-----------------------------PDF */
+
+.textLayer,
+.pdf__resize {
+    mix-blend-mode: darken;
+}
+
+/*将pdf标注颜色深度削一半，为了背景和黑色字体看得清*/
+.pdf__rect[data-content] {
+    opacity: 0.6;
+}
+
+
+.protyle-wysiwyg [data-node-id] span[data-type='file-annotation-ref'] {
+    color: var(--b3-protyle-inline-tag-color) !important;
+    opacity: 1;
+    padding-bottom: 1px;
+    border-bottom: 1px solid rgb(101, 168, 99);
+}
+
+.protyle-wysiwyg [data-node-id] span[data-type="file-annotation-ref"]:before {
+    content: "📖";
+}
+
+
+/*pdf搜索高亮 */
+.textLayer .highlight.selected {
+    background-color: red;
+}
+
+/* PDF搜索候选词高亮*/
+.textLayer .highlight {
+    background-color: yellow;
+}
+
+/*-----------------------------鼠标经过元素的醒目变化*/
+
+/* 块标移动增加过渡 */
+/*.protyle-gutters {
+    z-index: 3;
+    transition: all 200ms ease-out;
+}*/
+
+/*.p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.protyle-title__input,
+.td {
+    transition: width 2s, height 3s;
+}*/
+
+
+/*.h1:hover,.h2:hover,.h3:hover,.h4:hover,.h5:hover,.h6:hover{
+    border-radius: 3.5px;
+    background-color:rgba(204, 226, 156, 0.22);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+    transform: scale(1.002);
+}*/
+
+/*文档中的编辑标题*/
+/*.protyle-title__input:hover{
+    border-radius: 3.5px;
+    background-color:rgba(204, 226, 156, 0.22) !important;
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+    transform: scale(1.002);
+
+}*/
+
+.p:hover,
+.li>[data-type="NodeHeading"]:hover {
+    /*所有的p标签*/
+    border-radius: 3.5px;
+    /*background-color: rgba(204, 226, 156, 0.158);*/
+    background-color: rgba(204, 226, 156, 0.123);
+    text-shadow: 2px 2px 4px rgba(82, 81, 16, 0.219);
+    /*text-shadow: 1px 1px 4px rgb(163, 190, 150);*/
+
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+    /* transform: scale(1.001);*/
+    /*z-index: 1;*/
+    /*修复备注弹窗层级,因为有transition*/
+}
+
+td:hover {
+    /*表格中td标签*/
+    border-radius: 3.5px;
+    background-color: rgba(204, 226, 156, 0.123);
+    /*text-shadow: 1px 1px 4px rgb(163, 190, 150);*/
+    text-shadow: 2px 2px 4px rgba(82, 81, 16, 0.219);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+    transform: scale(1.001);
+}
+
+/*代码块中的spna标签*/
+/*
+.code-block span:not(.fn__flex-1):not(.language-css):not(.hljs-function):not(.hljs-params):not(.hljs-comment):hover {
+    border-radius: 3.5px;
+    background-color: rgb(200, 220, 158);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+}*/
+
+/*行内代码块 醒目变化*/
+
+[data-type~="code"]:not([aria-label]):not(.hljs):hover {
+    border-radius: 3.5px;
+    background-color: rgb(200, 220, 158);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+}
+
+/*行内按键，醒目变化*/
+[data-type~="kbd"]:not([aria-label]):hover {
+    border-radius: 3.5px;
+    border: 2px solid rgba(101, 168, 99, 0.541);
+    border-bottom: 0.01em solid rgb(101, 168, 99) !important;
+    background-color: rgba(255, 250, 232, 0.741);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+}
+
+
+/*思源#标签经过高亮*/
+.protyle-wysiwyg [data-node-id] span[data-type='tag']:hover {
+    color: rgb(0, 0, 0);
+    background-color: rgb(200, 220, 158);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.047);
+}
+
+/*+++++++++++++++++++++++++++++软件编辑区域+++++++++++++++++++++++++++++*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*+++++++++++++++++++++++++++++附加功能的样式区域+++++++++++++++++++++++++++++*/
+
+
+/*————————————————————————列表转导图————————————————————————*/
+/*整个导图取消缩进*/
+.protyle-wysiwyg *[custom-f="dt"] .li .list {
+    padding: 0px;
+    margin: 0px;
+    transition: all 0s;
+}
+
+.protyle-wysiwyg *[custom-f="dt"].list {
+    width: 100%-50 !important;
+    overflow-x: auto;
+    /*溢出滚动*/
+    padding-bottom: 30px !important;
+    margin: 10px 4px;
+}
+
+/*子项设偏移调整*/
+.protyle-wysiwyg *[custom-f="dt"] [data-node-id].li>[data-node-id] {
+    margin-left: 20px !important;
+    margin-right: -24px !important;
+}
+
+.protyle-wysiwyg *[custom-f="dt"] [data-node-id].li>.list {
+    padding-left: 20px;
+}
+
+/*文字设置居中*/
+.protyle-wysiwyg *[custom-f="dt"] .li {
+    display: flex;
+}
+
+.protyle-wysiwyg *[custom-f="dt"] .li .p,
+.protyle-wysiwyg *[custom-f="dt"] .li [data-type="NodeHeading"] {
+    display: flex;
+    align-items: center;
+    left: 6px;
+    margin: 0;
+    flex-shrink: 0;
+    /*不压缩宽度*/
+}
+
+.protyle-wysiwyg *[custom-f="dt"] .li [data-type="NodeHeading"]>[spellcheck="false"]:after {
+    display: none;
+}
+
+/*取消标题层级提示*/
+.protyle-wysiwyg *[custom-f="dt"] .li div:not(div.protyle-attr--refcount.popover__block) {
+    border-right: 10px solid transparent;
+}
+
+/*文字框*/
+.protyle-wysiwyg *[custom-f="dt"] .li div>div[spellcheck="false"] {
+    margin-left: -8px;
+    padding: 5px 0 5px 10px;
+    margin-top: 2px;
+    background-color: var(--b3-block-daotu);
+    border-radius: 3px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    max-width: 15vw;
+
+}
+
+.protyle-wysiwyg *[custom-f="dt"] .li>.p {
+    box-shadow: none;
+}
+
+.protyle-wysiwyg *[custom-f="dt"] .li[data-subtype="t"]>[data-node-id]>div[spellcheck="false"] {
+    padding: 5px 0px 5px 35px;
+}
+
+.protyle-wysiwyg *[custom-f="dt"] .li[data-subtype="o"]>[data-node-id]>div[spellcheck="false"] {
+    padding: 5px 10px 5px 25px;
+}
+
+/*去除竖线*/
+.list[custom-f="dt"][data-node-id] .li>:before {
+    display: none;
+}
+
+/*圆点符号居中对齐*/
+.protyle-content *[custom-f~=dt] [data-subtype="u"][data-node-id].li>div.protyle-action {
+    top: 50%;
+    margin-left: -18px;
+}
+
+/*无序列表*/
+.protyle-content *[custom-f~=dt] [data-subtype="o"][data-node-id].li>div.protyle-action {
+    top: calc(50% + 1px);
+    margin-left: 17px;
+}
+
+/*有序列表*/
+.list[custom-f="dt"][data-node-id] .protyle-action {
+    top: calc(50% + 1px);
+    left: 3px;
+    position: absolute;
+    transform: translate(0, -50%);
+    z-index: 2;
+}
+
+.protyle-wysiwyg *[custom-f="dt"] [data-subtype="u"][data-node-id].li>.protyle-action:after {
+    left: 37px;
+}
+
+.list[custom-f="dt"][data-node-id] .protyle-action svg {
+    left: 20px;
+}
+
+/*前继承线*/
+.protyle-wysiwyg *[custom-f="dt"] .li::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    border-top: var(--b3-border-daotu);
+    width: 20px;
+    height: 50%;
+}
+
+/*上竖线*/
+.protyle-wysiwyg *[custom-f="dt"] .li::before {
+    bottom: 50%;
+    border-left: var(--b3-border-daotu);
+}
+
+/*下竖线*/
+.protyle-wysiwyg *[custom-f="dt"] .li::after {
+    content: '';
+    position: absolute;
+    bottom: 50%;
+    border-left: var(--b3-border-daotu);
+    width: 20px;
+    height: 50%;
+}
+
+/*单个子项直线*/
+.protyle-wysiwyg *[custom-f="dt"] .list>.li:first-child:nth-last-child(2)::after {
+    border-radius: 0px;
+    width: 22px;
+    margin-bottom: -2px;
+}
+
+/*单子项居中*/
+.protyle-wysiwyg *[custom-f="dt"] .list>.li:first-child:nth-last-child(2) {
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+/*取消多余线条*/
+.protyle-wysiwyg *[custom-f="dt"] .li:first-child::after,
+.protyle-wysiwyg *[custom-f="dt"] .li:nth-last-child(2)::before {
+    border: none !important;
+}
+
+/*上框线*/
+.protyle-wysiwyg *[custom-f="dt"] .li:first-child::before {
+    border-radius: 5px 0 0 0;
+}
+
+/*下框线*/
+.protyle-wysiwyg *[custom-f="dt"] .li:nth-last-child(2)::after {
+    border-bottom: var(--b3-border-daotu) !important;
+    border-radius: 0 0 0 5px;
+}
+
+/*后继承线*/
+.list[custom-f="dt"] .list::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    border-top: var(--b3-border-daotu);
+    width: 20px;
+    height: 0;
+}
+
+/*取消根目录线*/
+div *[custom-f="dt"]>[data-type="NodeListItem"]::before,
+div *[custom-f="dt"]>[data-type="NodeListItem"]::after {
+    display: none;
+}
+
+
+
+/*————————————————————————列表转导图 END————————————————————————*/
+
+
+/* ————————————————————列表转化为表格———————————————————— */
+.list[data-node-id][data-type="NodeList"][custom-f="bg"] {
+    display: table-cell;
+    padding: 15px 50px 15px 5px;
+}
+
+/* 所有子项目的表格（除去第一列其余的列），包含溢出的空白部分，所以才会有边框 */
+
+.protyle-wysiwyg *[custom-f="bg"] .li .list {
+    padding: 0px;
+    margin: 0px !important;
+    width: 100%;
+    outline: 1px solid var(--surface-border-color);
+}
+
+/*对所有子列表项设置格式— */
+.protyle-wysiwyg *[custom-f="bg"] .li {
+    display: flex;
+    outline: 1px solid var(--surface-border-color);
+    background-color: rgb(255, 255, 255) !important;
+}
+
+.protyle-wysiwyg *[custom-f="bg"] .li>.p {
+    box-shadow: none;
+}
+
+
+/* 调整每个子列表项右侧边距— */
+.protyle-wysiwyg *[custom-f="bg"] .li>div {
+    margin-right: 20px;
+}
+
+/*大神增加代码 */
+.protyle-wysiwyg *[custom-f="bg"] [data-node-id].li>[data-node-id] {
+    margin-left: 6px !important;
+}
+
+/* 对符号后文字设置格式 */
+.protyle-wysiwyg *[custom-f="bg"] .p {
+    flex: 1;
+    left: 18px;
+    text-align: left;
+    align-items: center;
+    display: flex;
+    min-width: 120px;
+    min-height: 30px;
+    height: auto;
+    margin: 0;
+}
+
+/* 去除小竖线 */
+.list[data-node-id][data-type="NodeList"][custom-f="bg"] .li>:before {
+    display: none;
+}
+
+/*设置前面的符号居中对齐 */
+.list[data-node-id][data-type="NodeList"][custom-f="bg"] .protyle-action {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    opacity: 0.3;
+}
+
+/*单子项居中*/
+
+.protyle-wysiwyg *[custom-f="bg"] .list>.li:first-child:nth-last-child(2) {
+    top: 50%;
+    transform: translate(0, -50%);
+    height: 100%;
+}
+
+.protyle-wysiwyg *[custom-f="bg"] .li [data-type="NodeHeading"]>[spellcheck="false"]:after {
+    display: none;
+}
+
+/*取消标题层级提示*/
+
+
+/* ————————————————————列表转化为表格 END————————————————————*/
+
+
+/*————————————————————列表转看板————————————————————*/
+
+.protyle-wysiwyg .list[custom-f~=kb][data-node-id][data-type="NodeList"] {
+    display: flex;
+}
+
+.protyle-wysiwyg *[custom-f~=kb].list[data-node-index] {
+    width: 100% !important;
+    overflow-x: auto;
+    /*溢出滚动*/
+    padding-bottom: 50px;
+}
+
+/* ————————————————————所有子项目的表格（除去第一列其余的列），包含溢出的空白部分，所以才会有边框—————————————————————— */
+.protyle-wysiwyg *[custom-f~=kb] .li .list {
+    min-width: var(--kbline-boarditem-minwidth);
+    border-radius: 3px;
+    transform: translate(-30px, 0);
+}
+
+
+/* ————————————————————对所有子列表项设置格式———————————————————— */
+
+.protyle-wysiwyg *[custom-f~=kb] .li .li {
+    border-radius: 3px;
+    padding: 0.4em 0 0.1em 0;
+    margin-bottom: 6px;
+    background-color: var(--kb--li--background);
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 2px 4px;
+}
+
+/*只处理每个列表的第一行*/
+.protyle-wysiwyg *[custom-f~=kb][data-node-index]>div>div:nth-child(2),
+.protyle-wysiwyg .sb>*[custom-f~=kb]>div>div:nth-child(2) {
+    min-width: var(--kbline-boarditem-minwidth);
+    border-radius: 3px;
+    padding: 9px 0px 11px 30px;
+    left: -30px;
+    margin-bottom: 10px;
+}
+
+.protyle-wysiwyg *[custom-f~=kb][data-node-index]>div>div:nth-child(2)[data-type="NodeHeading"],
+.protyle-wysiwyg .sb>*[custom-f~=kb]>div>div:nth-child(2)[data-type="NodeHeading"] {
+
+    padding: 5px 0px 7px 30px;
+}
+
+.protyle-wysiwyg *[custom-f~=kb] .li [data-type="NodeHeading"]>[spellcheck="false"]:after {
+    display: none;
+}
+
+/*取消标题层级提示*/
+
+/*标题行循环颜色*/
+.protyle-wysiwyg *[custom-f~=kb][data-node-index]>div:nth-child(4n-3)>div:nth-child(2),
+.protyle-wysiwyg .sb>*[custom-f~=kb]>div:nth-child(4n-3)>div:nth-child(2) {
+    background-color: var(--b3-card-error-background);
+}
+
+.protyle-wysiwyg *[custom-f~=kb][data-node-index]>div:nth-child(4n-2)>div:nth-child(2),
+.protyle-wysiwyg .sb>*[custom-f~=kb]>div:nth-child(4n-2)>div:nth-child(2) {
+    background-color: var(--b3-card-warning-background);
+}
+
+.protyle-wysiwyg *[custom-f~=kb][data-node-index]>div:nth-child(4n-1)>div:nth-child(2),
+.protyle-wysiwyg .sb>*[custom-f~=kb]>div:nth-child(4n-1)>div:nth-child(2) {
+    background-color: var(--b3-card-info-background);
+}
+
+.protyle-wysiwyg *[custom-f~=kb][data-node-index]>div:nth-child(4n)>div:nth-child(2),
+.protyle-wysiwyg .sb>*[custom-f~=kb]>div:nth-child(4n)>div:nth-child(2) {
+    background-color: var(--b3-card-success-background);
+}
+
+/*只处理每个列表第一行的点*/
+.protyle-wysiwyg *[custom-f~=kb][data-node-index]>div>div:nth-child(1),
+.protyle-wysiwyg .sb>*[custom-f~=kb]>div>div:nth-child(1) {
+    transform: translate(4px, 5px);
+    z-index: 2;
+}
+
+/* ————————————————————去除小竖线———————————————————— */
+.list[custom-f="kb"][data-node-id] .li>:before {
+    display: none;
+}
+
+/* 对除了第一层之外的子列表 .protyle-action 移动 */
+.protyle-wysiwyg *[custom-f~=kb] .li .list .protyle-action {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: 3px;
+}
+
+/*————————————————————列表转化看板 END————————————————————*/
+
+
+
+
+/*钉住窗口增强*/
+[iswindowmin="true"] [data-doc-type]>[data-node-id] {
+    font-size: 87%;
+}
+
+
+
+
+/*左右搜索面板*/
+
+
+
+
+
+
+
+
+
+
+
+/*去除预览窗口多余空间*/
+#searchPreview>.protyle-content>div.protyle-wysiwyg.protyle-wysiwyg--attr {
+    margin-top: 15px !important;
+    padding-left: 23px !important;
+    padding-right: 23px !important;
+    /*禁止搜索结果水平滚动*/
+    overflow-x: hidden !important;
+    overflow-y: auto;
+}
+
+/*列出条目改造*/
+#searchList,
+#globalSearchList {
+    padding-right: 0px !important;
+}
+
+#searchList>[data-type="search-item"],
+#globalSearchList>[data-type="search-item"] {
+    display: block !important;
+    padding-top: 0px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    padding-bottom: 0px !important;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.249);
+}
+
+
+/*
+#searchList>[data-type="search-item"]:hover,
+#globalSearchList>[data-type="search-item"]:hover {
+    background-color: rgb(202, 219, 186, 0.788);
+}*/
+
+#searchList>[data-type="search-item"]>.b3-list-item__graphic,
+#globalSearchList>[data-type="search-item"]>.b3-list-item__graphic {
+    position: absolute;
+    margin-top: 6px !important;
+    margin-left: 2px !important;
+}
+
+#searchList>[data-type="search-item"]>.b3-list-item__text,
+#globalSearchList>[data-type="search-item"]>.b3-list-item__text {
+    margin-left: 20px;
+    max-height: 89px !important;
+    padding-top: 5px !important;
+    padding-bottom: 2px !important;
+    padding-right: 5px !important;
+    overflow-y: auto !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.2;
+    -webkit-box-orient: inherit !important;
+}
+
+#searchList>[data-type="search-item"]>.b3-list-item__meta.b3-list-item__meta--ellipsis,
+#globalSearchList>[data-type="search-item"]>.b3-list-item__meta.b3-list-item__meta--ellipsis {
+    display: block !important;
+    max-width: 95% !important;
+    margin-top: -7px !important;
+    margin-bottom: -5px !important;
+    padding-left: 12px !important;
+    color: rgb(101, 168, 99) !important;
+
+}
+
+
+
+/*#searchList>[data-type="search-item"]>.b3-list-item__meta.b3-list-item__meta--ellipsis::before,#globalSearchList>[data-type="search-item"]>.b3-list-item__meta.b3-list-item__meta--ellipsis::before{
+    content: "路径：";
+}*/
+/*---------ctrl+p窗口改造 end -------------*/
