@@ -1305,11 +1305,11 @@ function showDocumentCreationDate() {
 
 function DocumentCreationDate() {
 
-    var openDoc = document.querySelectorAll(".layout-tab-container>.fn__flex-1.protyle:not(.fn__none):not([CreatTimeOK])");
+    var openDoc = document.querySelectorAll(".layout-tab-container>.fn__flex-1.protyle:not(.fn__none):not([creatTimeOK])");
     var allDocumentTitleElement = [];
     for (let index = 0; index < openDoc.length; index++) {
         const element = openDoc[index];
-        element.setAttribute("CreatTimeOK", true);
+        element.setAttribute("creatTimeOK", true);
         allDocumentTitleElement.push(element.children[1].children[1].children[1]);
     }
 
@@ -1387,6 +1387,196 @@ function getDocumentTime(tilteElement) {
     }
 }
 
+
+
+/**--------------------------------显示文档父文档、子文档 ---------------------------------------------*/
+
+
+function displayParentChildDocuments() {
+
+    setInterval(() => {
+        var documentCreatTimeElement = document.querySelectorAll("[documentCreatTimeElement]:not([parentChild])");
+        for (let index = 0; index < documentCreatTimeElement.length; index++) {
+            const element = documentCreatTimeElement[index];
+            element.setAttribute("parentChild", true);
+            var documentCreatParentChild = creatParentChild(element);
+            documentCreatParentChild.innerText = "检查父子文档中……";
+            parentChildWhlie(element, documentCreatParentChild);
+        }
+    }, 300);
+
+
+    function parentChildWhlie(documentCreatTimeElement, documentCreatParentChild) {
+        var i = 0;
+        var ye = false;
+
+        var ParentChild = document.createElement("div");
+        ParentChild.innerHTML = `
+        <p>
+        <span>父文档：</span><span></span>
+        </p>
+        <p>
+        <span>子文档：</span><span></span>
+        </p>
+        `;
+
+        var setID = setInterval(() => {
+            var docid = documentCreatTimeElement.parentElement.parentElement.firstElementChild.getAttribute("data-node-id");
+            if (i == 100) {
+                documentCreatParentChild.innerText = "检查父子文档失败";
+                clearInterval(setID);
+                return;
+            }
+
+            if (ye != true) {
+                i++;
+                //根据id从文档树查询父级文档
+                var idTag = document.querySelector(".sy__file").querySelector(`[data-node-id='${docid}']`);
+                if (idTag == null) return;
+
+                var TagParent = idTag.parentElement.previousElementSibling;
+
+                if (!idTag.firstElementChild.classList.contains("fn__hidden") && (idTag.nextElementSibling == null || idTag.nextElementSibling.tagName != "UL")) {//有子文档但dom未加载
+                    idTag.firstElementChild.click();
+                    return;
+                }
+
+                //子文档
+                if (idTag.nextElementSibling.tagName == "UL") {
+                    var childs = idTag.nextElementSibling.children;
+                    var doc_css = ParentChild.lastElementChild;
+                    var doc_cs = doc_css.lastElementChild;
+
+                    for (let index = 0; index < childs.length; index++) {
+                        const element = childs[index];
+                        if (element.tagName == "UL") continue;
+                        var doc_c = creatA(element.getAttribute("data-node-id"), element.getAttribute("data-name"));
+                        doc_cs.appendChild(doc_c);
+                    }
+
+                    doc_css.style.maxHeight = "100px";
+                    doc_css.style.overflow = "scroll";
+                    doc_css.style.overflowX = "hidden";
+                    doc_css.style.transition = " all .15s cubic-bezier(0, 0, .2, 1) 0ms";
+
+
+                    AddEvent(doc_css, "mouseenter", () => {
+                        //console.log(getComputedStyle(doc_css).height);
+                        var item = parseFloat(getComputedStyle(doc_css).height);
+                        item = 100 - item;
+                        if (item < 2) {
+                            doc_css.style.maxHeight = "500px";
+                            doc_css.style.paddingBottom = "20px";
+                        }
+                    })
+
+                    AddEvent(doc_css, "mouseleave", () => {
+                        if (getComputedStyle(doc_css).height > "100px") {
+                            doc_css.style.maxHeight = "100px";
+                            doc_css.style.removeProperty("padding-bottom");
+
+                        }
+                    })
+
+
+                } else {
+                    ParentChild.lastElementChild.remove();//无子文档
+                }
+
+                //父文档
+                if (TagParent.getAttribute("data-type") != "navigation-root") {
+                    var doc_P = creatA(TagParent.getAttribute("data-node-id"), TagParent.getAttribute("data-name"));
+                    ParentChild.firstElementChild.lastElementChild.appendChild(doc_P);
+                } else {
+                    ParentChild.firstElementChild.remove();//无父文档
+                }
+
+
+                if (ParentChild.firstElementChild != null) {//任意存在父子文档加入dom
+                    documentCreatParentChild.firstChild.remove();
+                    documentCreatParentChild.appendChild(ParentChild);
+                } else {
+                    documentCreatParentChild.firstChild.remove();
+                }
+
+                ye = true;
+                clearInterval(setID);
+                return;
+
+            };
+        }, 3000);
+
+
+    }
+
+    function openHistoryDoc(e) {
+        e.stopPropagation();
+        if (e.target.tagName == "SPAN" && e.target.getAttribute("data-href")) {
+            try {
+                window.open(e.target.getAttribute("data-href"));
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
+    function creatA(id, name) {
+        var as = document.createElement("span");
+
+        var a = document.createElement("span");
+        a.setAttribute("data-href", "siyuan://blocks/" + id)
+        a.innerHTML = name.substring(0, name.length - 3);
+        a.style.paddingRight = "1px";
+        a.style.cursor = "pointer";
+        a.addEventListener("click", openHistoryDoc, false);
+
+
+        AddEvent(a, "mouseenter", () => {
+            if (a.getAttribute("isclick") == null) {
+                a.parentElement.style.textDecoration = "underline";
+            } else {
+                a.parentElement.style.textDecoration = "none";
+            }
+        });
+        AddEvent(a, "mouseleave", () => { a.parentElement.style.textDecoration = " none" });
+        AddEvent(a, "click", () => {
+            a.setAttribute("isclick", true);
+            a.parentElement.style.color = "rgb(119,28,170)";
+        });
+
+        var s = document.createElement("span");
+        s.setAttribute("data-type", 'a');
+        s.setAttribute("data-href", "siyuan://blocks/" + id)
+        s.innerText = "◈";
+        s.style.paddingRight = "10px";
+        s.style.cursor = "pointer";
+        as.style.color = "#3481c5";
+        as.title = "点击可跳转，悬浮◈可预览";
+        as.appendChild(a);
+        as.appendChild(s);
+        return as;
+    }
+
+
+    /**为文档标题元素下父子容器展示元素 */
+    function creatParentChild(documentCreatTimeElement) {
+
+        var is = documentCreatTimeElement.nextElementSibling;
+        if (is != null && is.getAttribute("documentCreatParentChild") != null) {
+            return element;
+        } else {
+            var documentCreatParentChild = insertCreateAfter(documentCreatTimeElement, "span");
+            documentCreatParentChild.setAttribute("documentCreatParentChild", "true");
+            documentCreatParentChild.style.display = "block";
+            documentCreatParentChild.style.marginLeft = "7px";
+            documentCreatParentChild.style.marginBottom = "0px";
+            documentCreatParentChild.style.fontSize = "61%";
+            documentCreatParentChild.style.color = "#767676";
+            return documentCreatParentChild;
+        }
+
+    }
+}
 
 
 /**----------------------------------自动展开悬浮窗折叠列表,展开搜索条目折叠列表,聚焦单独列表-----体验优化----------------------------------*/
@@ -3372,7 +3562,7 @@ function setAliasName() {
 /**---------------------------------子弹列表辅助线----------------------------------------- */
 /*
 function bulletListAuxiliaryLine() {
-
+ 
     HBuiderXThemeToolbarAddButton(
         "列表子弹辅助线",
         "开启后列表出现子弹辅助线",
@@ -3383,7 +3573,7 @@ function bulletListAuxiliaryLine() {
             AddEvent(window, "mouseup", focusHandler);
             AddEvent(window, "keyup", focusHandler);
         },
-
+ 
         () => {
             document.getElementById("listLine").remove();
             myRemoveEvent(window, "mouseup", focusHandler);
@@ -3391,7 +3581,7 @@ function bulletListAuxiliaryLine() {
         },
         true
     );
-
+ 
     async function focusHandler(e) {
         let className = "theme-focus";//焦点块获得class
         let focusId = "theme-focus-block";//焦点块获 id
@@ -4215,7 +4405,7 @@ function SetItem(key, value, fun = null) {
         }
     });
 }
-
+ 
 function GetItem(key, fun) {
     获取文件('/data/widgets/HBuilderX-Light-Custom.json', (v) => {
         if (v) {
@@ -4224,7 +4414,7 @@ function GetItem(key, fun) {
         }
     });
 }
-
+ 
 function RemoveItem(key, fun) {
     获取文件('/data/widgets/HBuilderX-Light-Custom.json', (v) => {
         if (v) {
@@ -4234,7 +4424,7 @@ function RemoveItem(key, fun) {
         }
     });
 }
-
+ 
 */
 
 
@@ -5021,6 +5211,8 @@ function getcommonMenu_Bolck() {
                 rundynamicUnderline();//为文档标题创建动态下划线
 
                 showDocumentCreationDate();//为打开文档标题下面显示文档创建日期
+
+                displayParentChildDocuments();//为文档展示父子文档
 
                 autoOpenList();//自动展开悬浮窗内折叠列表（第一次折叠）
 
