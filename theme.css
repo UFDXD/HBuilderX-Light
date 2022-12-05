@@ -249,7 +249,6 @@
 .b3-list--background .b3-list-item--focus {
     background-color: rgba(202, 219, 186, 0.788) !important;
     font-weight: bold;
-    margin-left: -1px !important;
     text-shadow: 2px 2px 4px rgba(182, 211, 169);
 }
 
@@ -1373,6 +1372,9 @@ svg[data-type="remove-tag"] {
 
 /*文档标题输入框*/
 /*.protyle-title__input {}*/
+span[aria-label="点击 打开菜单<br>⇧Click 修改属性"] {
+    top: 45px;
+}
 
 span[aria-label="点击 打开菜单<br>⇧Click 修改属性"]>svg {
     margin-top: -18px;
@@ -1380,6 +1382,7 @@ span[aria-label="点击 打开菜单<br>⇧Click 修改属性"]>svg {
     width: 25px;
     height: 25px;
 }
+
 
 /*-----------------------------文档正文区域*/
 /*正文宽度*/
