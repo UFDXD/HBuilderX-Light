@@ -4676,16 +4676,9 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonTitle, NoButtonSvgURL, Of
         GetItem(ButtonID, (v) => {
             offNo = v;
             if (offNo == "1") {
-                addButton.style.backgroundImage = "url(" + NoButtonSvgURL + ")";
-                addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
-                SetItem(ButtonID, "0", () => {
-                    NoClickRunFun(addButton);
-                    SetItem(ButtonID, "1");
-                });
+                _no();
             } else if (offNo != "0") {
-                SetItem(ButtonID, "0", () => {
-                    offNo = "0";
-                });
+                SetItem(ButtonID, "0");
             }
         });
 
@@ -4723,15 +4716,29 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonTitle, NoButtonSvgURL, Of
                     if (v == offNo) return;
                     offNo = v
                     if (v == "1") {
-                        no();
+                        _no();
                     } else {
-                        Off();
+                        _Off();
                     }
                 } else {
                     console.error(ButtonID, v, "功能启用状态非0或1，可能存在状态异常");
                 }
             })
         }, 1000)
+    }
+
+
+    function _Off() {
+        addButton.style.backgroundImage = "url(" + OffButtonSvgURL + ")";
+        addButton.style.filter = "none";
+        OffClickRunFun(addButton);
+    }
+    function _no() {
+
+        addButton.style.backgroundImage = "url(" + NoButtonSvgURL + ")";
+        addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
+        NoClickRunFun(addButton);
+
     }
 
     function Off() {
