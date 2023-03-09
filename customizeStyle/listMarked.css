@@ -1,0 +1,58 @@
+/*列表层级醒目增强*/
+/*.list:not(#lz-comment-box>.list):hover {
+    border-radius: 1px;
+    outline: 1px solid rgb(0, 103, 0);
+    background-color: rgba(255, 250, 233, 0.062) !important;
+}*/
+
+/*列表层级醒目增强*/
+.li:hover {
+    border-radius: 1px;
+    box-shadow: 0px 0px 0px 1px rgb(0, 103, 0) !important;
+    background-color: rgba(66, 134, 244, 0) !important;
+}
+
+.li>:nth-child(2):hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/*------当列表中有竖排超级快-------*/
+
+.protyle-wysiwyg [data-node-id].li>.sb[data-sb-layout="row"] {
+    margin-left: 30px !important;
+}
+
+.protyle-wysiwyg [data-node-id].li>.sb[data-sb-layout="col"] {
+    margin-left: 30px !important;
+}
+
+.li div[data-sb-layout="row"]>div:nth-child(1) {
+    margin-top: -2px !important;
+}
+
+
+.li>div[data-sb-layout="col"]>div {
+    margin-top: -3px !important;
+}
+
+
+.li .sb[data-sb-layout="row"] {
+    border: 0.1em dashed rgba(101, 168, 99, 0.26);
+    box-sizing: border-box;
+}
+
+.li .sb[data-sb-layout="col"] {
+    border: 0.1em dashed rgba(101, 168, 99, 0.26);
+    box-sizing: border-box;
+}
+
+.li .sb[data-sb-layout="row"]:hover {
+    border: 0.1em dashed rgb(101, 168, 99);
+    box-sizing: border-box;
+}
+
+.li .sb[data-sb-layout="col"]:hover {
+    border: 0.1em dashed rgb(101, 168, 99);
+    box-sizing: border-box;
+}
