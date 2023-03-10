@@ -3717,15 +3717,20 @@ div *[custom-f="dt"]>[data-type="NodeListItem"]::after {
 /*新窗口*/
 
 .body--window {
-    border-left: 1px solid rgb(239, 231, 204);
+    /*border-left: 1px solid rgb(239, 231, 204);
     border-right: 1px solid rgb(239, 231, 204);
+*/
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+    border-bottom: 1px solid red;
 }
 
 /*-----------------------------软件头栏*/
 .body--window .toolbar__window {
     height: 22px;
     position: relative;
-    border-top: 1px solid rgb(239, 231, 204);
+    /*border-top: 1px solid rgb(239, 231, 204);*/
+    border-top: 1px solid red;
     border-right: none;
     border-left: none;
     background-color: rgb(253, 250, 239);
