@@ -841,6 +841,8 @@ function qucuFiiter(fun) {
         if (index >= 0) {
             //console.log(Topicfilters[index]);
             GetItem(Topicfilters[index].getAttribute("topicfilter"), (offNo) => {
+
+                //console.log(Topicfilters[index].getAttribute("topicfilter"), offNo)
                 if (offNo == "1") {
                     document.getElementById(Topicfilters[index].getAttribute("topicfilter")).click();
                 }
@@ -4677,15 +4679,15 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonTitle, NoButtonSvgURL, Of
             offNo = v;
             if (offNo == "1") {
                 _no();
-            } else if (offNo != "0") {
-                SetItem(ButtonID, "0");
+            } else if (offNo == null || offNo == undefined) {
+                offNo = "0";
             }
         });
 
     }
 
     AddEvent(addButton, "click", () => {
-        if (offNo == "0") {
+        if (offNo == "0" || offNo == null || offNo == undefined) {
             no();
             return;
         }
@@ -4698,35 +4700,30 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonTitle, NoButtonSvgURL, Of
 
 
     AddEvent(addButton, "mouseover", () => {
-        if (offNo == "0") {
+        if (offNo == "0" || offNo == null || offNo == undefined) {
             addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
         }
     });
     AddEvent(addButton, "mouseout", () => {
-        if (offNo == "0") {
+        if (offNo == "0" || offNo == null || offNo == undefined) {
             addButton.style.filter = "none";
         }
     });
 
-
     if (Memory) {
         setInterval(() => {
             GetItem(ButtonID, (v) => {
-                if (v != null) {
-                    if (v == offNo) return;
-                    offNo = v
-                    if (v == "1") {
-                        _no();
-                    } else {
-                        _Off();
-                    }
+                if (v == offNo) return;
+
+                offNo = v
+                if (v == "1") {
+                    _no();
                 } else {
-                    console.error(ButtonID, v, "功能启用状态非0或1，可能存在状态异常");
+                    _Off();
                 }
             })
         }, 1000)
     }
-
 
     function _Off() {
         addButton.style.backgroundImage = "url(" + OffButtonSvgURL + ")";
@@ -4786,6 +4783,8 @@ function removeItem(key) {
 
 
 
+
+
 function SetItem(key, value, fun = null) {
     获取文件("/data/widgets/HBuilderX-Light.config.json", (config) => {
         if (config) {//不存在配置文件就要创建
@@ -4793,7 +4792,7 @@ function SetItem(key, value, fun = null) {
             //console.log(config);
             写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify(config, undefined, 4), fun);
         } else {
-            写入文件2("/data/widgets/HBuilderX-Light.config2.json", JSON.stringify({ "HBuilderXLight": 1, key: value }, undefined, 4), fun);
+            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify({ "HBuilderXLight": 1, key: value }, undefined, 4), fun);
         }
     });
 }
@@ -4802,9 +4801,14 @@ function GetItem(key, then = null) {
     获取文件("/data/widgets/HBuilderX-Light.config.json", (config) => {
         if (config) {//不存在配置文件就要创建
             // console.log(config[key]);
-            if (then) then(config[key]);
+            try {
+
+                if (then) then(config[key]);
+            } catch (error) {
+                if (then) then(null);
+            }
         } else {
-            写入文件2("/data/widgets/HBuilderX-Light.config2.json", JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), then(null));
+            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), then(null));
         }
     });
 }
@@ -4816,7 +4820,7 @@ function RemoveItem(key, fun = null) {
             //console.log(config);
             写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify(config, undefined, 4), fun);
         } else {
-            写入文件2("/data/widgets/HBuilderX-Light.config2.json", JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), fun);
+            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), fun);
         }
     });
 }
@@ -5646,113 +5650,173 @@ function 调整新窗口头栏位置() {
 
 调整新窗口头栏位置();
 
+
+var Funs;
+
 if (isPhone()) {
 
-    adjustDocumentLabelsWhile();//调整文档头部区域，在emj 标签，头图 各种情况下的布局
+    Funs = [
+        adjustDocumentLabelsWhile,//调整文档头部区域，在emj 标签，头图 各种情况下的布局
+        collapseExpand_Head_List,//鼠标中键标题、列表文本折叠/展开
+        simpleRemarks,//简单备注
+        FirstLineInDent,//开启段落自动缩进
+        Removefirstlineindent,//开启段落首行缩进的情况下，双击段落尾部去除缩进
+        listMarked,//列表块醒目增强。
+        InverseButton,//主题反色 
+        BlackWhiteButton,//主题黑白
+        ReduceColorContrast,//主题降低颜色对比度
+        HueRotateButton,//主题色相旋转
+        hyperlinkClickColorChange,//点击过的思源超链接超链接会变色
+        dblclickToReleaseReadOnly,//双击解除只读模式
+        setAliasName,//右键快速设置命名、别名
+        () => console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============")
+    ];
+    /*
+        FirstLineInDent();//开启段落自动缩进
+        Removefirstlineindent();
+    
+        listMarked();//列表块醒目增强。
+        //bulletListAuxiliaryLine()//子弹列表辅助线-有缺陷
+        automaticSerialNumber();//标题序号
+    
+    
+        InverseButton();//主题反色 
+        BlackWhiteButton();//主题黑白
+        ReduceColorContrast();//主题降低颜色对比度
+        HueRotateButton();//主题色相旋转
+    
+    
+        hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
+    
+        dblclickToReleaseReadOnly();
+    
+        newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
+    
+        setAliasName();//右键快速设置命名、别名
+    */
 
-    collapseExpand_Head_List();//鼠标中键标题、列表文本折叠/展开
-
-    simpleRemarks();//简单备注
-
-    FirstLineInDent();//开启段落自动缩进
-    Removefirstlineindent();//开启段落首行缩进的情况下，双击段落尾部去除缩进
-
-    listMarked();//列表块醒目增强。
-    //bulletListAuxiliaryLine()//子弹列表辅助线-有缺陷
-    automaticSerialNumber();//标题序号
-
-
-    InverseButton();//主题反色 
-    BlackWhiteButton();//主题黑白
-    ReduceColorContrast();//主题降低颜色对比度
-    HueRotateButton();//主题色相旋转
-
-
-    hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
-
-    dblclickToReleaseReadOnly();//双击解除只读模式
-
-    newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
-
-    setAliasName();//右键快速设置命名、别名
-
-
-    console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
 } else {
-    // createHBuiderXToolbar();//创建BuiderXToolbar
 
-    //SidebarMouseHoverExpandButton();//鼠标移动展开左右树面板按钮
+    Funs = [
+        HighlightBecomesHidden,//高亮变隐藏
+        FirstLineInDent,//开启段落自动缩进
+        Removefirstlineindent,//开启段落首行缩进的情况下，双击段落尾部去除缩进
+        listMarked,//列表块醒目增强。
+        moreCompact,//主题文档树，大纲列表等其他列表更加紧凑
+        automaticSerialNumber,//标题序号
+        InverseButton,//主题反色 
+        BlackWhiteButton,//主题黑白
+        ReduceColorContrast,//主题降低颜色对比度
+        HueRotateButton,//主题色相旋转
+        adjustDocumentLabelsWhile,//调整文档头部区域，在emj 标签，头图 各种情况下的布局
+        rundynamicUnderline,//为文档标题创建动态下划线
+        showDocumentCreationDate,//为打开文档标题下面显示文档创建日期
+        displayParentChildDocuments2,//为文档展示父子文档
+        autoOpenList,//自动展开悬浮窗内折叠列表（第一次折叠）
+        collapsedListPreview,//折叠列表内容预览查看
+        collapseExpand_Head_List,//鼠标中键标题、列表文本折叠/展开
+        VirtualReferenceEnhancements,//将同名虚拟引用的悬浮窗，本笔记相关内容放到前面
+        simpleRemarks,//简单备注
+        hyperlinkClickColorChange,//点击过的思源超链接超链接会变色
+        theFloatingWindowIsClosed,//思源悬浮窗头栏中键关闭
+        zoomOutToRestoreTheFloatingWindow,//钉住悬浮窗增强
+        setAliasName,//右键快速设置命名、别名
+        SuspendedWindowNoSection,//思源悬浮窗检测到单个段落块，单个列表项，面包屑前一级展示
+        () => loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss"),
+        () => console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============")
+    ];
 
-    HighlightBecomesHidden();//高亮变隐藏
+    /*
+        // createHBuiderXToolbar();//创建BuiderXToolbar
+    
+        //SidebarMouseHoverExpandButton();//鼠标移动展开左右树面板按钮
+    
+        HighlightBecomesHidden();//高亮变隐藏
+    
+        //QuickDropDownButton();//快捷下分栏按钮
+    
+        //FocusingOnAmplification();//聚焦内容放大200%
+    
+    
+        FirstLineInDent();//开启段落自动缩进
+        Removefirstlineindent();//开启段落首行缩进的情况下，双击段落尾部去除缩进
+    
+        listMarked();//列表块醒目增强。
+        //bulletListAuxiliaryLine()//子弹列表辅助线
+    
+        moreCompact();//主题文档树，大纲列表等其他列表更加紧凑
+        automaticSerialNumber();//标题序号
+    
+        InverseButton();//主题反色 
+        BlackWhiteButton();//主题黑白
+        ReduceColorContrast();//主题降低颜色对比度
+        HueRotateButton();//主题色相旋转
+    
+        // getTXTSum()//选中文字计数------已官方实现 
+    
+        //setTimeout(() => ClickMonitor(), 3000);//各种列表转xx
+    
+        adjustDocumentLabelsWhile();//调整文档头部区域，在emj 标签，头图 各种情况下的布局
+    
+        rundynamicUnderline();//为文档标题创建动态下划线
+    
+        showDocumentCreationDate();//为打开文档标题下面显示文档创建日期
+    
+        displayParentChildDocuments2();//为文档展示父子文档
+    
+        autoOpenList();//自动展开悬浮窗内折叠列表（第一次折叠）
+    
+        collapsedListPreview();//折叠列表内容预览查看
+    
+        collapseExpand_Head_List();//鼠标中键标题、列表文本折叠/展开
+    
+    
+        VirtualReferenceEnhancements();//将同名虚拟引用的悬浮窗，本笔记相关内容放到前面
+    
+        simpleRemarks();//简单备注
+    
+        // findMatchingListEntries();//查找匹配列表条目前的图标可以鼠标悬停打开悬浮窗
+    
+    
+        hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
+    
+        //newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
+    
+        theFloatingWindowIsClosed();//思源悬浮窗头栏中键关闭
+    
+        zoomOutToRestoreTheFloatingWindow();//钉住悬浮窗增强
+    
+    
+        //init();//最近打开文档
+    
+        setAliasName();//右键快速设置命名、别名
+    
+        SuspendedWindowNoSection();//思源悬浮窗检测到单个段落块，单个列表项，面包屑前一级展示
+    
+        //loadScript("/appearance/themes/HBuilderX-Light/comment/index.js");//js批注评论
+    */
 
-    //QuickDropDownButton();//快捷下分栏按钮
-
-    //FocusingOnAmplification();//聚焦内容放大200%
-
-
-    FirstLineInDent();//开启段落自动缩进
-    Removefirstlineindent();//开启段落首行缩进的情况下，双击段落尾部去除缩进
-
-    listMarked();//列表块醒目增强。
-    //bulletListAuxiliaryLine()//子弹列表辅助线
-
-    moreCompact();//主题文档树，大纲列表等其他列表更加紧凑
-    automaticSerialNumber();//标题序号
-
-    InverseButton();//主题反色 
-    BlackWhiteButton();//主题黑白
-    ReduceColorContrast();//主题降低颜色对比度
-    HueRotateButton();//主题色相旋转
-
-    // getTXTSum()//选中文字计数------已官方实现 
-
-    //setTimeout(() => ClickMonitor(), 3000);//各种列表转xx
-
-    adjustDocumentLabelsWhile();//调整文档头部区域，在emj 标签，头图 各种情况下的布局
-
-    rundynamicUnderline();//为文档标题创建动态下划线
-
-    showDocumentCreationDate();//为打开文档标题下面显示文档创建日期
-
-    displayParentChildDocuments2();//为文档展示父子文档
-
-    autoOpenList();//自动展开悬浮窗内折叠列表（第一次折叠）
-
-    collapsedListPreview();//折叠列表内容预览查看
-
-    collapseExpand_Head_List();//鼠标中键标题、列表文本折叠/展开
-
-
-    VirtualReferenceEnhancements();//将同名虚拟引用的悬浮窗，本笔记相关内容放到前面
-
-    simpleRemarks();//简单备注
-
-    // findMatchingListEntries();//查找匹配列表条目前的图标可以鼠标悬停打开悬浮窗
-
-
-    hyperlinkClickColorChange();//点击过的思源超链接超链接会变色
-
-    //newOpenWindow();//Dark+新开窗口代码抽取HBuilderX-Light移植魔改便携搬运版
-
-    theFloatingWindowIsClosed();//思源悬浮窗头栏中键关闭
-
-    zoomOutToRestoreTheFloatingWindow();//钉住悬浮窗增强
-
-
-    //init();//最近打开文档
-
-    setAliasName();//右键快速设置命名、别名
-
-    SuspendedWindowNoSection();//思源悬浮窗检测到单个段落块，单个列表项，面包屑前一级展示
-
-    //loadScript("/appearance/themes/HBuilderX-Light/comment/index.js");//js批注评论
-
-    loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/customizeCss.css", "customizeCss");
-    console.log("==============>HBuilderX-Light主题:附加CSS和特性JS_已经执行<==============");
 }
 
-//作者土嗨自用
-//loadStyle("/appearance/themes/HBuilderX-Light/personal/personal.css", "personal");
-//loadScript("/appearance/themes/HBuilderX-Light/personal/personal.js");
+setTimeout(() => {
+    Funs.reverse();
+    var index = (Funs.length) - 1;
+    var ID = setInterval(() => {
+
+        if (index >= 0) {
+            Funs[index]();
+        } else {
+            clearInterval(ID);
+
+            //作者土嗨自用
+            //loadStyle("/appearance/themes/HBuilderX-Light/personal/personal.css", "personal");
+            //loadScript("/appearance/themes/HBuilderX-Light/personal/personal.js");
+
+        }
+        index--;
+    }, 200)
+}, 2000)
+
+
 
 
