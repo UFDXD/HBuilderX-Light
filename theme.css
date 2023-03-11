@@ -1972,6 +1972,35 @@ div [data-type="img"] {
     filter: drop-shadow(rgb(76, 139, 244) 9999999px 0);
 }
 
+
+
+
+/*----------------标记------------------*/
+
+.b3-typography mark,
+.b3-typography span[data-type~=mark]:not(.card__block--hide [data-type~="mark"]),
+.protyle-wysiwyg mark,
+.protyle-wysiwyg span[data-type~=mark]:not(.card__block--hide [data-type~="mark"]) {
+    background-color: rgb(255, 251, 206);
+    /*color: black !important;*/
+}
+
+
+/*---------------闪卡标记*/
+.card__block--hide [data-type~="mark"] {
+    color: transparent !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid black !important;
+
+}
+
+.card__block--hide [data-type~="mark"]:hover {
+    background-color: rgb(255, 251, 206) !important;
+    color: black !important;
+}
+
+
+
 /*-----------------------------虚拟引用*/
 span[data-type~="virtual-block-ref"] {
     padding: 0px 0px 0px 0px !important;
