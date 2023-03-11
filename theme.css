@@ -1978,9 +1978,9 @@ div [data-type="img"] {
 /*----------------标记------------------*/
 
 .b3-typography mark,
-.b3-typography span[data-type~=mark]:not(.card__block--hide [data-type~="mark"]),
+.b3-typography span[data-type~=mark]:not(.card__block [data-type~="mark"]),
 .protyle-wysiwyg mark,
-.protyle-wysiwyg span[data-type~=mark]:not(.card__block--hide [data-type~="mark"]) {
+.protyle-wysiwyg span[data-type~=mark]:not(.card__block [data-type~="mark"]) {
     background-color: rgb(255, 251, 206);
     /*color: black !important;*/
 }
