@@ -5,25 +5,48 @@
  */
 
 window.HBuilderXLight = {};
+window.HBuilderXLight.ButtonControl = {};
 
 
+//按钮功能类型
+let ButtonFunctionType;
+(function (ButtonFunctionType) {
+    ButtonFunctionType[ButtonFunctionType["default"] = 1] = "default";//默认
+    ButtonFunctionType[ButtonFunctionType["topicfilter"] = 2] = "topicfilter";//滤镜
+})(ButtonFunctionType || (ButtonFunctionType = {}));
+var EnumButtonFunctionType = Object.freeze(ButtonFunctionType);
 
-/*----------------------------------创建HBuiderX主题工具栏区域----------------------------------*/
-function createHBuiderXToolbar() {
-    var siYuanToolbar = getSiYuanToolbar();
 
-    //如果是新窗口模式就不启动这个功能
-    if (siYuanToolbar == null && document.body.classList.contains("body--window")) return;
+//按钮特性类型
+let ButtonCharacteristicType;
+(function (ButtonCharacteristicType) {
+    ButtonCharacteristicType[ButtonCharacteristicType["default"] = 1] = "default";//默认
+    ButtonCharacteristicType[ButtonCharacteristicType["multiple"] = 2] = "multiple";//单选
+})(ButtonCharacteristicType || (ButtonCharacteristicType = {}));
+var EnumButtonCharacteristicType = Object.freeze(ButtonCharacteristicType);
 
-    var HBuiderXToolbar = getHBuiderXToolbar();
-    var windowControls = document.getElementById("windowControls");
 
-    if (HBuiderXToolbar) siYuanToolbar.removeChild(HBuiderXToolbar);
-    HBuiderXToolbar = insertCreateBefore(windowControls, "div", "HBuiderXToolbar");
-    HBuiderXToolbar.style.marginRight = "3px";
-    HBuiderXToolbar.style.marginTop = "1px";
-    HBuiderXToolbar.style.marginLeft = "10px";
+//渲染进程和主进程通信
+const { ipcRenderer } = require('electron');
+ipcRenderer.on("siyuan-send_windows", (event, data) => {
+    //console.log(data);
+    switch (data.Value) {
+        case "ButtonControl"://按钮状态控制
+            var ControlButtonIDs = data.ControlButtonIDs;
+            for (let index = 0; index < ControlButtonIDs.length; index++) {
+                const ControlButtonID = ControlButtonIDs[index];
+                window.HBuilderXLight.ButtonControl[ControlButtonID.ButtonID][ControlButtonID.ControlFun]();
+            }
+            break;
+
+        default:
+            break;
+    }
+});
+function broadcast(data) {
+    ipcRenderer.send("siyuan-send_windows", data);
 }
+
 
 
 /**----------------------------------边栏鼠标悬浮展开按钮----------------------------------*/
@@ -278,6 +301,8 @@ function HighlightBecomesHidden() {
     loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/highlight-Mark.css", "markCss");
     HBuiderXThemeToolbarAddButton(
         "高亮变隐藏",
+        EnumButtonFunctionType.default,
+        EnumButtonCharacteristicType.default,
         "开启后CTRL+E 高亮文本变隐藏文本，鼠标移上去才会显示。",
         "/appearance/themes/HBuilderX-Light/src/B2.png",
         "/appearance/themes/HBuilderX-Light/src/B1.png",
@@ -544,7 +569,8 @@ function huifuNodeDocument() {
 
 function FirstLineInDent() {
     HBuiderXThemeToolbarAddButton(
-        "段落缩进",
+        "段落缩进", EnumButtonFunctionType.default,
+        EnumButtonCharacteristicType.default,
         "开启后段落块自动缩进,双击段落块末尾无文本区域单独去除缩进",
         "/appearance/themes/HBuilderX-Light/src/段落缩进2.png",
         "/appearance/themes/HBuilderX-Light/src/段落缩进1.png",
@@ -566,7 +592,8 @@ function FirstLineInDent() {
 
 function listMarked() {
     HBuiderXThemeToolbarAddButton(
-        "列表块醒目增强",
+        "列表块醒目增强", EnumButtonFunctionType.default,
+        EnumButtonCharacteristicType.default,
         "开启后列表块醒目增强",
         "/appearance/themes/HBuilderX-Light/src/列表块醒目增强2.png",
         "/appearance/themes/HBuilderX-Light/src/列表块醒目增强1.png",
@@ -586,15 +613,14 @@ function listMarked() {
 
 function InverseButton() {
     HBuiderXThemeToolbarAddButton(
-        "按钮:颜色反转_深黑",
+        "按钮:颜色反转_深黑", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题反色滤镜_深黑",
         "/appearance/themes/HBuilderX-Light/src/反色2.png",
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
-            qucuFiiter(() => {
 
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_深黑.css", "颜色反转_深黑").setAttribute("topicfilter", "按钮:颜色反转_深黑");
-            })
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_深黑.css", "颜色反转_深黑").setAttribute("topicfilter", "按钮:颜色反转_深黑");
 
         },
         () => {
@@ -604,15 +630,13 @@ function InverseButton() {
     );
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:颜色反转_太空",
+        "按钮:颜色反转_太空", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题反色滤镜_太空",
         "/appearance/themes/HBuilderX-Light/src/反色2.png",
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_太空.css", "颜色反转_太空").setAttribute("topicfilter", "按钮:颜色反转_太空");
-            })
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_太空.css", "颜色反转_太空").setAttribute("topicfilter", "按钮:颜色反转_太空");
 
         },
         () => {
@@ -622,16 +646,13 @@ function InverseButton() {
     );
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:颜色反转_黑绿",
+        "按钮:颜色反转_黑绿", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题颜色反转_黑绿",
         "/appearance/themes/HBuilderX-Light/src/反色2.png",
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_黑绿.css", "颜色反转_黑绿").setAttribute("topicfilter", "按钮:颜色反转_黑绿");
-            })
-
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_黑绿.css", "颜色反转_黑绿").setAttribute("topicfilter", "按钮:颜色反转_黑绿");
         },
         () => {
             document.getElementById("颜色反转_黑绿").remove();
@@ -640,16 +661,13 @@ function InverseButton() {
     );
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:颜色反转_锈黑",
+        "按钮:颜色反转_锈黑", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题颜色反转_锈黑",
         "/appearance/themes/HBuilderX-Light/src/反色2.png",
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_锈黑.css", "颜色反转_锈黑").setAttribute("topicfilter", "按钮:颜色反转_锈黑");
-            })
-
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_锈黑.css", "颜色反转_锈黑").setAttribute("topicfilter", "按钮:颜色反转_锈黑");
         },
         () => {
             document.getElementById("颜色反转_锈黑").remove();
@@ -662,15 +680,13 @@ function InverseButton() {
 
 function BlackWhiteButton() {
     HBuiderXThemeToolbarAddButton(
-        "按钮:黑白",
+        "按钮:黑白", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题黑白滤镜",
         "/appearance/themes/HBuilderX-Light/src/黑白2.png",
         "/appearance/themes/HBuilderX-Light/src/黑白1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/BlackWhite.css", "黑白").setAttribute("topicfilter", "按钮:黑白");
-            })
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/BlackWhite.css", "黑白").setAttribute("topicfilter", "按钮:黑白");
 
         },
         () => {
@@ -686,15 +702,13 @@ function BlackWhiteButton() {
 
 function ReduceColorContrast() {
     HBuiderXThemeToolbarAddButton(
-        "降低颜色对比度",
+        "降低颜色对比度", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题对比度降低滤镜",
         "/appearance/themes/HBuilderX-Light/src/降低颜色对比度2.png",
         "/appearance/themes/HBuilderX-Light/src/降低颜色对比度1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/ReduceColor.css", "ReduceColor").setAttribute("topicfilter", "降低颜色对比度");
-            })
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/ReduceColor.css", "ReduceColor").setAttribute("topicfilter", "降低颜色对比度");
 
         },
         () => {
@@ -710,15 +724,13 @@ function ReduceColorContrast() {
 function HueRotateButton() {
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:色相旋转_青紫",
+        "按钮:色相旋转_青紫", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题色相滤镜_青紫",
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青紫.css", "色相旋转_青紫").setAttribute("topicfilter", "按钮:色相旋转_青紫");
-            })
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青紫.css", "色相旋转_青紫").setAttribute("topicfilter", "按钮:色相旋转_青紫");
 
         },
         () => {
@@ -728,15 +740,13 @@ function HueRotateButton() {
     );
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:色相旋转_青蓝",
+        "按钮:色相旋转_青蓝", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题色相滤镜_青蓝",
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青蓝.css", "色相旋转_青蓝").setAttribute("topicfilter", "按钮:色相旋转_青蓝");
-            })
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青蓝.css", "色相旋转_青蓝").setAttribute("topicfilter", "按钮:色相旋转_青蓝");
 
         },
         () => {
@@ -747,17 +757,13 @@ function HueRotateButton() {
 
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:色相旋转_褐紫",
+        "按钮:色相旋转_褐紫", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题色相旋转_褐紫",
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-
-            qucuFiiter(() => {
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_褐紫.css", "色相旋转_褐紫").setAttribute("topicfilter", "按钮:色相旋转_褐紫");
-
-            })
-
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_褐紫.css", "色相旋转_褐紫").setAttribute("topicfilter", "按钮:色相旋转_褐紫");
 
         },
         () => {
@@ -768,15 +774,13 @@ function HueRotateButton() {
 
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:色相旋转_红紫",
+        "按钮:色相旋转_红紫", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题色相旋转_红紫",
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_红紫.css", "色相旋转_红紫").setAttribute("topicfilter", "按钮:色相旋转_红紫");
-            })
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_红紫.css", "色相旋转_红紫").setAttribute("topicfilter", "按钮:色相旋转_红紫");
 
 
         },
@@ -788,15 +792,14 @@ function HueRotateButton() {
 
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:色相旋转_映绿",
+        "按钮:色相旋转_映绿", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题色相旋转_映绿",
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            qucuFiiter(() => {
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_映绿.css", "色相旋转_映绿").setAttribute("topicfilter", "按钮:色相旋转_映绿");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_映绿.css", "色相旋转_映绿").setAttribute("topicfilter", "按钮:色相旋转_映绿");
 
-            });
 
         },
         () => {
@@ -808,15 +811,13 @@ function HueRotateButton() {
 
 
     HBuiderXThemeToolbarAddButton(
-        "按钮:色相旋转_旧绿",
+        "按钮:色相旋转_旧绿", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
         "主题色相旋转_旧绿",
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            qucuFiiter(() => {
-
-                loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_旧绿.css", "色相旋转_旧绿").setAttribute("topicfilter", "按钮:色相旋转_旧绿");
-            });
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_旧绿.css", "色相旋转_旧绿").setAttribute("topicfilter", "按钮:色相旋转_旧绿");
         },
         () => {
             document.getElementById("色相旋转_旧绿").remove();
@@ -829,34 +830,6 @@ function HueRotateButton() {
 
 
 }
-
-
-//去除主题所有滤镜还原按钮状态
-function qucuFiiter(fun) {
-    var Topicfilters = document.querySelectorAll("head [topicfilter]");
-    fun();
-
-    var index = (Topicfilters.length) - 1;
-    var id = setInterval(() => {
-        if (index >= 0) {
-            //console.log(Topicfilters[index]);
-            GetItem(Topicfilters[index].getAttribute("topicfilter"), (offNo) => {
-
-                //console.log(Topicfilters[index].getAttribute("topicfilter"), offNo)
-                if (offNo == "1") {
-                    document.getElementById(Topicfilters[index].getAttribute("topicfilter")).click();
-                }
-                index--;
-            });
-        } else {
-            clearInterval(id);
-        }
-    }, 120)
-}
-
-
-
-
 
 
 /**------------------------------------------------------------调整文档,emj 标签，头图位置-------------------------------------------- */
@@ -2456,56 +2429,9 @@ function Removefirstlineindent() {
             }
         }
 
-        /*
-        
-                if ((getItem("段落缩进") != "1") && (getComputedStyle(document.getElementsByTagName("head")[0]).backgroundColor != "rgba(0, 0, 0, 0)")) return;
-                var element = e.target;
-                if ((window.getSelection ? window.getSelection() : document.selection.createRange().text).toString().length != 0) return;
-        
-                e.preventDefault();
-                if (element.getAttribute("contenteditable") == null) return;
-        
-                var item = element.parentElement;
-                if (item != null && item.className != "p") return;
-                item = element.parentElement.previousElementSibling;
-        
-                var isli = false;
-                if (item != null && item.getAttribute("draggable") != null) {
-                    isli = true;
-                };
-        
-                var element = element.parentElement;
-                var data_node_id = element.getAttribute("data-node-id");
-        
-                var custom_indent = element.getAttribute("custom-indent");
-        
-                if (isli) {
-                    if (custom_indent == null || custom_indent == "false") {
-                        element.setAttribute("custom-indent", true);
-                        设置思源块属性(data_node_id, { "custom-indent": "true" });
-        
-                    } else {
-                        element.setAttribute("custom-indent", false);
-                        设置思源块属性(data_node_id, { "custom-indent": "false" });
-        
-                    }
-                } else {
-        
-                    if (custom_indent == null || custom_indent == "true") {
-                        element.setAttribute("custom-indent", false);
-                        设置思源块属性(data_node_id, { "custom-indent": "false" });
-        
-                    } else {
-                        element.setAttribute("custom-indent", true);
-                        设置思源块属性(data_node_id, { "custom-indent": "true" });
-        
-                    }
-                }
-        */
+        GetItem("段落缩进", (offOn) => {
 
-        GetItem("段落缩进", (offNo) => {
-
-            if (offNo != "1" && (getComputedStyle(document.getElementsByTagName("head")[0]).backgroundColor != "rgba(0, 0, 0, 0)")) return;
+            if (offOn != "1" && (getComputedStyle(document.getElementsByTagName("head")[0]).backgroundColor != "rgba(0, 0, 0, 0)")) return;
 
             var element = e.target;
             if ((window.getSelection ? window.getSelection() : document.selection.createRange().text).toString().length != 0) return;
@@ -3681,7 +3607,8 @@ function bulletListAuxiliaryLine() {
 function moreCompact() {
 
     HBuiderXThemeToolbarAddButton(
-        "更加紧凑",
+        "更加紧凑", EnumButtonFunctionType.default,
+        EnumButtonCharacteristicType.default,
         "开启后文档树、大纲树、等其他项更加紧凑",
         "/appearance/themes/HBuilderX-Light/src/更加紧凑2.png",
         "/appearance/themes/HBuilderX-Light/src/更加紧凑1.png",
@@ -3701,7 +3628,8 @@ function moreCompact() {
 function automaticSerialNumber() {
 
     HBuiderXThemeToolbarAddButton(
-        "标题序号",
+        "标题序号", EnumButtonFunctionType.default,
+        EnumButtonCharacteristicType.default,
         "开启后标题自动编号，注意受动态加载影响",
         "/appearance/themes/HBuilderX-Light/src/标题序号2.png",
         "/appearance/themes/HBuilderX-Light/src/标题序号1.png",
@@ -3747,7 +3675,8 @@ function SuspendedWindowNoSection() {
 
             for (let index = 0; index < protyles.length; index++) {
                 const element = protyles[index];
-                if (element.querySelector("[data-doc-type]") == null) return;
+                /***********************************************排除失效引用但还站一个悬浮窗格的情况 */
+                if (element.querySelector("[data-doc-type]" && element.firstElementChild != null) == null) return;
             }
 
             if (da.getAttribute("zhankai") != null) return;//已经处理过的悬浮窗
@@ -4628,16 +4557,18 @@ async function 写入文件2(path, filedata, then = null, obj = null, isDir = fa
 
 
 /**
- * 方便为主题功能添加开关按钮，并选择是否拥有记忆状态（一窗口关闭功能，另一窗口自动同步关闭自动检测）
+ * 方便为主题功能添加开关按钮，并选择是否拥有记忆状态
  * @param {*} ButtonID 按钮ID。
  * @param {*} ButtonTitle 按钮作用提示文字。
+ * @param {*} ButtonFunctionType 按钮功能类型。:EnumButtonFunctionType 枚举
+ * @param {*} ButtonCharacteristicType 按钮特性类型。:EnumButtonCharacteristicType 枚举
  * @param {*} NoButtonSvg 按钮激活Svg图标路径
  * @param {*} OffButtonSvg 按钮未激活Svg图标路径
- * @param {*} NoClickRunFun 按钮开启执行函数
+ * @param {*} OnClickRunFun 按钮开启执行函数
  * @param {*} OffClickRunFun 按钮关闭执行函数
  * @param {*} Memory 是否设置记忆状态 true为是留空或false为不设置记忆状态。
  */
-function HBuiderXThemeToolbarAddButton(ButtonID, ButtonTitle, NoButtonSvgURL, OffButtonSvgURL, NoClickRunFun, OffClickRunFun, Memory = false) {
+function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonCharacteristicType, ButtonTitle, ONButtonSvgURL, OffButtonSvgURL, OnClickRunFun, OffClickRunFun, Memory = false) {
 
 
     //确认主题功能区toolbar是否存在，不存在就创建
@@ -4646,7 +4577,6 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonTitle, NoButtonSvgURL, Of
         var toolbarEdit = document.getElementById("toolbarEdit");
         var windowControls = document.getElementById("windowControls");
         var syWindow = document.body.classList.contains("body--window");
-
 
         if (toolbarEdit == null && windowControls != null) {
             HBuiderXToolbar = document.createElement("div");
@@ -4684,102 +4614,148 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonTitle, NoButtonSvgURL, Of
     addButton.setAttribute("title", ButtonTitle);
     addButton.id = ButtonID;
 
-    var offNo = "0";
+    var offon = "0";
+    var isclick = 0;
+
+    var broadcastData_off = { "Value": "ButtonControl", "ControlButtonIDs": [{ "ButtonID": ButtonID, "ControlFun": "ControlFun_off" }] };
+    var broadcastData_on = { "Value": "ButtonControl", "ControlButtonIDs": [{ "ButtonID": ButtonID, "ControlFun": "ControlFun_on" }] };
 
     if (Memory) {
         GetItem(ButtonID, (v) => {
-            offNo = v;
-            if (offNo == "1") {
-                _no();
-            } else if (offNo == null || offNo == undefined) {
-                offNo = "0";
+            offon = v;
+            if (offon == "1") {
+                _on();
+            } else if (offon == null || offon == undefined) {
+                offon = "0";
             }
         });
 
     }
 
     AddEvent(addButton, "click", () => {
-        if (offNo == "0" || offNo == null || offNo == undefined) {
-            no();
+        window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 1;
+
+        if (offon == "0" || offon == null || offon == undefined) {
+            broadcast(broadcastData_on);
             return;
         }
 
-        if (offNo == "1") {
-            Off();
+        if (offon == "1") {
+            broadcast(broadcastData_off);
             return;
         }
     });
 
 
     AddEvent(addButton, "mouseover", () => {
-        if (offNo == "0" || offNo == null || offNo == undefined) {
+        if (offon == "0" || offon == null || offon == undefined) {
             addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
         }
     });
     AddEvent(addButton, "mouseout", () => {
-        if (offNo == "0" || offNo == null || offNo == undefined) {
+        if (offon == "0" || offon == null || offon == undefined) {
             addButton.style.filter = "none";
         }
     });
 
-    if (Memory) {
-        setInterval(() => {
-            GetItem(ButtonID, (v) => {
-                if (v == offNo) return;
 
-                offNo = v
-                if (v == "1") {
-                    _no();
-                } else {
-                    _Off();
+    function buttonCharacteristicDispose() {
+        switch (ButtonCharacteristicType) {
+            case 2:
+                if (ButtonFunctionType == 2) {
+
+                    var topicfilterButtons = [];
+                    var ButtonControl = window.HBuilderXLight.ButtonControl;
+
+                    for (var t in ButtonControl) {
+                        if (t != ButtonID && ButtonControl[t].ButtonFunctionType == 2 && ButtonControl[t].OffOn == "1") {
+                            //console.log(t, ButtonControl[t].OffOn);
+                            ButtonControl[t].Isclick = 1;
+                            topicfilterButtons.push(ButtonControl[t]);
+                        }
+                    }
+
+                    if (topicfilterButtons.length == 0) {
+                        window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
+                        return;
+                    }
+                    //console.log(ButtonControl[ButtonID].Isclick);
+                    if (window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
+                        var index = (topicfilterButtons.length) - 1;
+                        var id = setInterval(() => {
+                            if (index >= 0) {
+                                //console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
+
+                                const element = topicfilterButtons[index];
+                                element["ControlFun_off"]();
+                            } else {
+                                // console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
+
+                                clearInterval(id);
+                                window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
+
+                            }
+                            index--;
+                        }, 300)
+                    } else {
+                        for (let index = 0; index < topicfilterButtons.length; index++) {
+                            const element = topicfilterButtons[index];
+                            element["ControlFun_off"]();
+                        }
+                    }
                 }
-            })
-        }, 1000)
+
+                break;
+
+            default:
+                break;
+        }
     }
 
-    function _Off() {
+    function _off() {
         addButton.style.backgroundImage = "url(" + OffButtonSvgURL + ")";
         addButton.style.filter = "none";
-        OffClickRunFun(addButton);
-    }
-    function _no() {
+        window.HBuilderXLight.ButtonControl[ButtonID].OffOn = offon = "0";
+        //console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
 
-        addButton.style.backgroundImage = "url(" + NoButtonSvgURL + ")";
-        addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
-        NoClickRunFun(addButton);
+        if (Memory && window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
+            //console.log("bbbbbbbbbbbb")
 
-    }
-
-    function Off() {
-        addButton.style.backgroundImage = "url(" + OffButtonSvgURL + ")";
-        addButton.style.filter = "none";
-        if (Memory) {
             SetItem(ButtonID, "0", () => {
-                offNo = "0";
                 OffClickRunFun(addButton);
+                window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
             });
         } else {
-            offNo = "0";
+            //console.log("aaaaaaaaaaa")
             OffClickRunFun(addButton);
+            window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
+        };
+    }
+    function _on() {
+        addButton.style.backgroundImage = "url(" + ONButtonSvgURL + ")";
+        addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
+        window.HBuilderXLight.ButtonControl[ButtonID].OffOn = offon = "1";
+        //console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
+        if (Memory && window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
+            SetItem(ButtonID, "1", () => {
+                OnClickRunFun(addButton);
+                buttonCharacteristicDispose();
+            });
+        } else {
+            OnClickRunFun(addButton);
+            buttonCharacteristicDispose();
         }
     }
-    function no() {
 
-        addButton.style.backgroundImage = "url(" + NoButtonSvgURL + ")";
-        addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
-
-        if (Memory) {
-            SetItem(ButtonID, "1", () => {
-                offNo = "1";
-                NoClickRunFun(addButton);
-            });
-        } else {
-            offNo = "1";
-            NoClickRunFun(addButton);
-        }
+    window.HBuilderXLight.ButtonControl[ButtonID] = {
+        "ControlFun_off": _off,
+        "ControlFun_on": _on,
+        "OffOn": offon,
+        "Isclick": isclick,
+        "ButtonFunctionType": ButtonFunctionType,
+        "ButtonCharacteristicType": ButtonCharacteristicType
     }
 }
-
 
 function setItem(key, value) {
     window.HBuilderXLight.config[key] = value;
@@ -4792,9 +4768,6 @@ function getItem(key) {
 function removeItem(key) {
     delete window.HBuilderXLight.config[key];
 }
-
-
-
 
 
 function SetItem(key, value, fun = null) {
@@ -5710,6 +5683,15 @@ if (isPhone()) {
 } else {
 
     Funs = [
+        adjustDocumentLabelsWhile,//调整文档头部区域，在emj 标签，头图 各种情况下的布局
+        rundynamicUnderline,//为文档标题创建动态下划线
+        showDocumentCreationDate,//为打开文档标题下面显示文档创建日期
+        displayParentChildDocuments2,//为文档展示父子文档
+        VirtualReferenceEnhancements,//将同名虚拟引用的悬浮窗，本笔记相关内容放到前面
+        autoOpenList,//自动展开悬浮窗内折叠列表（第一次折叠）
+        collapsedListPreview,//折叠列表内容预览查看
+        collapseExpand_Head_List,//鼠标中键标题、列表文本折叠/展开
+        simpleRemarks,//简单备注
         HighlightBecomesHidden,//高亮变隐藏
         FirstLineInDent,//开启段落自动缩进
         Removefirstlineindent,//开启段落首行缩进的情况下，双击段落尾部去除缩进
@@ -5720,15 +5702,6 @@ if (isPhone()) {
         BlackWhiteButton,//主题黑白
         ReduceColorContrast,//主题降低颜色对比度
         HueRotateButton,//主题色相旋转
-        adjustDocumentLabelsWhile,//调整文档头部区域，在emj 标签，头图 各种情况下的布局
-        rundynamicUnderline,//为文档标题创建动态下划线
-        showDocumentCreationDate,//为打开文档标题下面显示文档创建日期
-        displayParentChildDocuments2,//为文档展示父子文档
-        autoOpenList,//自动展开悬浮窗内折叠列表（第一次折叠）
-        collapsedListPreview,//折叠列表内容预览查看
-        collapseExpand_Head_List,//鼠标中键标题、列表文本折叠/展开
-        VirtualReferenceEnhancements,//将同名虚拟引用的悬浮窗，本笔记相关内容放到前面
-        simpleRemarks,//简单备注
         hyperlinkClickColorChange,//点击过的思源超链接超链接会变色
         theFloatingWindowIsClosed,//思源悬浮窗头栏中键关闭
         zoomOutToRestoreTheFloatingWindow,//钉住悬浮窗增强
@@ -5821,13 +5794,13 @@ setTimeout(() => {
             clearInterval(ID);
 
             //作者土嗨自用
-            //loadStyle("/appearance/themes/HBuilderX-Light/personal/personal.css", "personal");
-            //loadScript("/appearance/themes/HBuilderX-Light/personal/personal.js");
+            loadStyle("/appearance/themes/HBuilderX-Light/personal/personal.css", "personal");
+            loadScript("/appearance/themes/HBuilderX-Light/personal/personal.js");
 
         }
         index--;
-    }, 200)
-}, 2000)
+    }, 100)
+}, 1000)
 
 
 
