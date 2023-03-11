@@ -298,21 +298,19 @@ function rightHoverBlock_open() {
 
 function HighlightBecomesHidden() {
 
-    loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/highlight-Mark.css", "markCss");
+    //loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/highlight-Mark.css", "markCss");
     HBuiderXThemeToolbarAddButton(
         "高亮变隐藏",
         EnumButtonFunctionType.default,
         EnumButtonCharacteristicType.default,
-        "开启后CTRL+E 高亮文本变隐藏文本，鼠标移上去才会显示。",
+        "开启后高亮文本变隐藏文本，鼠标移上去才会显示。",
         "/appearance/themes/HBuilderX-Light/src/B2.png",
         "/appearance/themes/HBuilderX-Light/src/B1.png",
         () => {
-            var obj = document.getElementById("markCss");
-            obj.setAttribute("href", "/appearance/themes/HBuilderX-Light/customizeStyle/conceal-Mark.css");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/conceal-Mark.css", "高亮隐藏");
         },
         () => {
-            var obj = document.getElementById("markCss");
-            obj.setAttribute("href", "/appearance/themes/HBuilderX-Light/customizeStyle/highlight-Mark.css");
+            document.getElementById("高亮隐藏").remove();
         }
     );
 
@@ -620,7 +618,7 @@ function InverseButton() {
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
 
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_深黑.css", "颜色反转_深黑").setAttribute("topicfilter", "按钮:颜色反转_深黑");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_深黑.css", "颜色反转_深黑");
 
         },
         () => {
@@ -636,7 +634,7 @@ function InverseButton() {
         "/appearance/themes/HBuilderX-Light/src/反色2.png",
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_太空.css", "颜色反转_太空").setAttribute("topicfilter", "按钮:颜色反转_太空");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_太空.css", "颜色反转_太空");
 
         },
         () => {
@@ -652,7 +650,7 @@ function InverseButton() {
         "/appearance/themes/HBuilderX-Light/src/反色2.png",
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_黑绿.css", "颜色反转_黑绿").setAttribute("topicfilter", "按钮:颜色反转_黑绿");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_黑绿.css", "颜色反转_黑绿");
         },
         () => {
             document.getElementById("颜色反转_黑绿").remove();
@@ -667,7 +665,7 @@ function InverseButton() {
         "/appearance/themes/HBuilderX-Light/src/反色2.png",
         "/appearance/themes/HBuilderX-Light/src/反色1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_锈黑.css", "颜色反转_锈黑").setAttribute("topicfilter", "按钮:颜色反转_锈黑");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_锈黑.css", "颜色反转_锈黑");
         },
         () => {
             document.getElementById("颜色反转_锈黑").remove();
@@ -686,7 +684,7 @@ function BlackWhiteButton() {
         "/appearance/themes/HBuilderX-Light/src/黑白2.png",
         "/appearance/themes/HBuilderX-Light/src/黑白1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/BlackWhite.css", "黑白").setAttribute("topicfilter", "按钮:黑白");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/BlackWhite.css", "黑白");
 
         },
         () => {
@@ -702,13 +700,13 @@ function BlackWhiteButton() {
 
 function ReduceColorContrast() {
     HBuiderXThemeToolbarAddButton(
-        "降低颜色对比度", EnumButtonFunctionType.topicfilter,
-        EnumButtonCharacteristicType.multiple,
-        "主题对比度降低滤镜",
+        "降低颜色对比度", EnumButtonFunctionType.default,
+        EnumButtonCharacteristicType.default,
+        "主题对比度降低滤镜,可以和其他滤镜效果叠加",
         "/appearance/themes/HBuilderX-Light/src/降低颜色对比度2.png",
         "/appearance/themes/HBuilderX-Light/src/降低颜色对比度1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/ReduceColor.css", "ReduceColor").setAttribute("topicfilter", "降低颜色对比度");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/ReduceColor.css", "ReduceColor");
 
         },
         () => {
@@ -730,7 +728,7 @@ function HueRotateButton() {
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青紫.css", "色相旋转_青紫").setAttribute("topicfilter", "按钮:色相旋转_青紫");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青紫.css", "色相旋转_青紫");
 
         },
         () => {
@@ -746,7 +744,7 @@ function HueRotateButton() {
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青蓝.css", "色相旋转_青蓝").setAttribute("topicfilter", "按钮:色相旋转_青蓝");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_青蓝.css", "色相旋转_青蓝");
 
         },
         () => {
@@ -763,7 +761,7 @@ function HueRotateButton() {
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_褐紫.css", "色相旋转_褐紫").setAttribute("topicfilter", "按钮:色相旋转_褐紫");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_褐紫.css", "色相旋转_褐紫");
 
         },
         () => {
@@ -780,7 +778,7 @@ function HueRotateButton() {
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_红紫.css", "色相旋转_红紫").setAttribute("topicfilter", "按钮:色相旋转_红紫");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_红紫.css", "色相旋转_红紫");
 
 
         },
@@ -798,7 +796,7 @@ function HueRotateButton() {
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_映绿.css", "色相旋转_映绿").setAttribute("topicfilter", "按钮:色相旋转_映绿");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_映绿.css", "色相旋转_映绿");
 
 
         },
@@ -817,7 +815,7 @@ function HueRotateButton() {
         "/appearance/themes/HBuilderX-Light/src/色相旋转2.png",
         "/appearance/themes/HBuilderX-Light/src/色相旋转1.png",
         () => {
-            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_旧绿.css", "色相旋转_旧绿").setAttribute("topicfilter", "按钮:色相旋转_旧绿");
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/色相旋转_旧绿.css", "色相旋转_旧绿");
         },
         () => {
             document.getElementById("色相旋转_旧绿").remove();
@@ -4610,6 +4608,7 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonChara
     addButton.style.backgroundRepeat = "no-repeat";
     addButton.style.backgroundPosition = "left top";
     addButton.style.backgroundSize = "100%";
+    addButton.style.cursor = "pointer";
 
     addButton.setAttribute("title", ButtonTitle);
     addButton.id = ButtonID;
@@ -5647,9 +5646,9 @@ if (isPhone()) {
         FirstLineInDent,//开启段落自动缩进
         Removefirstlineindent,//开启段落首行缩进的情况下，双击段落尾部去除缩进
         listMarked,//列表块醒目增强。
-        InverseButton,//主题反色 
         BlackWhiteButton,//主题黑白
         ReduceColorContrast,//主题降低颜色对比度
+        InverseButton,//主题反色 
         HueRotateButton,//主题色相旋转
         hyperlinkClickColorChange,//点击过的思源超链接超链接会变色
         dblclickToReleaseReadOnly,//双击解除只读模式
@@ -5698,9 +5697,9 @@ if (isPhone()) {
         listMarked,//列表块醒目增强。
         moreCompact,//主题文档树，大纲列表等其他列表更加紧凑
         automaticSerialNumber,//标题序号
-        InverseButton,//主题反色 
         BlackWhiteButton,//主题黑白
         ReduceColorContrast,//主题降低颜色对比度
+        InverseButton,//主题反色 
         HueRotateButton,//主题色相旋转
         hyperlinkClickColorChange,//点击过的思源超链接超链接会变色
         theFloatingWindowIsClosed,//思源悬浮窗头栏中键关闭
