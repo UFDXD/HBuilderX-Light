@@ -7,6 +7,9 @@
 window.HBuilderXLight = {};
 window.HBuilderXLight.ButtonControl = {};
 
+var ConfigPath = "/data/widgets/HBuilderX-Light.config.json";
+if (isBrowser() || isPhone()) ConfigPath = "/data/widgets/HBuilderX-Light.Browser.config.json";
+
 
 //按钮功能类型
 let ButtonFunctionType;
@@ -27,7 +30,7 @@ var EnumButtonCharacteristicType = Object.freeze(ButtonCharacteristicType);
 
 
 //渲染进程和主进程通信
-if (isPc()) {
+if (isPc() || isPcWindow()) {
     const { ipcRenderer } = require('electron');
     ipcRenderer.on("siyuan-send_windows", (event, data) => {
         //console.log(data);
@@ -44,10 +47,11 @@ if (isPc()) {
                 break;
         }
     });
+    window.HBuilderXLight.broadcast = (data) => {
+        ipcRenderer.send("siyuan-send_windows", data);
+    }
 }
-function broadcast(data) {
-    ipcRenderer.send("siyuan-send_windows", data);
-}
+
 
 
 
@@ -4653,16 +4657,27 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonChara
     }
 
     AddEvent(addButton, "click", () => {
-        window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 1;
+        if (isBrowser() || isPhone()) {
+            if (offon == "0" || offon == null || offon == undefined) {
+                _on();
+                return;
+            }
 
-        if (offon == "0" || offon == null || offon == undefined) {
-            broadcast(broadcastData_on);
-            return;
-        }
+            if (offon == "1") {
+                _off();
+                return;
+            }
+        } else {
+            window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 1;
+            if (offon == "0" || offon == null || offon == undefined) {
+                window.HBuilderXLight.broadcast(broadcastData_on);
+                return;
+            }
 
-        if (offon == "1") {
-            broadcast(broadcastData_off);
-            return;
+            if (offon == "1") {
+                window.HBuilderXLight.broadcast(broadcastData_off);
+                return;
+            }
         }
     });
 
@@ -4680,55 +4695,76 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonChara
 
 
     function buttonCharacteristicDispose() {
-        switch (ButtonCharacteristicType) {
-            case 2:
-                if (ButtonFunctionType == 2) {
+        if (isBrowser() || isPhone()) {
 
-                    var topicfilterButtons = [];
-                    var ButtonControl = window.HBuilderXLight.ButtonControl;
+            if (ButtonFunctionType == 2) {
 
-                    for (var t in ButtonControl) {
-                        if (t != ButtonID && ButtonControl[t].ButtonFunctionType == 2 && ButtonControl[t].OffOn == "1") {
-                            //console.log(t, ButtonControl[t].OffOn);
-                            ButtonControl[t].Isclick = 1;
-                            topicfilterButtons.push(ButtonControl[t]);
-                        }
-                    }
+                var topicfilterButtons = [];
+                var ButtonControl = window.HBuilderXLight.ButtonControl;
 
-                    if (topicfilterButtons.length == 0) {
-                        window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
-                        return;
-                    }
-                    //console.log(ButtonControl[ButtonID].Isclick);
-                    if (window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
-                        var index = (topicfilterButtons.length) - 1;
-                        var id = setInterval(() => {
-                            if (index >= 0) {
-                                //console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
-
-                                const element = topicfilterButtons[index];
-                                element["ControlFun_off"]();
-                            } else {
-                                // console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
-
-                                clearInterval(id);
-                                window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
-
-                            }
-                            index--;
-                        }, 300)
-                    } else {
-                        for (let index = 0; index < topicfilterButtons.length; index++) {
-                            const element = topicfilterButtons[index];
-                            element["ControlFun_off"]();
-                        }
+                for (var t in ButtonControl) {
+                    if (t != ButtonID && ButtonControl[t].ButtonFunctionType == 2 && ButtonControl[t].OffOn == "1") {
+                        topicfilterButtons.push(ButtonControl[t]);
                     }
                 }
 
-                break;
+                if (topicfilterButtons.length == 0) {
+                    return;
+                }
+                var index = (topicfilterButtons.length) - 1;
+                var id = setInterval(() => {
+                    if (index >= 0) {
+                        const element = topicfilterButtons[index];
+                        element["ControlFun_off"]();
+                    } else {
+                        clearInterval(id);
+                    }
+                    index--;
+                }, 300)
+            }
+        } else {
+            switch (ButtonCharacteristicType) {
+                case 2:
+                    if (ButtonFunctionType == 2) {
 
-            default:
-                break;
+                        var topicfilterButtons = [];
+                        var ButtonControl = window.HBuilderXLight.ButtonControl;
+
+                        for (var t in ButtonControl) {
+                            if (t != ButtonID && ButtonControl[t].ButtonFunctionType == 2 && ButtonControl[t].OffOn == "1") {
+                                ButtonControl[t].Isclick = 1;
+                                topicfilterButtons.push(ButtonControl[t]);
+                            }
+                        }
+
+                        if (topicfilterButtons.length == 0) {
+                            window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
+                            return;
+                        }
+                        if (window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
+                            var index = (topicfilterButtons.length) - 1;
+                            var id = setInterval(() => {
+                                if (index >= 0) {
+                                    const element = topicfilterButtons[index];
+                                    element["ControlFun_off"]();
+                                } else {
+                                    clearInterval(id);
+                                    window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
+                                }
+                                index--;
+                            }, 300)
+                        } else {
+                            for (let index = 0; index < topicfilterButtons.length; index++) {
+                                const element = topicfilterButtons[index];
+                                element["ControlFun_off"]();
+                            }
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
@@ -4736,34 +4772,44 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonChara
         addButton.style.backgroundImage = "url(" + OffButtonSvgURL + ")";
         addButton.style.filter = "none";
         window.HBuilderXLight.ButtonControl[ButtonID].OffOn = offon = "0";
-        //console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
 
-        if (Memory && window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
-            //console.log("bbbbbbbbbbbb")
-
+        if (isBrowser() || isPhone()) {
             SetItem(ButtonID, "0", () => {
                 OffClickRunFun(addButton);
-                window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
             });
         } else {
-            //console.log("aaaaaaaaaaa")
-            OffClickRunFun(addButton);
-            window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
-        };
+            if (Memory && window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
+                SetItem(ButtonID, "0", () => {
+                    OffClickRunFun(addButton);
+                    window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
+                });
+            } else {
+                OffClickRunFun(addButton);
+                window.HBuilderXLight.ButtonControl[ButtonID].Isclick = isclick = 0;
+            };
+        }
     }
     function _on() {
         addButton.style.backgroundImage = "url(" + ONButtonSvgURL + ")";
         addButton.style.filter = "drop-shadow(rgb(0, 0, 0) 0px 0)";
         window.HBuilderXLight.ButtonControl[ButtonID].OffOn = offon = "1";
-        //console.log(window.HBuilderXLight.ButtonControl[ButtonID].Isclick);
-        if (Memory && window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
+
+        if (isBrowser() || isPhone()) {
             SetItem(ButtonID, "1", () => {
                 OnClickRunFun(addButton);
                 buttonCharacteristicDispose();
             });
         } else {
-            OnClickRunFun(addButton);
-            buttonCharacteristicDispose();
+
+            if (Memory && window.HBuilderXLight.ButtonControl[ButtonID].Isclick == 1) {
+                SetItem(ButtonID, "1", () => {
+                    OnClickRunFun(addButton);
+                    buttonCharacteristicDispose();
+                });
+            } else {
+                OnClickRunFun(addButton);
+                buttonCharacteristicDispose();
+            }
         }
     }
 
@@ -4791,19 +4837,20 @@ function removeItem(key) {
 
 
 function SetItem(key, value, fun = null) {
-    获取文件("/data/widgets/HBuilderX-Light.config.json", (config) => {
+    获取文件(ConfigPath, (config) => {
         if (config) {//不存在配置文件就要创建
             config[key] = value;
             //console.log(config);
-            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify(config, undefined, 4), fun);
+            写入文件2(ConfigPath, JSON.stringify(config, undefined, 4), fun);
         } else {
-            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify({ "HBuilderXLight": 1, key: value }, undefined, 4), fun);
+            写入文件2(ConfigPath, JSON.stringify({ "HBuilderXLight": 1, key: value }, undefined, 4), fun);
         }
     });
 }
 
 function GetItem(key, then = null) {
-    获取文件("/data/widgets/HBuilderX-Light.config.json", (config) => {
+
+    获取文件(ConfigPath, (config) => {
         if (config) {//不存在配置文件就要创建
             // console.log(config[key]);
             try {
@@ -4813,19 +4860,19 @@ function GetItem(key, then = null) {
                 if (then) then(null);
             }
         } else {
-            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), then(null));
+            写入文件2(ConfigPath, JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), then(null));
         }
     });
 }
 
 function RemoveItem(key, fun = null) {
-    获取文件("/data/widgets/HBuilderX-Light.config.json", (config) => {
+    获取文件(ConfigPath, (config) => {
         if (config) {//不存在配置文件就要创建
             delete config[key];
             //console.log(config);
-            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify(config, undefined, 4), fun);
+            写入文件2(ConfigPath, JSON.stringify(config, undefined, 4), fun);
         } else {
-            写入文件2("/data/widgets/HBuilderX-Light.config.json", JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), fun);
+            写入文件2(ConfigPath, JSON.stringify({ "HBuilderXLight": 1 }, undefined, 4), fun);
         }
     });
 }
