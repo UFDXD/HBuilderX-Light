@@ -27,22 +27,24 @@ var EnumButtonCharacteristicType = Object.freeze(ButtonCharacteristicType);
 
 
 //渲染进程和主进程通信
-const { ipcRenderer } = require('electron');
-ipcRenderer.on("siyuan-send_windows", (event, data) => {
-    //console.log(data);
-    switch (data.Value) {
-        case "ButtonControl"://按钮状态控制
-            var ControlButtonIDs = data.ControlButtonIDs;
-            for (let index = 0; index < ControlButtonIDs.length; index++) {
-                const ControlButtonID = ControlButtonIDs[index];
-                window.HBuilderXLight.ButtonControl[ControlButtonID.ButtonID][ControlButtonID.ControlFun]();
-            }
-            break;
+if (isPc()) {
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.on("siyuan-send_windows", (event, data) => {
+        //console.log(data);
+        switch (data.Value) {
+            case "ButtonControl"://按钮状态控制
+                var ControlButtonIDs = data.ControlButtonIDs;
+                for (let index = 0; index < ControlButtonIDs.length; index++) {
+                    const ControlButtonID = ControlButtonIDs[index];
+                    window.HBuilderXLight.ButtonControl[ControlButtonID.ButtonID][ControlButtonID.ControlFun]();
+                }
+                break;
 
-        default:
-            break;
-    }
-});
+            default:
+                break;
+        }
+    });
+}
 function broadcast(data) {
     ipcRenderer.send("siyuan-send_windows", data);
 }
@@ -4590,30 +4592,31 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonChara
     //确认主题功能区toolbar是否存在，不存在就创建
     var HBuiderXToolbar = document.getElementById("HBuiderXToolbar");
     if (HBuiderXToolbar == null) {
-        var toolbarEdit = document.getElementById("toolbarEdit");
-        var windowControls = document.getElementById("windowControls");
-        var syWindow = document.body.classList.contains("body--window");
-
-        if (toolbarEdit == null && windowControls != null) {
+        if (isPc()) {
             HBuiderXToolbar = document.createElement("div");
             HBuiderXToolbar.id = "HBuiderXToolbar";
             HBuiderXToolbar.style.marginRight = "3px";
             HBuiderXToolbar.style.marginTop = "1px";
-            windowControls.parentElement.insertBefore(HBuiderXToolbar, windowControls);
-        } else if (toolbarEdit != null) {
-            HBuiderXToolbar = insertCreateBefore(toolbarEdit, "div", "HBuiderXToolbar");
-            HBuiderXToolbar.style.position = "relative";
-            HBuiderXToolbar.style.height = "25px";
-            HBuiderXToolbar.style.overflowY = "scroll";
-            HBuiderXToolbar.style.paddingTop = "7px";
-            HBuiderXToolbar.style.marginRight = "9px";
-        } else if (syWindow) {
+            document.getElementById("windowControls").parentElement.insertBefore(HBuiderXToolbar, document.getElementById("windowControls"));
+        } else if (isBrowser()) {
+            HBuiderXToolbar = insertCreateAfter(document.getElementById("barMode"), "div", "HBuiderXToolbar");
+            HBuiderXToolbar.style.marginRight = "3px";
+            HBuiderXToolbar.style.marginTop = "1px";
+        }
+        else if (isPcWindow()) {
             HBuiderXToolbar = insertCreateBefore(document.getElementById("minWindow"), "div", "HBuiderXToolbar");
             HBuiderXToolbar.style.position = "absolute";
             HBuiderXToolbar.style.height = "25px";
             HBuiderXToolbar.style.paddingTop = "2px";
             HBuiderXToolbar.style.overflowY = "scroll";
             HBuiderXToolbar.style.right = "77px";
+        } else if (isPhone()) {
+            HBuiderXToolbar = insertCreateBefore(document.getElementById("toolbarEdit"), "div", "HBuiderXToolbar");
+            HBuiderXToolbar.style.position = "relative";
+            HBuiderXToolbar.style.height = "25px";
+            HBuiderXToolbar.style.overflowY = "scroll";
+            HBuiderXToolbar.style.paddingTop = "7px";
+            HBuiderXToolbar.style.marginRight = "9px";
         }
     }
 
@@ -5092,7 +5095,7 @@ function getHBuiderXToolbar() { return document.getElementById("HBuiderXToolbar"
 
 /**简单判断目前思源是否是手机模式 */
 function isPhone() {
-    return document.getElementById("toolbarEdit") != null;
+    return document.getElementById("toolbarEdit") != null && document.getElementById("toolbar") == null;
 }
 /**简单判断目前思源是否是pc窗口模式 */
 function isPcWindow() {
@@ -5100,9 +5103,12 @@ function isPcWindow() {
 }
 /**简单判断目前思源是pc模式 */
 function isPc() {
-    return document.getElementById("windowControls") != null;
+    return document.getElementById("windowControls") != null && document.getElementById("toolbar") != null && !document.getElementById("toolbar").classList.contains("toolbar--browser");
 }
-
+/**简单判断目前思源是否是浏览器模式 */
+function isBrowser() {
+    return document.getElementById("toolbar") != null && document.getElementById("toolbar").classList.contains("toolbar--browser");
+}
 
 /**
  * 加载样式文件
