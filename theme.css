@@ -881,9 +881,9 @@ span[aria-label="新建文档"]:hover {
 
 /*-----------------------------资源面板*/
 /*资源列表项*/
-#assetsList>li:hover {
+/*#assetsList>li:hover {
     transform: scale(1.005);
-}
+}*/
 
 /*-----------------------------思源标签索引窗口*/
 
@@ -1429,11 +1429,11 @@ svg[data-type="remove-tag"] {
 
 /*文档标题输入框*/
 /*.protyle-title__input {}*/
-span[aria-label="点击 打开菜单<br>⇧Click 修改属性"] {
+.protyle-title__icon {
     top: 45px;
 }
 
-span[aria-label="点击 打开菜单<br>⇧Click 修改属性"]>svg {
+.protyle-title__icon>svg {
     margin-top: -18px;
     margin-left: -2px;
     width: 25px;
@@ -1443,7 +1443,7 @@ span[aria-label="点击 打开菜单<br>⇧Click 修改属性"]>svg {
 
 /*-----------------------------文档正文区域*/
 /*正文宽度*/
-[data-fullwidth="true"]>[data-doc-type="NodeDocument"] {
+[data-fullwidth="true"]>[data-doc-type] {
     padding: 16px 26px 191.5px !important;
 }
 
@@ -1549,10 +1549,7 @@ span[aria-label="点击 打开菜单<br>⇧Click 修改属性"]>svg {
     bottom: -16px !important;
 }
 
-/*反链悬浮窗引用高亮*/
-.def--mark {
-    border: 1px dashed red !important;
-}
+
 
 
 /* ——————————————————————鼠标光标选中文本样式———————————————————————— */
@@ -1987,14 +1984,14 @@ div [data-type="img"] {
 
 
 /*---------------闪卡标记*/
-.card__block--hide [data-type~="mark"] {
+.card__block--hide [data-node-id] [data-type~="mark"] {
     color: transparent !important;
     background-color: transparent !important;
     border-bottom: 1px solid black !important;
 
 }
 
-.card__block--hide [data-type~="mark"]:hover {
+.card__block--hide [data-node-id] [data-type~="mark"]:hover {
     background-color: rgb(255, 251, 206) !important;
     color: black !important;
 }
@@ -3711,7 +3708,7 @@ div *[custom-f="dt"]>[data-type="NodeListItem"]::after {
 #searchList [data-type="search-item"]>.b3-list-item__text,
 #globalSearchList [data-type="search-item"]>.b3-list-item__text {
     margin-left: 20px;
-    max-height: 89px !important;
+    max-height: 73px !important;
     padding-top: 5px !important;
     padding-bottom: 2px !important;
     padding-right: 5px !important;
