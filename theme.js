@@ -3662,7 +3662,6 @@ function SuspendedWindowNoSection() {
 
             if (da.querySelector(".fn__loading")) return; //有内容没加载
 
-
             var protyles;
             try {
                 protyles = da.children[1].children;
@@ -3671,199 +3670,218 @@ function SuspendedWindowNoSection() {
                 return;
             }
 
+            var nul = 0;
+
             for (let index = 0; index < protyles.length; index++) {
                 const element = protyles[index];
                 /***********************************************排除失效引用但还站一个悬浮窗格的情况 */
-                if (element.querySelector("[data-doc-type]" && element.firstElementChild != null) == null) return;
+
+                var liaoj1 = element.querySelector("[data-doc-type]");
+                var liaoj3 = element.firstElementChild;
+
+                if (liaoj1 == null && liaoj3 != null) return;
+                if (liaoj1 == liaoj3) {
+                    nul++;
+                }
             }
+            if (nul == protyles.length) return;
+
 
             if (da.getAttribute("zhankai") != null) return;//已经处理过的悬浮窗
             da.setAttribute("zhankai", true);//标记已经处理，防止下次循环多次处理
 
-            Array.from(da.children[1].children).forEach((g) => {
+            setTimeout(() => {
+                Array.from(da.children[1].children).forEach((g) => {
 
-                var v = g.querySelector("[data-doc-type]");//查询基力悬浮窗内容类型元素
-                if (v.children.length != 1 && v.getAttribute("data-doc-type") != "NodeHeading") return;//剔除data-doc-type存在多个子元素的悬浮窗
-
-
-                var 悬浮窗类型 = "引用悬浮窗";
-                var 反链引用ID;
-                var defmark = v.querySelector(".def--mark");
-                if (defmark) {
-                    悬浮窗类型 = "反链悬浮窗";//判断悬浮窗类型
-                    反链引用ID = defmark.getAttribute("data-id");
-                }
+                    var v = g.querySelector("[data-doc-type]");//查询基力悬浮窗内容类型元素
+                    if (v == null) return;//排除失效引用但还站一个悬浮窗格的情况
+                    if (v.children.length != 1 && v.getAttribute("data-doc-type") != "NodeHeading") return;//剔除data-doc-type存在多个子元素的悬浮窗
 
 
-                //console.log(悬浮窗类型, 反链引用ID);
-                var 悬浮窗出现的单独块是什么块;
-                //悬浮窗出现的单独块是什么块？
-                switch (v.firstElementChild.className) {
-                    case "render-node"://嵌入块
-                        悬浮窗出现的单独块是什么块 = "嵌入块"; break;
-                    case "p"://段落块
-                        悬浮窗出现的单独块是什么块 = "段落块"; break;
-                    case "li"://单独列表项块//列表只要有三个子元素就是单独列表项块
-                        if (v.firstElementChild.children.length == 3) 悬浮窗出现的单独块是什么块 = "列表块";
-                        else 悬浮窗出现的单独块是什么块 = ""; break;
-                    case "sb"://单独超级快
-                        悬浮窗出现的单独块是什么块 = "超级块"; break;
-                    default:
-                        悬浮窗出现的单独块是什么块 = ""; break;
-                }
-
-
-                var 引用ID;
-                var 拟点击面包屑模元素;
-
-                var 时间累加器 = 0;
-                var iD = setInterval(() => {
-                    时间累加器 += 100;
-                    if (时间累加器 > 3000) clearInterval(iD);//超时
-
-
-                    try {
-
-                        if (悬浮窗出现的单独块是什么块 != "超级块") {
-                            引用ID = v.parentElement.previousElementSibling.firstElementChild.lastElementChild.getAttribute("data-node-id");//记录原块id
-                        } else {//思源超级块不显示面包屑上因此需要单独处理
-                            引用ID = v.firstElementChild.getAttribute("data-node-id");
-                        }
-                        拟点击面包屑模元素 = v.parentElement.previousElementSibling.firstElementChild.lastElementChild.previousElementSibling.previousElementSibling.children[1];
-                        clearInterval(iD);//上段代码没报错就证明元素获取成功了,关闭定时器
-
-                        if (悬浮窗出现的单独块是什么块 != "") {
-                            悬浮窗面包屑跳转();
-                        } else {
-                            不需要模拟点击的反链展示();
-                        }
-
-                    } catch (error) {
-                        console.log("面包屑模拟点击元素获取错误", v.parentElement.previousElementSibling.firstElementChild.lastElementChild);
+                    var 悬浮窗类型 = "引用悬浮窗";
+                    var 反链引用ID;
+                    var defmark = v.querySelector(".def--mark");
+                    if (defmark) {
+                        悬浮窗类型 = "反链悬浮窗";//判断悬浮窗类型
+                        反链引用ID = defmark.getAttribute("data-id");
                     }
-                }, 100);
 
 
-                function 悬浮窗面包屑跳转() {
-                    拟点击面包屑模元素.click();
-
-                    const observer = new MutationObserver(() => {//创建监视
-                        observer.disconnect();//关闭监视
-                        setTimeout(() => {
-                            switch (悬浮窗类型) {
-                                case "反链悬浮窗":
-
-                                    switch (悬浮窗出现的单独块是什么块) {
-                                        case "嵌入块":
-                                            var ts = v.parentElement.querySelectorAll(`[data-content="select * from blocks where id='${反链引用ID}'"]`);
-                                            for (let index = 0; index < ts.length; index++) {
-                                                const element = ts[index];
-                                                element.classList.add("blockhighlighting")///块高亮
-                                                if (index == 0) 高亮内容跳转到悬浮窗中间(element, v);
-                                            }
-                                            break;
-                                        default:
-                                            var ts = v.parentElement.querySelectorAll(`[data-id='${反链引用ID}'][data-subtype]`);
-                                            for (let index = 0; index < ts.length; index++) {
-                                                const element = ts[index];
-                                                element.classList.add("blockRefhighlighting")//引用高亮
-                                                isFatherFather(element, (f) => {
-                                                    if (f.getAttribute("contenteditable") != null) {
-                                                        f.classList.add("blockhighlighting")//块高亮
-                                                        if (index == 0) 高亮内容跳转到悬浮窗中间(element, v);
-                                                        return true;
-                                                    }
-                                                    if (f.tagName == "TD" || f.tagName == "TR") {
-                                                        f.classList.add("blockhighlighting")//块高亮
-                                                        if (index == 0) 高亮内容跳转到悬浮窗中间(element, v);
-                                                        return true;
-                                                    }
-                                                    return false;
-                                                }, 4)
-                                            }
-                                            break;
-                                    }
-                                    break;
-                                case "引用悬浮窗":
-                                    switch (悬浮窗出现的单独块是什么块) {
-                                        case "嵌入块":
-                                            var ts = v.parentElement.querySelector(`[data-node-id='${引用ID}'][data-type="NodeBlockQueryEmbed"]`);
-                                            ts.classList.add("blockhighlighting")//引用高亮
-                                            高亮内容跳转到悬浮窗中间(ts, v);
-                                            break;
-                                        default:
-                                            var ts = v.parentElement.querySelector(`[data-node-id='${引用ID}']`);
-                                            ts.classList.add("blockhighlighting")//引用高亮
-                                            高亮内容跳转到悬浮窗中间(ts, v);
-                                            break;
-                                    }
-
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }, 500)
-
-                    });
-                    observer.observe(v, { attributes: false, childList: true, subtree: false });
-                }
-
-                function 不需要模拟点击的反链展示() {
-                    switch (悬浮窗类型) {
-                        case "反链悬浮窗":
-                            var protyle_content = v.parentElement;
-                            var ts = protyle_content.querySelectorAll(`[data-id='${反链引用ID}']`);
-                            for (let index = 0; index < ts.length; index++) {
-                                const element = ts[index];
-                                element.classList.add("blockRefhighlighting")//引用高亮
-                                isFatherFather(element, (f) => {
-                                    if (f.getAttribute("contenteditable") != null) {
-                                        f.classList.add("blockhighlighting")//块高亮
-                                        if (index == 0) 高亮内容跳转到悬浮窗中间(element, v)
-                                        return true;
-                                    }
-                                    if (f.tagName == "TD" || f.tagName == "TR") {
-                                        f.classList.add("blockhighlighting")//块高亮
-                                        if (index == 0) 高亮内容跳转到悬浮窗中间(element, v)
-                                        return true;
-                                    }
-                                    return false;
-                                }, 4)
-                            }
-                            break;
-                        case "引用悬浮窗":
-                            var protyle_content = v.parentElement;
-                            var ts = protyle_content.querySelector(`[data-node-id='${引用ID}']`);
-                            //ts.scrollIntoView(true);
-                            // ts.classList.add("blockRefhighlighting")//引用高亮
-
-                            break;
+                    //console.log(悬浮窗类型, 反链引用ID);
+                    var 悬浮窗出现的单独块是什么块;
+                    //悬浮窗出现的单独块是什么块？
+                    switch (v.firstElementChild.className) {
+                        case "render-node"://嵌入块
+                            悬浮窗出现的单独块是什么块 = "嵌入块"; break;
+                        case "p"://段落块
+                            悬浮窗出现的单独块是什么块 = "段落块"; break;
+                        case "li"://单独列表项块//列表只要有三个子元素就是单独列表项块
+                            if (v.firstElementChild.children.length == 3) 悬浮窗出现的单独块是什么块 = "列表块";
+                            else 悬浮窗出现的单独块是什么块 = ""; break;
+                        case "sb"://单独超级快
+                            悬浮窗出现的单独块是什么块 = "超级块"; break;
                         default:
-                            break;
+                            悬浮窗出现的单独块是什么块 = ""; break;
                     }
-                }
 
-                function 高亮内容跳转到悬浮窗中间(element, v) {
-                    setTimeout(() => {
-                        element.scrollIntoView(false);
-                        setTimeout(() => {
-                            var tim = v.parentElement;
-                            //console.log(tim, tim.scrollTop);
-                            if (tim.scrollTop != 0) {
-                                tim.scrollBy(0, tim.offsetHeight / 2);
+
+                    var 引用ID;
+                    var 拟点击面包屑模元素;
+
+                    var 时间累加器 = 0;
+                    var iD = setInterval(() => {
+                        时间累加器 += 100;
+                        if (时间累加器 > 3000) clearInterval(iD);//超时
+
+
+                        try {
+
+                            if (悬浮窗出现的单独块是什么块 != "超级块") {
+                                引用ID = v.parentElement.previousElementSibling.firstElementChild.lastElementChild.getAttribute("data-node-id");//记录原块id
+                            } else {//思源超级块不显示面包屑上因此需要单独处理
+                                引用ID = v.firstElementChild.getAttribute("data-node-id");
                             }
-                        }, 100);
-                        isFatherFather(v, (g) => {
-                            if (g.getAttribute("class") == "block__content") {
-                                g.scrollTo(0, 0);
-                                return true;
+                            拟点击面包屑模元素 = v.parentElement.previousElementSibling.firstElementChild.lastElementChild.previousElementSibling.previousElementSibling.children[1];
+                            clearInterval(iD);//上段代码没报错就证明元素获取成功了,关闭定时器
+
+                            if (悬浮窗出现的单独块是什么块 != "") {
+                                悬浮窗面包屑跳转();
+                            } else {
+                                不需要模拟点击的反链展示();
                             }
-                            return false;
-                        }, 5)
+
+                        } catch (error) {
+                            console.log("面包屑模拟点击元素获取错误", v.parentElement.previousElementSibling.firstElementChild.lastElementChild);
+                        }
                     }, 100);
-                }
 
-            });
+
+                    function 悬浮窗面包屑跳转() {
+                        拟点击面包屑模元素.click();
+
+                        const observer = new MutationObserver(() => {//创建监视
+                            observer.disconnect();//关闭监视
+                            setTimeout(() => {
+                                switch (悬浮窗类型) {
+                                    case "反链悬浮窗":
+
+                                        switch (悬浮窗出现的单独块是什么块) {
+                                            case "嵌入块":
+                                                var ts = v.parentElement.querySelectorAll(`[data-content="select * from blocks where id='${反链引用ID}'"]`);
+                                                for (let index = 0; index < ts.length; index++) {
+                                                    const element = ts[index];
+                                                    element.classList.add("blockhighlighting")///块高亮
+                                                    if (index == 0) 高亮内容跳转到悬浮窗中间(element, v);
+                                                }
+                                                break;
+                                            default:
+                                                var ts = v.parentElement.querySelectorAll(`[data-id='${反链引用ID}'][data-subtype]`);
+                                                for (let index = 0; index < ts.length; index++) {
+                                                    const element = ts[index];
+                                                    element.classList.add("blockRefhighlighting")//引用高亮
+                                                    isFatherFather(element, (f) => {
+                                                        if (f.getAttribute("contenteditable") != null) {
+                                                            f.classList.add("blockhighlighting")//块高亮
+                                                            if (index == 0) 高亮内容跳转到悬浮窗中间(element, v);
+                                                            return true;
+                                                        }
+                                                        if (f.tagName == "TD" || f.tagName == "TR") {
+                                                            f.classList.add("blockhighlighting")//块高亮
+                                                            if (index == 0) 高亮内容跳转到悬浮窗中间(element, v);
+                                                            return true;
+                                                        }
+                                                        return false;
+                                                    }, 4)
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case "引用悬浮窗":
+                                        switch (悬浮窗出现的单独块是什么块) {
+                                            case "嵌入块":
+                                                var ts = v.parentElement.querySelector(`[data-node-id='${引用ID}'][data-type="NodeBlockQueryEmbed"]`);
+                                                ts.classList.add("blockhighlighting")//引用高亮
+                                                高亮内容跳转到悬浮窗中间(ts, v);
+                                                break;
+                                            default:
+                                                var ts = v.parentElement.querySelector(`[data-node-id='${引用ID}']`);
+                                                ts.classList.add("blockhighlighting")//引用高亮
+                                                高亮内容跳转到悬浮窗中间(ts, v);
+                                                break;
+                                        }
+
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }, 500)
+
+                        });
+                        observer.observe(v, { attributes: false, childList: true, subtree: false });
+                    }
+
+                    function 不需要模拟点击的反链展示() {
+                        switch (悬浮窗类型) {
+                            case "反链悬浮窗":
+                                var protyle_content = v.parentElement;
+                                var ts = protyle_content.querySelectorAll(`[data-id='${反链引用ID}']`);
+                                for (let index = 0; index < ts.length; index++) {
+                                    const element = ts[index];
+                                    element.classList.add("blockRefhighlighting")//引用高亮
+                                    isFatherFather(element, (f) => {
+                                        if (f.getAttribute("contenteditable") != null) {
+                                            f.classList.add("blockhighlighting")//块高亮
+                                            if (index == 0) 高亮内容跳转到悬浮窗中间(element, v)
+                                            return true;
+                                        }
+                                        if (f.tagName == "TD" || f.tagName == "TR") {
+                                            f.classList.add("blockhighlighting")//块高亮
+                                            if (index == 0) 高亮内容跳转到悬浮窗中间(element, v)
+                                            return true;
+                                        }
+                                        return false;
+                                    }, 4)
+                                }
+                                break;
+                            case "引用悬浮窗":
+                                var protyle_content = v.parentElement;
+                                var ts = protyle_content.querySelector(`[data-node-id='${引用ID}']`);
+                                //ts.scrollIntoView(true);
+                                // ts.classList.add("blockRefhighlighting")//引用高亮
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    function 高亮内容跳转到悬浮窗中间(element, v) {
+                        setTimeout(() => {
+                            element.scrollIntoView(false);
+                            setTimeout(() => {
+                                var tim = v.parentElement;
+                                //console.log(tim, tim.scrollTop);
+                                if (tim.scrollTop != 0) {
+                                    tim.scrollBy(0, tim.offsetHeight / 2);
+                                }
+                            }, 100);
+                            isFatherFather(v, (g) => {
+                                if (g.getAttribute("class") == "block__content") {
+                                    g.scrollTo(0, 0);
+                                    return true;
+                                }
+                                return false;
+                            }, 5)
+                        }, 100);
+                    }
+
+                });
+
+
+
+            }, 500)
+
+
         });
     }, 1000);
 
