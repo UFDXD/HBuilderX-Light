@@ -1026,8 +1026,6 @@ span[aria-label="新建文档"]:hover {
 }
 
 
-/*未选中钉住页签*/
-
 
 /*选中钉住页签*/
 .layout-tab-bar .item--focus.item--pin:not(.item--readonly) {
@@ -1104,8 +1102,8 @@ li.item.item--pin>.fn__none {
 
 
 /*功能页签图标*/
-.layout-tab-bar .item--focus .item:not(.item--unupdate),
-.layout-tab-bar .item:not(.item--unupdate) {
+.layout-tab-bar .item--focus .item:not([aria-label]),
+.layout-tab-bar .item:not([aria-label]) {
     display: flex !important;
 }
 
@@ -1116,12 +1114,12 @@ li.item.item--pin>.fn__none {
 .layout-tab-bar .item .item__text {}
 
 /*功能页签钉住图标*/
-.layout-tab-bar .item--focus.item--pin:not(.item--unupdate),
-.layout-tab-bar .item--pin:not(.item--unupdate) {
+.layout-tab-bar .item--focus.item--pin:not([aria-label]),
+.layout-tab-bar .item--pin:not([aria-label]) {
     width: 12px !important;
 }
 
-.layout-tab-bar .item--pin .item__text:not(.item--unupdate .item__text) {
+.layout-tab-bar .item--pin .item__text:not([aria-label] .item__text) {
     display: none !important;
 }
 
