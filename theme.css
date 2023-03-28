@@ -927,7 +927,6 @@ span[aria-label="新建文档"]:hover {
     user-select: none;
     display: block;
     align-items: flex-start;
-    text-align: center;
     transition: none;
     position: relative;
     height: 24.5px;
@@ -1102,32 +1101,25 @@ li.item.item--pin>.fn__none {
 
 
 /*功能页签图标*/
-.layout-tab-bar .item--focus .item:not([aria-label]),
+/*.layout-tab-bar .item--focus .item:not([aria-label]),
 .layout-tab-bar .item:not([aria-label]) {
     display: flex !important;
-}
+}*/
 
 .layout-tab-bar .item .item__graphic {
     display: none;
 }
 
-.layout-tab-bar .item .item__text {}
-
 /*功能页签钉住图标*/
-.layout-tab-bar .item--focus.item--pin:not([aria-label]),
-.layout-tab-bar .item--pin:not([aria-label]) {
+/*.layout-tab-bar .item--focus.item--pin:not(.layout-tab-bar .item--focus.item--pin[aria-label]),
+.layout-tab-bar .item--pin:not(.layout-tab-bar .item--focus.item--pin[aria-label]) {
     width: 12px !important;
-}
-
+}*/
+/*
 .layout-tab-bar .item--pin .item__text:not([aria-label] .item__text) {
     display: none !important;
-}
+}*/
 
-.layout-tab-bar .item--pin .item__graphic {
-    display: block !important;
-    padding-top: 5px;
-    margin-left: 3px;
-}
 
 
 
