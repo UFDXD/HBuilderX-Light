@@ -1062,7 +1062,7 @@ span[aria-label="新建文档"]:hover {
     display: block;
     position: relative;
     float: right;
-    margin-top: -25px;
+    margin-top: -29px;
     margin-right: -6px;
     min-width: auto;
     flex: none;
@@ -1077,18 +1077,18 @@ span[aria-label="新建文档"]:hover {
     overflow: hidden;
 }
 
-.layout-tab-bar--readonly [data-type="new"] {
-    position: relative !important;
-    top: -5px;
-}
-
+.layout-tab-bar--readonly [data-type="new"],
 .layout-tab-bar--readonly [data-type="more"] {
     position: relative !important;
     top: -5px;
 }
 
+.layout-tab-bar--readonly [data-type="new"]:hover,
+.layout-tab-bar--readonly [data-type="more"]:hover {
+    background-color: transparent !important;
+}
 
-.item.item--readonly>.item__close {
+.layout-tab-bar--readonly [data-type="new"] .item.item--readonly>.item__close {
     padding-right: 5px !important;
 }
 
@@ -1245,7 +1245,7 @@ svg[data-type="remove-tag"] {
 /*-----------------------------文档标题*/
 /*文档内标题块距离左边距的距离*/
 [data-fullwidth="true"] .protyle-title.protyle-wysiwyg--attr {
-    margin-top: 0px !important;
+    /*margin-top: 0px !important;*/
     margin-left: 26px !important;
     margin-right: 26px !important;
 }
@@ -1257,7 +1257,7 @@ svg[data-type="remove-tag"] {
 }
 
 .protyle-title__icon>svg {
-    margin-top: -18px;
+    margin-top: -27px;
     margin-left: -2px;
     width: 25px;
     height: 25px;
@@ -1292,13 +1292,16 @@ svg[data-type="remove-tag"] {
     color: white !important;
 }
 
-/*去定去低*/
+/*动态滚动条*/
 .protyle-scroll {
     height: 20%;
     top: 50% !important;
     right: 0px !important;
 }
 
+[data-oid] .protyle-scroll {
+    display: none;
+}
 
 /*-----------------------------文档内触发悬浮窗*/
 /*引用悬浮窗标签背景色 */
