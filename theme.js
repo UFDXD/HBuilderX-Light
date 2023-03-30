@@ -843,7 +843,7 @@ function adjustDocumentLabelsWhile() {
     const observer = new MutationObserver(() => {
         adjustDocumentLabels();
     })//创建监视
-    observer.observe(layouts, { attributes: true, childList: true, subtree: true });
+    observer.observe(layouts, { attributes: true, childList: false, subtree: true });
 }
 
 function adjustDocumentLabels() {
@@ -883,8 +883,10 @@ function Adjustment(Labels) {
         var Labelfater = getLabelfater(item);
         var Icon = getIcon(item);
 
+        var Title = getTitle(item);
+
         Icon.style.position = "static ";
-        Icon.style.marginLeft = getTitle(item).style.marginLeft;
+        Icon.style.marginLeft = Title.style.marginLeft;
 
         var TopSet = getTopSet(item);
         var TopImgSet = getTopImgSet(item);
@@ -892,12 +894,12 @@ function Adjustment(Labels) {
         var emj = isEmj(item);
         var labe = isLabel(item);
         var img = isImg(item);
-
+        //console.log(Labelfater, item, Icon, TopSet, TopImgSet, Title);
         /**没有emj，没有标签，没有头图的情况 */
         if (!emj && !labe && !img) {
             Labelfater.style.height = "auto";
 
-            Labelfater.style.marginTop = "0px";
+            Labelfater.style.marginTop = "-20px";
             Labelfater.style.marginBottom = "0px";
 
             Labelfater.style.paddingTop = "0px";
@@ -908,12 +910,15 @@ function Adjustment(Labels) {
             item.style.marginBottom = "0px";
 
             Icon.style.marginTop = "0px";
+            Icon.style.height = "75px";//
             Icon.style.marginBottom = "0px";
 
             Icon.firstElementChild.style.display = "none";
 
-            TopSet.style.marginTop = "80px";
+            TopSet.style.marginTop = "76px";
             TopImgSet.style.button = "0px";
+            Title.style.marginTop = "0px";
+
             continue;
         }
 
@@ -930,15 +935,19 @@ function Adjustment(Labels) {
 
             item.style.height = "auto";
             item.style.marginTop = "30px";
+            Icon.style.height = "75px";//
             item.style.marginBottom = "0px";
 
-            Icon.style.marginTop = "0px";
+            Icon.style.marginTop = "-8px";//
             Icon.style.marginBottom = "0px";
 
             Icon.firstElementChild.style.display = "block";
 
             TopSet.style.marginTop = "42px";
             TopImgSet.style.button = "0px";
+
+            Title.style.marginTop = "16px";
+
             continue;
         }
 
@@ -955,16 +964,20 @@ function Adjustment(Labels) {
 
 
             item.style.height = "auto";
-            item.style.marginTop = "0px";
+            item.style.marginTop = "-10px";
             item.style.marginBottom = "0px";
 
             Icon.style.marginTop = "0px";
+            Icon.style.height = "0px";//
             Icon.style.marginBottom = "0px";
 
             Icon.firstElementChild.style.display = "none";
 
-            TopSet.style.marginTop = "-72px";
+            TopSet.style.marginTop = "105px";
             TopImgSet.style.button = "0px";
+
+            Title.style.marginTop = "80px";
+
             continue;
         }
 
@@ -984,13 +997,17 @@ function Adjustment(Labels) {
             item.style.marginBottom = "0px";
 
             Icon.style.marginTop = "0px";
-            Icon.style.marginBottom = "0px";
 
+            Icon.style.marginBottom = "0px";
+            Icon.style.height = "70px";//
             Icon.firstElementChild.style.display = "none";
 
-            TopSet.style.marginTop = "75px";
+            TopSet.style.marginTop = "85px";
             TopImgSet.style.top = "246px";
             TopImgSet.style.button = "0px";
+
+            Title.style.marginTop = "16px";
+
             continue;
         }
 
@@ -1007,16 +1024,20 @@ function Adjustment(Labels) {
 
 
             item.style.height = "auto";
-            item.style.marginTop = "0px";
+            item.style.marginTop = "-10px";
             item.style.marginBottom = "10px";
 
-            Icon.style.marginTop = "0px";
+            Icon.style.marginTop = "-13px";
+            Icon.style.height = "75px";//
             Icon.style.marginBottom = "0px";
 
             Icon.firstElementChild.style.display = "block";
 
             TopSet.style.marginTop = "37px";
             TopImgSet.style.button = "0px";
+
+            Title.style.marginTop = "14px";
+
             continue;
         }
 
@@ -1038,6 +1059,7 @@ function Adjustment(Labels) {
             item.style.marginBottom = "0px";
 
             Icon.style.marginTop = "0px";
+            Icon.style.height = "75px";//
             Icon.style.marginBottom = "0px";
 
             Icon.firstElementChild.style.display = "block";
@@ -1045,6 +1067,9 @@ function Adjustment(Labels) {
             TopSet.style.marginTop = "45px";
             TopImgSet.style.top = "246px";
             TopImgSet.style.button = "0px";
+
+            Title.style.marginTop = "18px";
+
             continue;
         }
 
@@ -1063,13 +1088,17 @@ function Adjustment(Labels) {
             item.style.marginBottom = "0px";
 
             Icon.style.marginTop = "0px";
+            Icon.style.height = "75px";//
             Icon.style.marginBottom = "0px";
 
             Icon.firstElementChild.style.display = "none";
 
-            TopSet.style.marginTop = "75px";
+            TopSet.style.marginTop = "85px";
             TopImgSet.style.top = "246px";
             TopImgSet.style.button = "0px";
+
+            Title.style.marginTop = "12px";
+
             continue;
         }
         /**emj和头图 标签 都存在的的情况下*/
@@ -1088,6 +1117,7 @@ function Adjustment(Labels) {
             item.style.marginBottom = "0px";
 
             Icon.style.marginTop = "0px";
+            Icon.style.height = "75px";//
             Icon.style.marginBottom = "0px";
 
             Icon.firstElementChild.style.display = "block";
@@ -1095,6 +1125,9 @@ function Adjustment(Labels) {
             TopSet.style.marginTop = "45px";
             TopImgSet.style.top = "246px";
             TopImgSet.style.button = "0px";
+
+            Title.style.marginTop = "18px";
+
             continue;
         }
     }
@@ -1757,7 +1790,7 @@ function collapsedListPreviewEvent() {
 var flag22 = false;
 
 function LIstout(e) {
-    items = Array.from(e.target.children);
+    var items = Array.from(e.target.children);
     flag22 = false;
     for (let index = 0; index < items.length; index++) {
         const element = items[index];
