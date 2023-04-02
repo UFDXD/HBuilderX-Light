@@ -3802,6 +3802,10 @@ function SuspendedWindowNoSection() {
                                 引用ID = v.firstElementChild.getAttribute("data-node-id");
                             }
                             拟点击面包屑模元素 = v.parentElement.previousElementSibling.firstElementChild.lastElementChild.previousElementSibling.previousElementSibling.children[1];
+
+                            if (拟点击面包屑模元素.title == "") {// 无意义面包屑层级继续向上一级查找
+                                拟点击面包屑模元素 = 拟点击面包屑模元素.parentElement.previousElementSibling.previousElementSibling.lastElementChild;
+                            }
                             clearInterval(iD);//上段代码没报错就证明元素获取成功了,关闭定时器
 
                             if (悬浮窗出现的单独块是什么块 != "") {
@@ -4656,10 +4660,21 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonChara
             HBuiderXToolbar.style.marginRight = "3px";
             HBuiderXToolbar.style.marginTop = "1px";
             document.getElementById("windowControls").parentElement.insertBefore(HBuiderXToolbar, document.getElementById("windowControls"));
+
+            HBuiderXToolbar.style.width = "35px";
+            HBuiderXToolbar.style.overflow = "hidden";
+            AddEvent(HBuiderXToolbar, "mouseover", () => { HBuiderXToolbar.style.width = "auto" })
+            AddEvent(HBuiderXToolbar, "mouseout", () => { HBuiderXToolbar.style.width = "35px" })
+
         } else if (isBrowser()) {
             HBuiderXToolbar = insertCreateAfter(document.getElementById("barMode"), "div", "HBuiderXToolbar");
             HBuiderXToolbar.style.marginRight = "3px";
             HBuiderXToolbar.style.marginTop = "1px";
+
+            HBuiderXToolbar.style.width = "35px";
+            HBuiderXToolbar.style.overflow = "hidden";
+            AddEvent(HBuiderXToolbar, "mouseover", () => { HBuiderXToolbar.style.width = "auto" })
+            AddEvent(HBuiderXToolbar, "mouseout", () => { HBuiderXToolbar.style.width = "35px" })
         }
         else if (isPcWindow()) {
             HBuiderXToolbar = insertCreateBefore(document.getElementById("minWindow"), "div", "HBuiderXToolbar");
@@ -4668,6 +4683,11 @@ function HBuiderXThemeToolbarAddButton(ButtonID, ButtonFunctionType, ButtonChara
             HBuiderXToolbar.style.paddingTop = "2px";
             HBuiderXToolbar.style.overflowY = "scroll";
             HBuiderXToolbar.style.right = "77px";
+
+            HBuiderXToolbar.style.width = "35px";
+            HBuiderXToolbar.style.overflow = "hidden";
+            AddEvent(HBuiderXToolbar, "mouseover", () => { HBuiderXToolbar.style.width = "auto" })
+            AddEvent(HBuiderXToolbar, "mouseout", () => { HBuiderXToolbar.style.width = "35px" })
         } else if (isPhone()) {
             HBuiderXToolbar = insertCreateBefore(document.getElementById("toolbarEdit"), "div", "HBuiderXToolbar");
             HBuiderXToolbar.style.position = "relative";
