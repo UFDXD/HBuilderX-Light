@@ -430,9 +430,10 @@ li[data-type="toggle"] {
 }
 
 /*订阅标志*/
-#toolbarVIP {
-    margin-left: -10px;
-}
+#toolbarVIP {}
+
+
+
 
 /*头栏按钮*/
 #toolbar .toolbar__item {
@@ -1006,8 +1007,8 @@ span[aria-label="新建文档"]:hover {
 /*未选中钉住页签*/
 .layout-tab-bar .item--pin:not(.item--readonly) {
     background-color: rgb(255, 250, 232);
-    padding-right: 0px;
-    padding-left: 5px;
+    padding: 0 !important;
+    text-align: center;
     color: rgb(101, 168, 99) !important;
     width: 100px !important;
 }
@@ -1029,8 +1030,8 @@ span[aria-label="新建文档"]:hover {
 /*选中钉住页签*/
 .layout-tab-bar .item--focus.item--pin:not(.item--readonly) {
     background-color: rgb(255, 250, 232);
-    padding-right: 0px;
-    padding-left: 5px;
+    padding: 0 !important;
+    text-align: center;
     color: white !important;
     width: 100px !important;
     text-overflow: ellipsis !important;
@@ -2638,22 +2639,26 @@ tr .blockhighlighting {
 
 
 /* 任务列表 */
-.protyle-task--done {
-    color: rgb(181, 154, 64);
-    text-decoration: line-through rgb(144, 121, 45);
+.protyle-task--done>div[data-node-id].p {
+    color: unset;
+    text-decoration: unset;
 }
 
-
-.bq .protyle-task--done {
-    color: rgb(101, 101, 101);
-    text-decoration: line-through rgb(0, 0, 0);
+.protyle-task--done>div[data-node-id].p:nth-child(2) {
+    color: rgb(181, 154, 64) !important;
+    text-decoration: line-through !important;
 }
 
-.protyle-task--done svg {
+.bq .protyle-task--done>div[data-node-id].p:nth-child(2) {
+    color: rgb(101, 101, 101) !important;
+    text-decoration: line-through !important;
+}
+
+.protyle-task--done [draggable]>svg {
     color: rgb(101, 168, 99) !important;
 }
 
-.protyle-task--done:hover svg {
+.protyle-task--done [draggable]>svg:hover {
     color: rgb(44, 219, 41) !important;
 }
 
