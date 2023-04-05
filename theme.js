@@ -650,6 +650,21 @@ function InverseButton() {
     );
 
     HBuiderXThemeToolbarAddButton(
+        "按钮:颜色反转_墨空", EnumButtonFunctionType.topicfilter,
+        EnumButtonCharacteristicType.multiple,
+        "主题颜色反转_墨空",
+        "/appearance/themes/HBuilderX-Light/src/反色2.png",
+        "/appearance/themes/HBuilderX-Light/src/反色1.png",
+        () => {
+            loadStyle("/appearance/themes/HBuilderX-Light/customizeStyle/Topicfilter/颜色反转_墨空.css", "颜色反转_墨空");
+        },
+        () => {
+            document.getElementById("颜色反转_墨空").remove();
+        },
+        true
+    );
+
+    HBuiderXThemeToolbarAddButton(
         "按钮:颜色反转_黑绿", EnumButtonFunctionType.topicfilter,
         EnumButtonCharacteristicType.multiple,
         "主题颜色反转_黑绿",
