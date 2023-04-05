@@ -1,0 +1,109 @@
+body {
+    filter: invert(92.5%) hue-rotate(90deg);
+}
+
+
+img,
+/*图片*/
+video,
+/*视频*/
+canvas:not(.pdfViewer canvas),
+/*canvas，排除PDF*/
+.protyle-background__icon,
+/*文档头部emj图标*/
+#toolbarVIP,
+/*订阅用户图标*/
+[data-type="tag"]::before,
+/*标签图标*/
+[data-type="file-annotation-ref"]::before,
+/*pdf引用图标*/
+.code-block::after,
+/*pdf引用图标*/
+.b3-list-item__icon,
+/*菜单列表项图标*/
+.b3-list-item__graphic:not(.popover__block),
+/*大纲文档名图标*/
+.emojis__item,
+/*emj面板图标*/
+.emojis__type,
+/*emj面板图标类型图标*/
+.toolbar__item::after,
+/*头栏信息提示泡*/
+.iframe-content>iframe,
+/*iframe*/
+.item__preview
+
+/*集市包预览图*/
+    {
+    filter: invert(107.5%) hue-rotate(270deg);
+}
+
+
+/*某信息泡样式*/
+.tooltip {
+    background-color: white !important;
+    color: black !important;
+}
+
+/*深色模式下为透明背景黑的图标添加白色背景*/
+.img img {
+    background-color: white !important;
+}
+
+/*文档正文标题*/
+.protyle-title__input {
+    color: black !important;
+}
+
+/*页签*/
+.layout-tab-bar .item--focus {
+    color: black !important;
+}
+
+.layout-tab-bar .item--focus>.item__text {
+    color: black !important;
+}
+
+/*选中钉住页签*/
+.layout-tab-bar .item--focus.item--pin:not(.item--readonly) {
+    color: black !important;
+}
+
+.layout-tab-bar .item--focus.item--pin>.item__text {
+    color: black !important;
+}
+
+/*失焦窗口页签*/
+.layout-tab-bar .item--focus:not(.layout__wnd--active .layout-tab-bar .item--focus),
+.layout-tab-bar .item--focus .item__text:not(.layout__wnd--active .layout-tab-bar .item--focus .item__text) {
+    color: white !important;
+}
+
+/* ——————————————————————鼠标光标选中文本样式———————————————————————— */
+.protyle-wysiwyg ::selection {
+    background-color: rgb(172, 255, 169);
+    color: rgb(0, 0, 0) !important;
+}
+
+
+
+.protyle-wysiwyg [data-node-id] span[data-type~="block-ref"]::after {
+    filter: drop-shadow(rgb(77, 105, 77) 9999999px 0) !important;
+}
+
+/*窗口边框*/
+.body--window {
+    border-left: 1px solid rgb(0, 103, 0) !important;
+    border-right: 1px solid rgb(0, 103, 0) !important;
+    border-bottom: 1px solid rgb(0, 103, 0) !important;
+}
+
+.body--window .toolbar__window {
+    border-top: 1px solid rgb(0, 103, 0) !important;
+
+}
+
+.bq,
+.render-node {
+    background-color: rgba(255, 255, 255, 0.342) !important;
+}
