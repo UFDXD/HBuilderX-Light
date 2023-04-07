@@ -1388,6 +1388,11 @@ svg[data-type="remove-tag"] {
     bottom: -16px !important;
 }
 
+/* 反链悬浮窗 描文本高亮*/
+.block__popover .def--mark {
+    background-color: var(--b3-protyle-inline-mark-background) !important;
+}
+
 
 
 
@@ -1908,55 +1913,6 @@ span[data-type~="virtual-block-ref"] {
     left: -10000006px;
     filter: drop-shadow(rgb(88, 123, 88) 9999999px 0);
 }
-
-
-/*
-.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"] {
-    font-size: 96%;
-    padding: 0px 5px 0px 5px;
-    color: inherit;
-    background-color: rgba(224, 237, 211, 0.467);
-    border-bottom: 1px dashed rgb(32, 33, 36);
-    transition: none !important;
-}
-
-.protyle-wysiwyg [data-node-id] span[data-subtype="d"][data-type~="block-ref"]:hover {
-    background-color: rgb(219, 233, 184);
-    transition: none !important;
-}
-
-.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"] {
-    font-size: 96%;
-    padding: 0px 5px 0px 5px;
-    color: inherit;
-    background-color: rgba(224, 237, 211, 0.467);
-    border-bottom: 1px solid rgba(32, 33, 36, 0.519);
-    transition: none !important;
-}
-
-.protyle-wysiwyg [data-node-id] span[data-subtype="s"][data-type~="block-ref"]:hover {
-    background-color: rgb(219, 233, 184);
-    border-bottom: 1px solid rgba(32, 33, 36, 0.64);
-    transition: none !important;
-}
-
-
-.protyle-wysiwyg [data-node-id] span[data-type~="block-ref"]::after {
-    display: inline-block;
-    position: relative;
-    background: url('src/引用描文本.svg');
-    background-size: cover;
-    content: "";
-    width: 0.8em;
-    height: 0.8em;
-    top: -0.8em;
-    margin-right: -0.8em;
-    left: -10000006px;
-    filter: drop-shadow(rgb(98, 133, 98) 9999999px 0);
-}
-
-*/
-
 
 
 
