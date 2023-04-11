@@ -1,8 +1,0 @@
-/*让大纲树，文档树列表等其他间距更小*/
-.b3-list-item:not([data-type="search-item"]):not([data-treetype="backlink"]) {
-    line-height: 16px !important;
-}
-
-[data-treetype="backlink"] {
-    line-height: 22px;
-}
