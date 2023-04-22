@@ -1,0 +1,59 @@
+/* 列表辅助样式 */
+/* 👇👇👇 列表辅助线 👇👇👇 */
+.protyle-content .li[data-node-id]:has(.theme-focus)>.protyle-action {
+    /* 上级节点标志颜色 */
+    color: red;
+}
+
+.protyle-content .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]::after {
+    /* 子弹流直线 */
+    content: "";
+    top: calc(-5px);
+    bottom: 0;
+    left: calc(42px - 2em);
+    position: absolute;
+    border-left: 2px solid red;
+}
+
+.protyle-content .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)>.protyle-action::before {
+    /* 子弹流弧线 */
+    content: "";
+    top: -4px;
+    bottom: calc(2px + 7em / 8);
+    left: calc(42px - 2em);
+    position: absolute;
+    border-left: 2px solid red;
+    border-bottom: 2px solid red;
+    /* border-bottom-left-radius: 16px;*/
+}
+
+.protyle-content .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)[data-subtype="t"]>.protyle-action::before {
+    /* 与本层节点的接缝 */
+    right: calc(22px + 5em / 16);
+}
+
+.protyle-content .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)[data-subtype="u"]>.protyle-action::before {
+    /* 与本层节点的接缝 */
+    right: calc(22px + 5em / 16);
+}
+
+.protyle-content .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)[data-subtype="o"]>.protyle-action::before {
+    /* 与本层节点的接缝 */
+    right: calc(14px + 1em);
+}
+
+.protyle-content .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)::after,
+.protyle-content .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)~.li[data-node-id]::after {
+    border-left-color: transparent;
+}
+
+.protyle-content [custom-type] .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]::after,
+.protyle-content .list[data-node-id][custom-type] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]::after {
+    top: unset;
+    left: unset;
+}
+
+.protyle-content [custom-type] .list[data-node-id] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)>.protyle-action::before,
+.protyle-content .list[data-node-id][custom-type] .list[data-node-id]:has(.theme-focus)>.li[data-node-id]:has(.theme-focus)>.protyle-action::before {
+    content: normal;
+}
