@@ -1300,7 +1300,7 @@ button.b3-tooltips.b3-tooltips__w.block__icon:hover {
 
 /*修改思源悬浮窗口默认宽度，由原来的60vm 到40vm。*/
 .block__popover {
-    width: 29vw;
+    width: 32vw;
 }
 
 /*悬浮窗文档内容边距*/
@@ -1774,18 +1774,22 @@ div [data-type="img"] {
 
 
 /*---------------闪卡标记*/
-.card__block--hide [data-node-id] [data-type~="mark"] {
+
+
+.card__main [class~="card__block--hidesb"] [data-type~="mark"] {
     color: transparent !important;
     background-color: transparent !important;
     border-bottom: 1px solid black !important;
-
 }
 
-.card__block--hide [data-node-id] [data-type~="mark"]:hover {
+.card__main [class~="card__block--hidesb"] [data-type~="mark"]:hover {
     background-color: rgb(255, 251, 206) !important;
     color: black !important;
 }
 
+.card__main .fn__size200 {
+    background-color: rgb(132, 184, 126);
+}
 
 
 /*-----------------------------虚拟引用*/
