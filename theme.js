@@ -1623,7 +1623,7 @@ function MiddleKeyExpansionClosed_Outline() {
 
 /**----------------同名虚拟引用显示内容窗口排序，将触发文档相关性最高的引用内容优先展示------D大暂时不搞-所以-自己动手顶顶----------*/
 //https://github.com/siyuan-note/siyuan/issues/5476
-
+var AllWindows;
 function VirtualReferenceEnhancements() {
     //BodyEventRunFun("mouseover",VirtualReference, 5000);
     AddEvent(document.body, "mouseover", (e) => {
@@ -1632,7 +1632,7 @@ function VirtualReferenceEnhancements() {
         if (target.getAttribute("data-type") == "virtual-block-ref") {
 
             AddEvent(target, "mouseout", mouseout);
-
+            AllWindows = Array.from(document.querySelectorAll("[data-oid]"));
             setTimeout(() => {
                 if (isyy) VirtualReferenceEventMouseenter(e);
             }, 500);
@@ -1684,11 +1684,10 @@ function VirtualReferenceAsync(path, e) {
 
 //检测思源新出现悬浮窗
 function monitoringFloatingWindows(e, BookNodeName, path, fun) {
-    var AllWindows = Array.from(document.querySelectorAll("[data-oid]"));
 
     var time = 0;
     var setID = setInterval(() => {
-        if (/*e.target.getAttribute("mouseenter") == null ||*/ time > 1500 || newWindows() == true) {
+        if (/*e.target.getAttribute("mouseenter") == null ||*/ time > 3000 || newWindows() == true) {
             clearInterval(setID);
         }
         time += 200;
@@ -1696,6 +1695,7 @@ function monitoringFloatingWindows(e, BookNodeName, path, fun) {
 
     function newWindows() {
         var _AllWindows = Array.from(document.querySelectorAll("[data-oid]"));
+
         //console.log("触发前的悬浮窗：",AllWindows,"延时检测查找的悬浮窗:",_AllWindows);
 
         if (_AllWindows.length == 0) return false;
@@ -1721,10 +1721,8 @@ function monitoringFloatingWindows(e, BookNodeName, path, fun) {
 function floatingWindowSorting(newWindows, BookNodeName, path) {
     //悬浮窗内找到有关笔记本名称的内容窗
     var item = 0;
-
     var idd = setInterval(() => {
         item += 900;
-
         if (item > 60000) clearInterval(idd);
         if (newWindows.querySelector(".fn__loading")) return; //有内容没加载
 
@@ -1854,7 +1852,7 @@ function floatingWindowSorting(newWindows, BookNodeName, path) {
     }, 900);
 
     function 查找函数3(v) {
-        return v.className == "block__icons block__icons--border";
+        return v.className == "block__icons block__icons--menu";
     }
     function 查找函数2(v) {
         return v.classList.contains("protyle-breadcrumb__text");
@@ -2140,7 +2138,7 @@ function theFloatingWindowIsClosed() {
         if (e.button != 1) return;
         var element = e.target;
         var className = element.className;
-        if (className == "block__icons block__icons--border" || className == "fn__space fn__flex-1" || className == "maxMinButton") {
+        if (className == "block__icons block__icons--menu" || className == "fn__space fn__flex-1" || className == "maxMinButton") {
             element = element.parentElement;
         } else {
             return;
