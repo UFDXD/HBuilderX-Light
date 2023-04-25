@@ -213,6 +213,10 @@
     transition: none;
 }
 
+/* 官方头栏按钮选择背景*/
+.toolbar__item--active {
+    background-color: var(--b3-list-icon-hover);
+}
 
 /*-----------------------------某些块右上角的图标背景色*/
 .protyle-icon {
@@ -349,18 +353,21 @@ body {
     opacity: 0.2;
 }
 
+/*----------------*/
 .layout-tab-container .block__icons:not(.block__icons--border) {
     height: 25px;
 }
 
+/*
 .fn__none .layout-tab-container .block__icons+div:not(.block__icons--border):not([style="flex:none;height:0px"]) {
     margin-top: 8px;
-}
+}*/
 
+/*
 [data-type="wnd"] .fn__flex+.layout-tab-container .block__icons+div:not(.block__icons--border):not([style="flex:none;height:0px"]) {
     min-height: 0;
 }
-
+*/
 /*+++++++++++++++++++++++++++++软件非编辑区域+++++++++++++++++++++++++++++*/
 
 
@@ -433,11 +440,6 @@ li[data-type="toggle"] {
 
 
 
-/*头栏按钮*/
-#toolbar .toolbar__item {
-    padding-left: 8px;
-}
-
 #toolbar .toolbar__item svg {
     width: 16px;
     height: 16px;
@@ -451,8 +453,8 @@ li[data-type="toggle"] {
 #history,
 #barSetting,
 [aria-label="插件系统"] {
-    padding-left: 7px;
-    padding-right: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
     color: rgb(60, 116, 57);
 }
 
@@ -697,20 +699,11 @@ protyle-util,
 /*固定左右栏面板列表树列表头背景颜色*/
 .block__icons {
     background-color: rgb(255, 250, 232);
+    min-height: 25px;
 }
-
-/*左区域*/
-/*div.fn__flex-column.fn__flex-shrink {}*/
-
-/*右区域*/
-/*#layouts>.fn__flex.fn__flex-1>div:last-child {
-    border-left: 1px solid rgb(216, 202, 158);
-}*/
 
 /*边栏面板整体向左移动，以契合边栏缩窄后观感*/
-.layout-tab-container .b3-list--background {
-    margin-left: -5px;
-}
+/*.layout-tab-container .b3-list--background {}*/
 
 /*-----------------------------大纲区域*/
 
@@ -1296,6 +1289,13 @@ button.b3-tooltips.b3-tooltips__w.block__icon:hover {
     100% {
         transform: scale(1);
     }
+}
+
+/* 悬浮窗头栏*/
+.block__popover--move>.block__icons {
+    background-color: rgba(101, 167, 99, 0.521);
+    min-height: 27px;
+    border-radius: 1px;
 }
 
 /*修改思源悬浮窗口默认宽度，由原来的60vm 到40vm。*/
